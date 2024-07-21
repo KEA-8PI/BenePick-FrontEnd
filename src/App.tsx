@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import MemeberNavBar from './components/memberNavbar';
+import MemeberNavBar from './components/navbar/memberNavbar';
 // import ManagerNavBar from './components/managerNavBar';
 
 import Home from './pages/home';
