@@ -1,6 +1,6 @@
 import React from 'react';
 import colors from '../../theme/variableColors';
-import ProfilePopover from '../popover/profilePopover';
+import ProfilePopover from 'components/popover/ProfilePopover';
 
 // 타입 정의
 interface NavItem {

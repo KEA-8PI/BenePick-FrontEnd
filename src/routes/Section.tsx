@@ -1,8 +1,8 @@
 import { Outlet, useRoutes } from 'react-router-dom';
-import Layout from 'components/Layout/Layout';
+import Layout from 'components/layout/Layout';
 import { Suspense, lazy } from 'react';
 
-export const LoginPage = lazy(() => import('../pages/Login/LoginPage'));
+export const LoginPage = lazy(() => import('../pages/login/LoginPage'));
 export const Router = () => {
   const routes = useRoutes([
     {
