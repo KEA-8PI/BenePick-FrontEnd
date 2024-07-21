@@ -5,7 +5,7 @@ const MyPage = () => {
   return (
     <div>
       <Helmet>
-        <title>마이페이지 | BenePick</title>
+        <title>BenePick | 마이페이지</title>
       </Helmet>
       <h1>MyPage</h1>
       {Array.from({ length: 30 }, (_, index) => (

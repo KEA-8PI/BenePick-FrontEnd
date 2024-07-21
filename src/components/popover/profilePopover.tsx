@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { startTransition } from 'react';
 import { IconButton, Menu, MenuItem } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePopover = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    startTransition(() => {
+      setAnchorEl(null);
+    });
   };
 
   const handleClick = () => {
     console.log('profilePopover');
+  };
+
+  const handleLoginClick = () => {
+    handleClose();
+    navigate('/login');
   };
 
   return (
@@ -44,7 +53,7 @@ const ProfilePopover = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClick}>프로필</MenuItem>
-        <MenuItem onClick={handleClose}>로그인</MenuItem>
+        <MenuItem onClick={handleLoginClick}>로그인</MenuItem>
       </Menu>
     </div>
   );

@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <div>
       <Helmet>
-        <title>대시보드 | BenePick</title>
+        <title>BenePick | 대시보드</title>
       </Helmet>
       <h1>Dashboard</h1>
       {Array.from({ length: 30 }, (_, index) => (

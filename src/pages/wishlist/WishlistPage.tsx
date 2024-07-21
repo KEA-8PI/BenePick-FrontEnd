@@ -5,7 +5,7 @@ const Wishlist = () => {
   return (
     <div>
       <Helmet>
-        <title>위시리스트 | BenePick</title>
+        <title>BenePick | 위시리스트</title>
       </Helmet>
       {Array.from({ length: 30 }, (_, index) => (
         <p key={index}>This is the Wishlit Page.</p>
