@@ -1,6 +1,6 @@
 import MemeberNavBar from 'components/navbar/MemberNavbar';
 import ManagerNavBar from 'components/navbar/ManagerNavBar';
-
+// navItems 배열의 path 속성은 여전히 각 항목의 경로를 정의하는 데 필요
 const navItems = [
   { title: '홈', path: '/' },
   { title: '대시보드', path: '/dashboard' },
@@ -14,11 +14,12 @@ const managerNavItems = [
   { title: '사원관리', path: '/manageMember' },
 ];
 
-const Layout = (props: { children: React.ReactNode }) => {
+// Layout 컴포넌트에서 path Prop을 받아서, MemberNavBar 컴포넌트에 전달합니다.
+const Layout = (props: { children: React.ReactNode; path: string }) => {
   return (
-    <div style={{ padding: '110px 188px 0 188px' }}>
+    <div style={{ padding: '150px 188px 0 188px' }}>
       {/* <Header /> */}
-      <MemeberNavBar navItems={navItems} memberNavItems={memberNavItems} path={''} />
+      <MemeberNavBar navItems={navItems} memberNavItems={memberNavItems} path={props.path} />
       {/* <ManagerNavBar navItems={navItems} managerNavItems={managerNavItems} path={''} /> */}
       <main>{props.children}</main>
       {/* <Footer /> */}
