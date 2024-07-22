@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { HomeView } from './view';
 
 const Home = () => {
   return (
@@ -7,36 +8,10 @@ const Home = () => {
       <Helmet>
         <title>BenePick | 홈</title>
       </Helmet>
-      <h1>Home</h1>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
-      <p>Welcome to the home page.</p>
+
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <HomeView />
+      </div>
     </div>
   );
 };
