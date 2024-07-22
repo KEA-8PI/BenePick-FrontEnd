@@ -1,4 +1,4 @@
-import { Outlet, useRoutes } from 'react-router-dom';
+import { Outlet, useRoutes, useLocation } from 'react-router-dom';
 import Layout from 'components/layout/Layout';
 import { Suspense, lazy } from 'react';
 
@@ -9,10 +9,13 @@ export const WishListPage = lazy(() => import('../pages/wishlist/WishlistPage'))
 export const LoginPage = lazy(() => import('../pages/login/LoginPage'));
 
 export const Router = () => {
+  // Router에서 useLocation 훅을 사용하여 현재 경로를 가져오고,
+  const location = useLocation();
   const routes = useRoutes([
     {
       element: (
-        <Layout>
+        // useRoutes 훅을 사용하여 라우트를 설정합니다.
+        <Layout path={location.pathname}>
           <Suspense>
             <Outlet />
           </Suspense>
