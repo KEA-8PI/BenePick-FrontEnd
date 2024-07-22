@@ -2,24 +2,15 @@ import React from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import colors from 'theme/variableColors';
 import CustomTabPanel from './CustomTabPanel';
+import { CustomTabsProps } from './CustomTab.types';
 
 // 탭 속성 (0,1,2,3)
-function a11yProps(index: number) {
+const a11yProps = (index: number) => {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
   };
-}
-
-// Tabs와 TabPanel을 구성하는 데이터를 props로 받아서 렌더링하는 방식
-interface TabData {
-  label: string;
-  content: React.ReactNode;
-}
-
-interface CustomTabsProps {
-  tabs: TabData[];
-}
+};
 
 const CustomTab: React.FC<CustomTabsProps> = ({ tabs }) => {
   const [value, setValue] = React.useState(0);

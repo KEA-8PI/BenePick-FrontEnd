@@ -1,10 +1,5 @@
 import { Box } from '@mui/material';
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
+import { TabPanelProps } from './CustomTab.types';
 
 // 탭 안의 내용
 const CustomTabPanel = (props: TabPanelProps) => {

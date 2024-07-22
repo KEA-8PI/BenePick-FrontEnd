@@ -1,6 +1,7 @@
 import SelectCategory from 'components/select/SelectCategory';
-import SearchBar from 'components/searchbar/SearchBar';
+import SearchBar from 'components/searchBar/SearchBar';
 import CustomTab from 'components/tab/CustomTab';
+import { Wrapper } from 'components/common/Components.styles';
 
 const HomeView = () => {
   const tabData = [
@@ -10,13 +11,13 @@ const HomeView = () => {
   ];
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Wrapper>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '100%' }}>
           <SelectCategory />
           <SearchBar />
         </div>
         <CustomTab tabs={tabData} />
-      </div>
+      </Wrapper>
     </>
   );
 };
