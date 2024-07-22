@@ -1,5 +1,5 @@
 import SelectCategory from 'components/select/SelectCategory';
-import SearchBar from 'components/searchBar/SearchBar';
+import SearchBar from 'components/searchbar/SearchBar';
 import CustomTab from 'components/tab/CustomTab';
 import { Wrapper } from 'components/common/Components.styles';
 

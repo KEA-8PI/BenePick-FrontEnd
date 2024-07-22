@@ -8,14 +8,14 @@ interface NavItem {
   path: string;
 }
 
-interface MemeberNavBarProps {
+interface MemberNavBarProps {
   navItems: NavItem[];
   memberNavItems: NavItem[];
   path: string;
 }
 
 // 컴포넌트 정의
-const MemeberNavBar: React.FC<MemeberNavBarProps> = ({ navItems, memberNavItems, path }) => {
+const MemberNavBar: React.FC<MemberNavBarProps> = ({ navItems, memberNavItems, path }) => {
   return (
     <nav
       style={{
@@ -97,4 +97,4 @@ const MemeberNavBar: React.FC<MemeberNavBarProps> = ({ navItems, memberNavItems,
   );
 };
 
-export default MemeberNavBar;
+export default MemberNavBar;
