@@ -27,7 +27,7 @@ const ManagerNavBar: React.FC<ManagerNavBarProps> = ({ navItems, managerNavItems
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        height: '110px',
+        height: '90px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         justifyContent: 'space-between', // 양 끝으로 배치
       }}
@@ -61,6 +61,8 @@ const ManagerNavBar: React.FC<ManagerNavBarProps> = ({ navItems, managerNavItems
                 className="nav-item"
                 style={{
                   color: path === item.path ? colors.primary : '#000000',
+                  fontSize: '15px',
+                  fontWeight: path === item.path ? 'bold' : 'regular',
                 }}
               >
                 {item.title}
@@ -74,6 +76,8 @@ const ManagerNavBar: React.FC<ManagerNavBarProps> = ({ navItems, managerNavItems
               className="nav-item"
               style={{
                 color: path === item.path ? colors.primary : '#000000',
+                fontSize: '15px',
+                fontWeight: path === item.path ? 'bold' : 'regular',
               }}
             >
               {item.title}

@@ -28,7 +28,7 @@ const MemeberNavBar: React.FC<MemeberNavBarProps> = ({ navItems, memberNavItems,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        height: '110px',
+        height: '90px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         justifyContent: 'space-between', // 양 끝으로 배치
       }}
@@ -41,7 +41,7 @@ const MemeberNavBar: React.FC<MemeberNavBarProps> = ({ navItems, memberNavItems,
         }}
       >
         <a href="/">
-          <img src="/images/benepickLogo.png" alt="logo" width={230} height={67} />
+          <img src="/images/benepickLogo.png" alt="logo" width={180} height={52} />
         </a>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -62,6 +62,8 @@ const MemeberNavBar: React.FC<MemeberNavBarProps> = ({ navItems, memberNavItems,
                 className="nav-item"
                 style={{
                   color: path === item.path ? colors.primary : '#000000',
+                  fontSize: '15px',
+                  fontWeight: path === item.path ? 'bold' : 'regular',
                 }}
               >
                 {item.title}
@@ -75,6 +77,8 @@ const MemeberNavBar: React.FC<MemeberNavBarProps> = ({ navItems, memberNavItems,
               className="nav-item"
               style={{
                 color: path === item.path ? colors.primary : '#000000',
+                fontSize: '15px',
+                fontWeight: path === item.path ? 'bold' : 'regular',
               }}
             >
               {item.title}
