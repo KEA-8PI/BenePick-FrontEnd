@@ -9,9 +9,7 @@ const Home = () => {
         <title>BenePick | 홈</title>
       </Helmet>
 
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <HomeView />
-      </div>
+      <HomeView />
     </div>
   );
 };
