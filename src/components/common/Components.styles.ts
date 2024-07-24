@@ -29,3 +29,14 @@ export const Row = styled.div`
   justify-content: space-between;
   width: ${({ width }: { width?: number }) => (width ? `${width}%` : 'auto')};
 `;
+
+export const ColorBox = styled.div`
+  width: 60px;
+  height: 30px;
+  border-radius: 10px;
+  display: 'flex';
+  justify-content: 'center';
+  align-items: 'center';
+  text-align: 'center';
+  background-color: ${({ color }: { color: string }) => color};
+`;
