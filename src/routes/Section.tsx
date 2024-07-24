@@ -1,12 +1,12 @@
 import { Outlet, useRoutes, useLocation } from 'react-router-dom';
-import Layout from 'components/Layout/Layout';
+import Layout from 'components/layout/Layout';
 import { Suspense, lazy } from 'react';
 
 export const HomePage = lazy(() => import('../pages/home/HomePage'));
 export const DashboardPage = lazy(() => import('../pages/dashboard/DashboardPage'));
 export const MyPage = lazy(() => import('../pages/mypage/MyPage'));
 export const WishListPage = lazy(() => import('../pages/wishlist/WishlistPage'));
-export const LoginPage = lazy(() => import('../pages/Login/LoginPage'));
+export const LoginPage = lazy(() => import('../pages/login/LoginPage'));
 
 export const Router = () => {
   // Router에서 useLocation 훅을 사용하여 현재 경로를 가져오고,
