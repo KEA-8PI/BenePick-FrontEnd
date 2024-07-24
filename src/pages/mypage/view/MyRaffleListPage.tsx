@@ -41,6 +41,7 @@ const MyRaffleListPage = () => {
       <S.Row width={80}>
         {TabData.map((tab, index) => (
           <Button
+            key={index} // key prop 추가
             onClick={() => setActiveTab(index)}
             sx={{
               width: '50%',
