@@ -72,4 +72,14 @@ export const CardBoldFont = styled.div`
 export const CardLightFont = styled.div`
   font-size: 13px;
   color: ${colors.grey01};
+=======
+export const ColorBox = styled.div`
+  width: 60px;
+  height: 30px;
+  border-radius: 10px;
+  display: 'flex';
+  justify-content: 'center';
+  align-items: 'center';
+  text-align: 'center';
+  background-color: ${({ color }: { color: string }) => color};
 `;
