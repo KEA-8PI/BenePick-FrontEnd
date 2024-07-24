@@ -29,7 +29,7 @@ const CustomTab: React.FC<CustomTabsProps> = ({ tabs }) => {
           onChange={handleChange}
           aria-label="custom tabs"
           textColor="inherit"
-          sx={{ '& .MuiTab-root': { fontSize: '17px' } }}
+          sx={{ '& .MuiTab-root': { fontSize: '15px' } }}
           TabIndicatorProps={{
             style: {
               backgroundColor: colors.primary,
