@@ -75,7 +75,12 @@ const CustomTabPanel: React.FC<TabPanelProps> = ({
             }}
           >
             <FormControl>
-              <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group">
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+                defaultValue="종료 임박순" // 기본 선택 값 설정
+              >
                 <FormControlLabel
                   value="종료 임박순"
                   control={
