@@ -17,7 +17,7 @@ const managerNavItems = [
 // Layout 컴포넌트에서 path Prop을 받아서, MemberNavBar 컴포넌트에 전달합니다.
 const Layout = (props: { children: React.ReactNode; path: string }) => {
   return (
-    <div style={{ padding: '130px 188px 0 188px' }}>
+    <div style={{ padding: '130px 12%' }}>
       {/* <Header /> */}
       <MemberNavBar navItems={navItems} memberNavItems={memberNavItems} path={props.path} />
       {/* <ManagerNavBar navItems={navItems} managerNavItems={managerNavItems} path={''} /> */}
