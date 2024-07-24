@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import colors from 'theme/variableColors';
 import CustomTabPanel from './CustomTabPanel';
-import { CustomTabsProps } from './CustomTab.types';
+import { TabsProps } from './CustomTab.types';
 
 // 탭 속성 (0,1,2,3)
 const a11yProps = (index: number) => {
@@ -12,7 +12,7 @@ const a11yProps = (index: number) => {
   };
 };
 
-const CustomTab: React.FC<CustomTabsProps> = ({ tabs }) => {
+const CustomTab: React.FC<TabsProps> = ({ tabs, showTabTitle, showFilter }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newIndex: number) => {
@@ -44,7 +44,14 @@ const CustomTab: React.FC<CustomTabsProps> = ({ tabs }) => {
 
       {/* 탭 내용 컴포넌트 */}
       {tabs.map((tab, index) => (
-        <CustomTabPanel key={index} value={value} index={index}>
+        <CustomTabPanel
+          key={index}
+          value={value}
+          index={index}
+          showTabTitle={showTabTitle} // showTabTitle CustomTabPanel에 전달
+          title={tab.tabTitle} // tabTitle을 CustomTabPanel에 전달
+          showFilter={showFilter} // showFilter를 CustomTabPanel에 전달
+        >
           {tab.content}
         </CustomTabPanel>
       ))}
