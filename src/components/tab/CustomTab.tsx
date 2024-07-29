@@ -16,7 +16,7 @@ const CustomTab: React.FC<TabsProps> = ({ tabs, showTabTitle, showFilter }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newIndex: number) => {
-    console.log('탭 변경', newIndex);
+    console.log('탭 변경:', tabs[newIndex].label);
     setValue(newIndex);
   };
 
