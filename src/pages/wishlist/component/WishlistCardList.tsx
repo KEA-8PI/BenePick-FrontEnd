@@ -1,5 +1,6 @@
 import React from 'react';
 import * as S from 'components/common/Components.styles';
+import * as C from '../../../components/CustomCard/CustomCard.styles';
 import WishlistCard from './WishlistCard';
 import { HomeCardPageProps } from 'components/CustomCard/CustomCard.types';
 
@@ -90,15 +91,15 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
   ];
 
   return (
-    <S.CardContainer>
+    <C.CardContainer>
       {cardInfo.map((info, index) => (
-        <S.Card key={index}>
+        <C.Card key={index}>
           <S.ShadowBox padding="0">
             <WishlistCard info={info} goodsStatus={goodsStatus} />
           </S.ShadowBox>
-        </S.Card>
+        </C.Card>
       ))}
-    </S.CardContainer>
+    </C.CardContainer>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as S from '../../../components/common/Components.styles';
+import * as C from '../../../components/CustomCard/CustomCard.styles';
 import { CustomCardProps } from '../../../components/CustomCard/CustomCard.types';
 import { Divider, CardMedia, Chip, Box, IconButton } from '@mui/material';
 import colors from 'theme/variableColors';
@@ -17,13 +18,13 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
   return (
     <div>
       <CardImage info={info} goodsStatus={goodsStatus} />
-      <S.CardContent>
+      <C.CardContent>
         <div style={{ padding: '8px' }}>
           <S.Row>
-            <S.CardLightFont>{info.category}</S.CardLightFont>
-            <S.CardBoldFont>{info.amounts}</S.CardBoldFont>
+            <C.CardLightFont>{info.category}</C.CardLightFont>
+            <C.CardBoldFont>{info.amounts}</C.CardBoldFont>
           </S.Row>
-          <S.CardBoldFont>{info.name}</S.CardBoldFont>
+          <C.CardBoldFont>{info.name}</C.CardBoldFont>
           <Date info={info} goodsStatus={goodsStatus} />
         </div>
 
@@ -42,10 +43,10 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
               icon="bi:person"
               sx={{ width: '20px', height: '20px', color: colors.grey01, paddingRight: '4px' }}
             />
-            <S.CardLightFont style={{ fontWeight: 'bold' }}>{info.applicant}</S.CardLightFont>
+            <C.CardLightFont style={{ fontWeight: 'bold' }}>{info.applicant}</C.CardLightFont>
           </div>
         </S.Row>
-      </S.CardContent>
+      </C.CardContent>
     </div>
   );
 };
