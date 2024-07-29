@@ -7,6 +7,7 @@ export const DashboardPage = lazy(() => import('../pages/dashboard/DashboardPage
 export const MyPage = lazy(() => import('../pages/mypage/MyPage'));
 export const WishListPage = lazy(() => import('../pages/wishlist/WishlistPage'));
 export const LoginPage = lazy(() => import('../pages/login/LoginPage'));
+export const GoodsPage = lazy(() => import('../pages/goods/GoodsPage'));
 
 export const Router = () => {
   // Router에서 useLocation 훅을 사용하여 현재 경로를 가져오고,
@@ -49,7 +50,7 @@ export const Router = () => {
         },
         {
           path: 'goods/:id',
-          element: <div>상품 상세 페이지</div>,
+          element: <GoodsPage />,
         },
       ],
     },
