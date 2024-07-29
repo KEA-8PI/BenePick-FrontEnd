@@ -1,16 +1,30 @@
+import * as S from 'components/common/Components.styles';
+import SelectCategory from 'components/select/SelectCategory';
+import SearchBar from 'components/searchbar/SearchBar';
 import CustomTab from 'components/tab/CustomTab';
 import { Typography } from '@mui/material';
+import WishlistCardList from '../component/WishlistCardList';
+
+const tabData = [
+  { label: '진행중', content: <WishlistCardList goodsStatus="진행" />, tabTitle: '총 123개' },
+  { label: '응모 예정', content: <WishlistCardList goodsStatus="예정" />, tabTitle: '총 123개' },
+];
 
 const WishlistView = () => {
-  const tabData = [
-    { label: '진행중', content: <div>Content for Tab 1</div> },
-    { label: '응모 예정', content: <div>Content for Tab 2</div> },
-  ];
+  const showTabTitle = true; // 조건에 따라 동적으로 결정
+  const showFilter = true; // 조건에 따라 동적으로 결정
+
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ fontWeight: 'bold', fontSize: '26px', paddingBottom: '32px' }}>위시리스트</Typography>
-        <CustomTab tabs={tabData} />
+        <S.Wrapper>
+          <S.Row>
+            <SelectCategory />
+            <SearchBar />
+          </S.Row>
+          <CustomTab tabs={tabData} showTabTitle={showTabTitle} showFilter={showFilter} />
+        </S.Wrapper>{' '}
       </div>
     </>
   );
