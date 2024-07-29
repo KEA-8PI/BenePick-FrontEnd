@@ -30,6 +30,7 @@ export const CardBoldFont = styled.div`
   overflow: hidden; /* 넘친 내용 숨김 */
   text-overflow: ellipsis; /* ...으로 표시 */
   white-space: normal; /* 여러 줄 허용 */
+  max-width: 380px; /* 최대 너비 */
 `;
 
 export const CardLightFont = styled.div`
