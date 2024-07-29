@@ -8,7 +8,7 @@ import Iconify from 'components/common/Iconify/Iconify';
 import Date from 'components/date/Date';
 import CardImage from '../../../components/CustomCard/CardImage';
 
-const CustomCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
+const WishlistCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
   const [like, setLike] = useState(false);
 
   const handleLike = () => {
@@ -51,4 +51,4 @@ const CustomCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
   );
 };
 
-export default CustomCard;
+export default WishlistCard;

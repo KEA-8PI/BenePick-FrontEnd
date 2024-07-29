@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import * as S from 'components/common/Components.styles';
+import * as C from 'components/CustomCard/CustomCard.styles';
 import { CustomCardProps } from 'components/CustomCard/CustomCard.types';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
@@ -26,10 +27,10 @@ const Date: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
         sx={{ width: '20px', height: '20px', marginRight: '8px', color: colors.grey01 }}
       />
       <S.Wrapper>
-        <S.CardLightFont>{formatDate(info.raffleStartAt)}</S.CardLightFont>
+        <C.CardLightFont>{formatDate(info.raffleStartAt)}</C.CardLightFont>
         <S.Row>
-          <S.CardLightFont>~</S.CardLightFont>
-          <S.CardLightFont>{formatDate(info.raffleEndAt)}</S.CardLightFont>
+          <C.CardLightFont>~</C.CardLightFont>
+          <C.CardLightFont>{formatDate(info.raffleEndAt)}</C.CardLightFont>
         </S.Row>
       </S.Wrapper>
     </Box>
