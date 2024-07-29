@@ -72,7 +72,8 @@ export const CardBoldFont = styled.div`
 export const CardLightFont = styled.div`
   font-size: 13px;
   color: ${colors.grey01};
-=======
+`;
+
 export const ColorBox = styled.div`
   width: 60px;
   height: 30px;
