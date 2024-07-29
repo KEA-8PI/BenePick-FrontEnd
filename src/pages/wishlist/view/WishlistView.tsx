@@ -1,6 +1,4 @@
 import * as S from 'components/common/Components.styles';
-import SelectCategory from 'components/select/SelectCategory';
-import SearchBar from 'components/searchbar/SearchBar';
 import CustomTab from 'components/tab/CustomTab';
 import { Typography } from '@mui/material';
 import WishlistCardList from '../component/WishlistCardList';
@@ -19,10 +17,6 @@ const WishlistView = () => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ fontWeight: 'bold', fontSize: '26px', paddingBottom: '32px' }}>위시리스트</Typography>
         <S.Wrapper>
-          <S.Row>
-            <SelectCategory />
-            <SearchBar />
-          </S.Row>
           <CustomTab tabs={tabData} showTabTitle={showTabTitle} showFilter={showFilter} />
         </S.Wrapper>{' '}
       </div>
