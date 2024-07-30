@@ -1,13 +1,46 @@
 import { Card, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
 import TableHeader from './TableHeader';
 import { useState } from 'react';
-import SelectTableRow from './CustomTableRow';
+import CustomTableRow from './CustomTableRow';
 
 const CustomSelectTable = ({ headList, isPaging }: { headList: { [key: string]: string }[]; isPaging?: boolean }) => {
   const [rowData, setRowData] = useState([
-    { date: '2021-10-15', change: '-50', content: 'This is a test1', totalPoint: 950 },
-    { date: '2021-10-19', change: '+50', content: 'This is a test2', totalPoint: 1000 },
-    { date: '2021-10-10', change: '+500', content: 'This is a test3', totalPoint: 1000 },
+    {
+      date: '2021-10-15',
+      change: '-50',
+      content: 'MacBook Pro 14',
+      totalPoint: 950,
+      category: '전자기기',
+      point: 1000,
+      result: '당첨',
+    },
+    {
+      date: '2021-10-19',
+      change: '+50',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '여행/티켓',
+      point: 512,
+      result: '미당첨',
+    },
+    {
+      date: '2021-10-10',
+      change: '+500',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '문화생활',
+      point: 120,
+      result: '노쇼',
+    },
+    {
+      date: '2021-10-10',
+      change: '+500',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '문화생활',
+      point: 120,
+      result: '취소',
+    },
   ]);
   const [page, setPage] = useState(0);
 
@@ -34,7 +67,7 @@ const CustomSelectTable = ({ headList, isPaging }: { headList: { [key: string]: 
           />
           <TableBody>
             {rowData.map((row, index) => (
-              <SelectTableRow
+              <CustomTableRow
                 key={row.content}
                 index={index}
                 totalNum={rowData.length}
