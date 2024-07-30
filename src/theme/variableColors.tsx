@@ -14,6 +14,7 @@ const colors = {
   lightBlack: '#494545',
   purple: '#E3E6FF',
   lemon: '#FBFADA',
+  yellow: '#FFCD2A',
   mint: '#DFF1E9',
 };
 
