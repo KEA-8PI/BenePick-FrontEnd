@@ -36,7 +36,6 @@ export const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
             justifyContent: 'center',
             alignItems: 'center',
             display: 'flex',
-            // backgroundColor: 'grey',
             height: '63%',
           }}
         >

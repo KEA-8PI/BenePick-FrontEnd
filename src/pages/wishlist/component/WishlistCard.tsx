@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import * as S from '../../../components/common/Components.styles';
 import * as C from '../../../components/CustomCard/CustomCard.styles';
 import { CustomCardProps } from '../../../components/CustomCard/CustomCard.types';
-import { Divider, CardMedia, Chip, Box, IconButton } from '@mui/material';
+import { Divider, IconButton } from '@mui/material';
 import colors from 'theme/variableColors';
 import Iconify from 'components/common/Iconify/Iconify';
 import Date from 'components/date/Date';
@@ -17,14 +19,21 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
 
   return (
     <div>
-      <CardImage info={info} goodsStatus={goodsStatus} />
+      <CardImage info={info} goodsStatus={goodsStatus} style={{ paddingTop: '56.25%' }} />
       <C.CardContent>
         <div style={{ padding: '8px' }}>
           <S.Row>
             <C.CardLightFont>{info.category}</C.CardLightFont>
             <C.CardBoldFont>{info.amounts}</C.CardBoldFont>
           </S.Row>
-          <C.CardBoldFont>{info.name}</C.CardBoldFont>
+          {/* 상품 아이디, 상태, 상품 정보 -> 상품 상세 페이지로 전달 */}
+          <Link
+            to={`/goods/${info.id}?status=${goodsStatus}`}
+            style={{ textDecoration: 'none', color: 'black' }}
+            state={{ info }}
+          >
+            <C.CardBoldFont>{info.name}</C.CardBoldFont>
+          </Link>
           <Date info={info} goodsStatus={goodsStatus} />
         </div>
 
