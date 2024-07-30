@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import * as S from 'components/common/Components.styles';
-import CustomTab from 'components/tab/CustomTab';
 import GoodsDetail from '../components/GoodsDetail';
 
 const GoodsView = () => {
