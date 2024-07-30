@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
 
 export const LeftButton = styled(Button)`
   width: 25%;
-  height: 20px;
+  height: 30px;
   border: 3px solid ${colors.buttonPink};
   border-radius: 30px;
   color: black;
@@ -24,7 +24,7 @@ export const LeftButton = styled(Button)`
 `;
 export const RightButton = styled(Button)`
   width: 25%;
-  height: 20px;
+  height: 30px;
   background-color: ${colors.primary};
   border-radius: 30px;
   color: white;
