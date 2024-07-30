@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import * as S from 'components/common/Components.styles';
 import * as C from 'components/CustomCard/CustomCard.styles';
-import { Button, Slider, OutlinedInput, Typography } from '@mui/material';
+import { Box, Button, Slider, OutlinedInput, Typography } from '@mui/material';
+import { CustomModal } from 'components/CustomModal/CustomModal';
+import { IModalConfig } from 'components/CustomModal/CustomModal.types';
 import colors from 'theme/variableColors';
 
 const MIN = 0;
@@ -28,6 +30,47 @@ const RaffleButton: React.FC = () => {
   };
 
   console.log('value', value);
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+
+  const handleAction = () => {
+    console.log('Action button clicked');
+    handleClose();
+  };
+
+  const modalConfig: IModalConfig = {
+    open: isModalOpen,
+    onClose: handleClose,
+    contents: (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="100%"
+        textAlign="center"
+      >
+        <Typography style={{ fontSize: '18px' }}>응모 하시겠습니까?</Typography>
+        <Typography
+          style={{ color: colors.primary, textDecoration: 'underline', fontSize: '13px', paddingTop: '15px' }}
+        >
+          ※ 응모 완료 시 취소할 수 없습니다.
+        </Typography>
+      </Box>
+    ),
+    buttons: {
+      label: '확인',
+      action: handleAction,
+    },
+  };
 
   return (
     <div style={{ width: '400px' }}>
@@ -71,9 +114,12 @@ const RaffleButton: React.FC = () => {
           color: 'white',
           marginTop: '10px',
         }}
+        onClick={handleOpen}
       >
         응모하기
       </Button>
+      <CustomModal modalConfig={modalConfig} />
+
       <C.CardLightFont
         style={{
           fontSize: '13px',
