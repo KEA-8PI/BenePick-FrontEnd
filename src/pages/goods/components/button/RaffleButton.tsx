@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from 'components/common/Components.styles';
 import * as C from 'components/CustomCard/CustomCard.styles';
 import { Box, Button, Slider, OutlinedInput, Typography } from '@mui/material';
@@ -29,7 +29,9 @@ const RaffleButton: React.FC = () => {
     setValue(newValue as number);
   };
 
-  console.log('value', value);
+  useEffect(() => {
+    console.log('value', value);
+  }, [value]);
 
   const [isModalOpen, setModalOpen] = useState(false);
 

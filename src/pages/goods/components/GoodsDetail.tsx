@@ -1,4 +1,4 @@
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useRef, useState, useEffect } from 'react';
 import * as S from 'components/common/Components.styles';
 import LeftDetailContents from './detailContents/LeftDetailContents';
 import RightDetailContents from './detailContents/RightDetailContents';
@@ -9,16 +9,17 @@ import RaffleNotice from './tab/raffleNotice/RaffleNotice';
 import DrawOutcomeView from './tab/drawOutcome/DrawOutcomeView';
 
 const GoodsDetail = ({ goodsStatus, info }): ReactElement => {
-  console.log('status', goodsStatus);
-  console.log('info', info);
+  useEffect(() => {
+    console.log('status', goodsStatus);
+    console.log('info', info);
+    console.log('상품 상태: ', goodsStatus);
+  }, [goodsStatus, info]);
 
   const [like, setLike] = useState(false);
 
   const handleLike = () => {
     setLike(!like);
   };
-
-  console.log('상품 상태: ', goodsStatus);
 
   // Initialize scrollRef as an array of refs
   const scrollRef = useRef<(HTMLElement | null)[]>([]);

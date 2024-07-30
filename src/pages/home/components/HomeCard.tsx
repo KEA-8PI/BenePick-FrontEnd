@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as S from '../../../components/common/Components.styles';
@@ -17,8 +17,9 @@ const CustomCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
     setLike(!like);
   };
 
-  // console.log('홈페이지 상태: ', goodsStatus);
-  console.log('상품 정보: ', info);
+  useEffect(() => {
+    console.log('info', info);
+  }, [goodsStatus, info]);
 
   return (
     <div
