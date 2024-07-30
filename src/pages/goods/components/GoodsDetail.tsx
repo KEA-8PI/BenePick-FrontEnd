@@ -1,21 +1,12 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import * as S from 'components/common/Components.styles';
-
 import LeftDetailContents from './detailContents/LeftDetailContents';
 import RightDetailContents from './detailContents/RightDetailContents';
-
 import ButtonView from './button/ButtonView';
-
-import RaffleCurrentInformation from './tabContents/RaffleCurrentInformation';
-import RaffleNotice from './tabContents/RaffleNotice';
-import DrawOutcome from './tabContents/DrawOutcome';
-import CustomTab from 'components/tab/CustomTab';
-
-const tabData = [
-  { label: '응모 현황 정보', content: <RaffleCurrentInformation />, tabTitle: '응모 현황 정보' },
-  { label: '결과 발표', content: <RaffleNotice />, tabTitle: '결과 발표' },
-  { label: '안내 사항', content: <DrawOutcome />, tabTitle: '안내 사항' },
-];
+import GoodsDetailTab from './tab/GoodsDetailTab';
+import RaffleCurrentInfoView from './tab/raffleCurrentInfo/RaffleCurrentInfoView';
+import RaffleNotice from './tab/raffleNotice/RaffleNotice';
+import DrawOutcomeView from './tab/drawOutcome/DrawOutcomeView';
 
 const GoodsDetail = ({ goodsStatus, info }): ReactElement => {
   console.log('status', goodsStatus);
@@ -29,8 +20,17 @@ const GoodsDetail = ({ goodsStatus, info }): ReactElement => {
 
   console.log('상품 상태: ', goodsStatus);
 
+  // Initialize scrollRef as an array of refs
+  const scrollRef = useRef<(HTMLElement | null)[]>([]);
+
+  // Function to assign refs to the array
+  const setRef = (index: number) => (element: HTMLElement | null) => {
+    scrollRef.current[index] = element;
+  };
+
   return (
     <S.Wrapper>
+      {/* 상품 이미지, 상품 정보 */}
       <S.Row style={{ justifyContent: 'flex-start' }}>
         <LeftDetailContents goodsStatus={goodsStatus} info={info} />
 
@@ -45,7 +45,19 @@ const GoodsDetail = ({ goodsStatus, info }): ReactElement => {
         </div>
       </S.Row>
 
-      <CustomTab tabs={tabData} />
+      {/* 탭 */}
+      <GoodsDetailTab scrollRef={scrollRef} />
+
+      {/* 탭 내용 */}
+      <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+        <RaffleCurrentInfoView ref={setRef(0)} goodsStatus={goodsStatus} />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+        <DrawOutcomeView ref={setRef(1)} goodsStatus={goodsStatus} info={info} />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+        <RaffleNotice ref={setRef(2)} goodsStatus={goodsStatus} />
+      </div>
     </S.Wrapper>
   );
 };
