@@ -6,14 +6,16 @@ import { TableRowProps } from './CustomTable.types';
 import { ColorBox } from 'components/common/Components.styles';
 
 const ResultJson = {
-  WINNING: '당첨',
+  WINNER: '당첨',
   WAITLIST: '대기',
   CANCEL: '취소',
   NO_SHOW: '노쇼',
+  NON_WINNER: '미당첨',
 };
 
 const ResultColor = {
   당첨: colors.mint,
+  미당첨: colors.pinkGrey,
   대기: colors.lemon,
   취소: colors.pinkGrey,
   노쇼: colors.buttonPink,
