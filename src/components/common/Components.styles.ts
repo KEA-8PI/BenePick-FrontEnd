@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Button } from '@mui/material';
 import colors from 'theme/variableColors';
 
 // Header.styles.ts
@@ -48,4 +49,12 @@ export const ColorBox = styled.div`
   text-align: center;
   font-size: 15px;
   background-color: ${({ color }: { color: string }) => color};
+`;
+
+export const CustomButton = styled(Button)`
+  width: ${({ width }: { width?: string }) => (width ? `${width}` : '81px')};
+  border-radius: 3px;
+  background-color: ${colors.buttonPink};
+  height: 28px;
+  color: black;
 `;

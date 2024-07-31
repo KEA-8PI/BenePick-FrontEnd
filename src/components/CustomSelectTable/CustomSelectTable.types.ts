@@ -17,15 +17,18 @@ export interface SelectTableHeadProps {
 }
 
 export interface SelectTableRowProps {
+  id: string | React.SetStateAction<string> | number;
   selected: boolean;
-  content: string;
   columns: IColumnList[];
   handleClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onRowClick: (event: React.MouseEvent<unknown>) => void;
+  isModify: boolean;
+  setIsModify: React.Dispatch<React.SetStateAction<string>>;
+  rowData: { [key: string]: string | number }[];
+  setRowData: React.Dispatch<React.SetStateAction<{ [key: string]: string | number }[]>>;
 }
 
 export interface IColumnList {
   id: string | number;
   label: string | number;
-  type: string;
+  type?: string;
 }
