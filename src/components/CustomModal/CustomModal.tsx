@@ -10,6 +10,13 @@ export const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
     return null;
   }
 
+  const clickButton = () => {
+    if (buttons) {
+      buttons.action();
+    }
+    onClose();
+  };
+
   return (
     <Modal
       open={open}
@@ -35,14 +42,14 @@ export const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
           {contents}
         </Box>
         {buttons ? (
-          <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-around' }}>
+          <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-around', padding: '0 7%' }}>
             <S.LeftButton onClick={onClose}>취소</S.LeftButton>
-            <S.RightButton onClick={buttons.action}>{buttons.label}</S.RightButton>
+            <S.RightButton onClick={clickButton}>{buttons.label}</S.RightButton>
           </Stack>
         ) : (
-          <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-around' }}>
+          <div style={{ justifyContent: 'center', display: 'flex' }}>
             <S.RightButton onClick={onClose}>확인</S.RightButton>
-          </Stack>
+          </div>
         )}
       </S.Wrapper>
     </Modal>
