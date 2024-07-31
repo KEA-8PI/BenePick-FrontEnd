@@ -1,18 +1,24 @@
-# 프로젝트명
-> 간략한 프로젝트 소개 문구를 작성합니다.
+# BenePick
+> 복지포인트를 활용한 공정한 사내 추첨 통합 시스템
 
-한 두 문단으로 프로젝트 소개 글을 작성합니다.
+<img width="281" alt="image" src="https://github.com/user-attachments/assets/f8845bf2-b694-4828-8255-0fa77f128be4">
 
-![License](https://img.shields.io/github/license/사용자명/레포지토리명)
-![Stars](https://img.shields.io/github/stars/사용자명/레포지토리명)
-![Issues](https://img.shields.io/github/issues/사용자명/레포지토리명)
+사내 복지포인트 제도를 활용하여 여러 가지 상품에 대한 응모 및 추첨을 진행할 수 있습니다.
+<br/>
 
 ## 구성원
 
 |사진|이름|파트|
 |------|---|---|
-|테스트1|테스트2|테스트3|
-|테스트1|테스트2|테스트3|
+|<img width="100" alt="image" src="https://github.com/user-attachments/assets/fde95413-2135-4985-9ba3-bbd847a16204">|김미소|관리자 페이지|
+|<img width="100" alt="image" src="https://github.com/user-attachments/assets/e35cc3e5-3204-437e-bcfa-4ce17e1b7374">|윤혜원|사원 페이지|
+<br/>
+
+## UI
+
+<img width="1250" alt="image" src="https://github.com/user-attachments/assets/fc355d79-4eba-486b-b0de-d53686459446">
+<img width="1250" alt="image" src="https://github.com/user-attachments/assets/f5c749d5-c729-4ef6-bead-c8bfc7fed770">
+<br/>
 
 ## 요구 사항
 
@@ -24,21 +30,14 @@
 
 ## 실행 방법
 
-모든 개발 의존성 설치 방법과 자동 테스트 슈트 실행 방법을 운영체제 별로 작성합니다.
-
-OS X & 리눅스:
-
-```sh
-npm install my-crazy-module --save
-```
-윈도우:
-
-```sh
-edit autoexec.bat
-```
+- [Download from Github](https://github.com/KEA-8PI/BenePick-FrontEnd/archive/refs/heads/develop.zip) or clone the repo : `https://github.com/KEA-8PI/BenePick-FrontEnd.git`
+- Recommended `Node.js v18.x`.
+- **Install:** `npm install`
+- **Start:** `npm start`
+<br/>
 
 ## 기술스택
-<img src="https://img.shields.io/badge/flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"><img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
 
 
 
