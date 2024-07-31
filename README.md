@@ -3,12 +3,24 @@
 
 한 두 문단으로 프로젝트 소개 글을 작성합니다.
 
+![License](https://img.shields.io/github/license/사용자명/레포지토리명)
+![Stars](https://img.shields.io/github/stars/사용자명/레포지토리명)
+![Issues](https://img.shields.io/github/issues/사용자명/레포지토리명)
+
 ## 구성원
 
 |사진|이름|파트|
 |------|---|---|
 |테스트1|테스트2|테스트3|
 |테스트1|테스트2|테스트3|
+
+## 요구 사항
+
+프로젝트를 실행하기 위해 필요한 필수 요구 사항:
+
+- 예: Python 3.8 이상
+- 예: Node.js 14.x
+- 기타 필요 라이브러리나 도구들
 
 ## 실행 방법
 
