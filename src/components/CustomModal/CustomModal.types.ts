@@ -7,7 +7,6 @@ export interface IModalConfig {
 }
 
 export interface IButtons {
-  cancelLabel: any;
   action: () => void;
   label?: string;
 }

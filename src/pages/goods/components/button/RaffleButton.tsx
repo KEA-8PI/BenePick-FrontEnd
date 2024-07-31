@@ -60,9 +60,7 @@ const RaffleButton: React.FC = () => {
     ),
     buttons: {
       label: '확인',
-      cancelLabel: '취소', // Add the cancelLabel property
       action: () => {
-        isFirstModalToggle.toggle(); // 첫 번째 모달 닫기
         isSecondModalToggle.toggle(); // 두 번째 모달 열기
       },
     },
