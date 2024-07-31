@@ -40,7 +40,9 @@ export const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
             <S.RightButton onClick={buttons.action}>{buttons.label}</S.RightButton>
           </Stack>
         ) : (
-          <S.RightButton onClick={close}>확인</S.RightButton>
+          <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-around' }}>
+            <S.RightButton onClick={onClose}>확인</S.RightButton>
+          </Stack>
         )}
       </S.Wrapper>
     </Modal>
