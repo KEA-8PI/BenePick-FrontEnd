@@ -3,7 +3,7 @@ import { Container, Box, Button, IconButton, Stack, Modal, Typography, TextField
 import * as S from './CustomModal.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 
-export const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
+const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
   const { buttons, size, open, onClose, contents } = modalConfig;
 
   if (!open) {
@@ -55,3 +55,5 @@ export const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
     </Modal>
   );
 };
+
+export default CustomModal;
