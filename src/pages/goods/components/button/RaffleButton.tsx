@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import * as S from 'components/common/Components.styles';
 import * as C from 'components/CustomCard/CustomCard.styles';
 import { Box, Button, Slider, OutlinedInput, Typography } from '@mui/material';
-import { CustomModal } from 'components/CustomModal/CustomModal';
+import CustomModal from 'components/CustomModal/CustomModal';
 import { IModalConfig } from 'components/CustomModal/CustomModal.types';
+import { useToggle } from 'hooks/useToggle';
+
 import colors from 'theme/variableColors';
 
 const MIN = 0;
@@ -33,24 +35,12 @@ const RaffleButton: React.FC = () => {
     console.log('value', value);
   }, [value]);
 
-  const [isModalOpen, setModalOpen] = useState(false);
+  const isFirstModalToggle = useToggle();
+  const isSecondModalToggle = useToggle();
 
-  const handleOpen = () => {
-    setModalOpen(true);
-  };
-
-  const handleClose = () => {
-    setModalOpen(false);
-  };
-
-  const handleAction = () => {
-    console.log('Action button clicked');
-    handleClose();
-  };
-
-  const modalConfig: IModalConfig = {
-    open: isModalOpen,
-    onClose: handleClose,
+  const firstModalConfig: IModalConfig = {
+    open: isFirstModalToggle.isOpen,
+    onClose: isFirstModalToggle.toggle,
     contents: (
       <Box
         display="flex"
@@ -70,8 +60,16 @@ const RaffleButton: React.FC = () => {
     ),
     buttons: {
       label: '확인',
-      action: handleAction,
+      action: () => {
+        isSecondModalToggle.toggle(); // 두 번째 모달 열기
+      },
     },
+  };
+
+  const secondModalConfig = {
+    open: isSecondModalToggle.isOpen,
+    onClose: isSecondModalToggle.toggle,
+    contents: <Typography>응모가 완료되었습니다.</Typography>,
   };
 
   return (
@@ -116,11 +114,12 @@ const RaffleButton: React.FC = () => {
           color: 'white',
           marginTop: '10px',
         }}
-        onClick={handleOpen}
+        onClick={() => isFirstModalToggle.toggle()}
       >
         응모하기
       </Button>
-      <CustomModal modalConfig={modalConfig} />
+      <CustomModal modalConfig={firstModalConfig} />
+      <CustomModal modalConfig={secondModalConfig} />
 
       <C.CardLightFont
         style={{
