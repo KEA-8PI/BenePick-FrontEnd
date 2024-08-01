@@ -23,7 +23,7 @@ export const CardContent = styled.div`
 export const CardBoldFont = styled.div`
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   display: -webkit-box; /* 플렉스 박스로 설정 */
   -webkit-box-orient: vertical; /* 수직으로 쌓기 */
   -webkit-line-clamp: 2; /* 2줄로 제한 */
