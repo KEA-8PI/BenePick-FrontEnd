@@ -40,7 +40,7 @@ export const Row = styled.div`
 `;
 
 export const ColorBox = styled.div`
-  width: 60px;
+  width: 65px;
   height: 30px;
   border-radius: 10px;
   display: flex;
