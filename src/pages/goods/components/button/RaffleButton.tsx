@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as S from 'components/common/Components.styles';
 import * as C from 'components/CustomCard/CustomCard.styles';
 import { Box, Button, Slider, OutlinedInput, Typography } from '@mui/material';
-import { CustomModal } from 'components/CustomModal/CustomModal';
+import CustomModal from 'components/CustomModal/CustomModal';
 import { IModalConfig } from 'components/CustomModal/CustomModal.types';
 import { useToggle } from 'hooks/useToggle';
 
