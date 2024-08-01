@@ -1,5 +1,5 @@
 import { Avatar, Divider, Typography } from '@mui/material';
-import { CustomModal } from 'components/CustomModal/CustomModal';
+import CustomModal from 'components/CustomModal/CustomModal';
 import CustomTable from 'components/CustomTable/CustomTable';
 import { ChangePwdModal } from 'components/changePwdModal/ChangePwdModal';
 import * as S from 'components/common/Components.styles';

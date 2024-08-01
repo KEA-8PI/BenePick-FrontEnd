@@ -1,10 +1,10 @@
-import { IModalConfig } from './CustomModal.types';
+import { IModalConfig } from './bigCustomModal.types';
 import { Container, Box, Button, IconButton, Stack, Modal, Typography, TextField } from '@mui/material';
-import * as S from './CustomModal.styles';
+import * as S from './bigCustomModal.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 
-const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
-  const { buttons, size, open, onClose, contents } = modalConfig;
+const BigCustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
+  const { buttons, open, onClose, contents } = modalConfig;
 
   if (!open) {
     return null;
@@ -33,8 +33,9 @@ const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
         </div>
         <Box
           sx={{
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             alignItems: 'center',
+            paddingLeft: '44px',
             display: 'flex',
             height: '63%',
           }}
@@ -42,13 +43,12 @@ const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
           {contents}
         </Box>
         {buttons ? (
-          <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-around', padding: '0 7%' }}>
-            <S.LeftButton onClick={onClose}>취소</S.LeftButton>
-            <S.RightButton onClick={clickButton}>{buttons.label}</S.RightButton>
-          </Stack>
+          <div style={{ justifyContent: 'center', display: 'flex', paddingTop: '40px' }}>
+            <S.StyledButton onClick={clickButton}>결과 돌려보기</S.StyledButton>
+          </div>
         ) : (
-          <div style={{ justifyContent: 'center', display: 'flex' }}>
-            <S.RightButton onClick={onClose}>확인</S.RightButton>
+          <div style={{ justifyContent: 'center', display: 'flex', paddingTop: '40px' }}>
+            <S.StyledButton onClick={clickButton}>확인</S.StyledButton>
           </div>
         )}
       </S.Wrapper>
@@ -56,4 +56,4 @@ const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
   );
 };
 
-export default CustomModal;
+export default BigCustomModal;
