@@ -20,7 +20,7 @@ const Layout = (props: { children: React.ReactNode; path: string }) => {
     <div style={{ padding: '130px 12%' }}>
       {/* <Header /> */}
       <MemberNavBar navItems={navItems} memberNavItems={memberNavItems} path={props.path} />
-      {/* <ManagerNavBar navItems={navItems} managerNavItems={managerNavItems} path={''} /> */}
+      {/* <ManagerNavBar navItems={navItems} managerNavItems={managerNavItems} path={props.path} /> */}
       <main>{props.children}</main>
       {/* <Footer /> */}
     </div>

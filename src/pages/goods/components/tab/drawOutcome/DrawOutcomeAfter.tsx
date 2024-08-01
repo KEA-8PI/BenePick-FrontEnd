@@ -3,7 +3,7 @@ import * as S from 'components/common/Components.styles';
 import { DrawOutcomeProps } from '../TabContent.types';
 import { Card, Table, TableBody, TableContainer } from '@mui/material';
 import TableHeader from 'components/CustomTable/TableHeader';
-import SelectTableRow from 'components/CustomTable/CustomTableRow';
+import CustomTableRow from 'components/CustomTable/CustomTableRow';
 
 const headList = [{ 아이디: 'id' }, { 이름: 'name' }, { '응모한 포인트': 'points' }];
 
@@ -29,10 +29,9 @@ const DrawOutcomeAfter = forwardRef<HTMLElement, DrawOutcomeProps>(() => {
             />
             <TableBody>
               {rowData.map((row, index) => (
-                <SelectTableRow
+                <CustomTableRow
                   key={index}
                   index={index}
-                  totalNum={rowData.length}
                   columns={headList.map((head) => {
                     const key = Object.keys(head)[0];
                     return { id: head[key], label: row[head[key] as keyof typeof row] };

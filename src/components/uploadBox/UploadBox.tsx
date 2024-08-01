@@ -46,10 +46,10 @@ const ManageMemberView = ({
     setActive(false);
 
     const file = event.dataTransfer.files[0];
-    if (file && file.name.endsWith('.xlsx' || '.xls' || '.csv')) {
+    if (file && file.name.endsWith('.xlsx' || '.xls')) {
       setFileInfo(file);
     } else {
-      alert('지원하지 않는 파일 형식입니다. .xlsx / .xls / .csv 파일을 업로드해주세요');
+      alert('지원하지 않는 파일 형식입니다. .xlsx / .xls 파일을 업로드해주세요');
     }
   };
 
@@ -58,7 +58,7 @@ const ManageMemberView = ({
     if (file && file.name.endsWith('.xlsx')) {
       setFileInfo(file);
     } else {
-      alert('지원하지 않는 파일 형식입니다. .xlsx / .xls / .csv 파일을 업로드해주세요.');
+      alert('지원하지 않는 파일 형식입니다. .xlsx / .xls 파일을 업로드해주세요.');
     }
   };
 

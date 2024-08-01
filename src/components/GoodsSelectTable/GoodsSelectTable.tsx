@@ -1,22 +1,18 @@
 import { Card, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
-import SelectTableHeader from './SelectTableHeader';
+import SelectTableHeader from '../CustomSelectTable/SelectTableHeader';
 import { useEffect, useState } from 'react';
-import SelectTableToolbar from './SelectTableToolbar';
-import SelectTableRow from './SelectTableRow';
+import SelectTableToolbar from '../CustomSelectTable/SelectTableToolbar';
+import SelectTableRow from './GoodsSelectTableRow';
 
-const CustomSelectTable = ({
+const GoodsSelectTable = ({
   headList,
   rowData,
-  isModify,
-  setIsModify,
   setRowData,
   selected,
   setSelected,
 }: {
   headList: { [key: string]: string }[];
   rowData: { [key: string]: string | number }[];
-  isModify: string;
-  setIsModify: React.Dispatch<React.SetStateAction<string>>;
   setRowData: React.Dispatch<React.SetStateAction<{ [key: string]: string | number }[]>>;
   selected: any[];
   setSelected: React.Dispatch<React.SetStateAction<any[]>>;
@@ -73,7 +69,6 @@ const CustomSelectTable = ({
   };
 
   const paginatedRowData = rowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
   return (
     <Card sx={{ borderRadius: '10px' }}>
       <SelectTableToolbar numSelected={selected.length} />
@@ -82,7 +77,7 @@ const CustomSelectTable = ({
           <SelectTableHeader
             order={order}
             orderBy={orderBy}
-            rowCount={isModify === 'null' ? rowData.length - 1 : rowData.length}
+            rowCount={rowData.length}
             numSelected={selected.length}
             onRequestSort={handleSort}
             onSelectAllClick={handleSelectAllClick}
@@ -102,8 +97,6 @@ const CustomSelectTable = ({
                   const key = Object.keys(head)[0];
                   return { id: head[key], label: row[head[key] as keyof typeof row] };
                 })}
-                isModify={isModify === 'null' ? row.id === '' : isModify === row.id}
-                setIsModify={setIsModify}
                 rowData={rowData}
                 setRowData={setRowData}
               />
@@ -114,7 +107,7 @@ const CustomSelectTable = ({
       <TablePagination
         page={page}
         component="div"
-        count={isModify === 'null' ? rowData.length - 1 : rowData.length}
+        count={rowData.length}
         rowsPerPage={rowsPerPage}
         onPageChange={handleChangePage}
         rowsPerPageOptions={[5, 10, 25]}
@@ -124,4 +117,4 @@ const CustomSelectTable = ({
   );
 };
 
-export default CustomSelectTable;
+export default GoodsSelectTable;

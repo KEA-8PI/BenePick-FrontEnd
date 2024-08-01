@@ -1,18 +1,16 @@
 import { Card, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
-import TableHeader from './TableHeader';
+import TableHeader from 'components/CustomTable/TableHeader';
 import { useState } from 'react';
-import CustomTableRow from './CustomTableRow';
+import WinnerTableRow from './WinnerTableRow';
 
-const CustomTable = ({
+const WinnerTable = ({
   rowData,
   setRowData,
   headList,
-  isPaging,
 }: {
   rowData: { [key: string]: string | number }[];
   setRowData: React.Dispatch<React.SetStateAction<{ [key: string]: string | number }[]>>;
   headList: { [key: string]: string }[];
-  isPaging?: boolean;
 }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -40,8 +38,8 @@ const CustomTable = ({
           />
           <TableBody>
             {paginatedRowData.map((row, index) => (
-              <CustomTableRow
-                key={index} // Changed key to use index instead of row.content
+              <WinnerTableRow
+                key={index}
                 index={index}
                 columns={headList.map((head) => {
                   const key = Object.keys(head)[0];
@@ -52,19 +50,17 @@ const CustomTable = ({
           </TableBody>
         </Table>
       </TableContainer>
-      {isPaging && (
-        <TablePagination
-          page={page}
-          component="div"
-          count={rowData.length}
-          rowsPerPage={rowsPerPage}
-          onPageChange={handleChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      )}
+      <TablePagination
+        page={page}
+        component="div"
+        count={rowData.length}
+        rowsPerPage={rowsPerPage}
+        onPageChange={handleChangePage}
+        rowsPerPageOptions={[5, 10, 25]}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </Card>
   );
 };
 
-export default CustomTable;
+export default WinnerTable;
