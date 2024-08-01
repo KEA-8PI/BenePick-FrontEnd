@@ -13,7 +13,6 @@ export interface TableHeadProps {
 export interface TableRowProps {
   columns: IColumnList[];
   index: number;
-  totalNum: number;
 }
 
 export interface IColumnList {
