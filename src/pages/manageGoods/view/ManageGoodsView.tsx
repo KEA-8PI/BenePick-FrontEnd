@@ -1,5 +1,5 @@
 import { IconButton, InputAdornment, Typography } from '@mui/material';
-import { CustomModal } from 'components/CustomModal/CustomModal';
+import CustomModal from 'components/CustomModal/CustomModal';
 import GoodsSelectTable from 'components/GoodsSelectTable/GoodsSelectTable';
 import * as S from 'components/common/Components.styles';
 import Iconify from 'components/common/Iconify/Iconify';
