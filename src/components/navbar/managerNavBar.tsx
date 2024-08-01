@@ -42,7 +42,7 @@ const ManagerNavBar: React.FC<ManagerNavBarProps> = ({ navItems, managerNavItems
           }}
         >
           <a href="/">
-            <img src="/images/benepickLogo.png" alt="logo" width={230} height={67} />
+            <img src="/images/benepickLogo.png" alt="logo" width={180} height={52} />
           </a>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
