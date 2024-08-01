@@ -5,7 +5,7 @@ import UploadBox from 'components/uploadBox/UploadBox';
 import { useState } from 'react';
 import { OutlinedInput } from 'components/searchbar/SearchBar.styles';
 import CustomSelectTable from 'components/CustomSelectTable/CustomSelectTable';
-import { CustomModal } from 'components/CustomModal/CustomModal';
+import CustomModal from 'components/CustomModal/CustomModal';
 import { useToggle } from 'hooks/useToggle';
 
 const ManageMemberView = () => {
