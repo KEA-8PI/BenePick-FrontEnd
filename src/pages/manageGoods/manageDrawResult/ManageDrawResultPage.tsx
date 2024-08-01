@@ -59,7 +59,6 @@ const ManageGoodsPage = () => {
       content: (
         <CustomTable
           rowData={rowData}
-          setRowData={setRowData}
           headList={[{ '응모 날짜': 'date' }, { 아이디: 'id' }, { 이름: 'name' }, { '사용 복지 포인트': 'point' }]}
           isPaging={true}
         />
@@ -86,7 +85,6 @@ const ManageGoodsPage = () => {
       content: (
         <CustomTable
           rowData={rowData}
-          setRowData={setRowData}
           headList={[
             { '응모 날짜': 'date' },
             { 아이디: 'id' },

@@ -133,7 +133,6 @@ const MemberInfoPage = () => {
         headList={[{ 날짜: 'date' }, { 내역: 'content' }, { 변동: 'change' }, { '총 포인트': 'totalPoint' }]}
         isPaging={true}
         rowData={rowData}
-        setRowData={setRowData}
       />
       <Typography variant="h5" style={{ margin: '80px 0 15px 0' }}>
         패널티 내역
@@ -142,7 +141,6 @@ const MemberInfoPage = () => {
         headList={[{ 날짜: 'date' }, { 내역: 'content' }, { 변동: 'change' }, { '잔여 패널티': 'totalPoint' }]}
         isPaging={true}
         rowData={rowData}
-        setRowData={setRowData}
       />
       <ChangePwdModal modalConfig={modalConfig} />
       <CustomModal modalConfig={confirmModalConfig} />

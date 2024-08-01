@@ -54,7 +54,6 @@ const MyRaffleListPage = () => {
           headList={[{ 날짜: 'date' }, { 카테고리: 'category' }, { 내역: 'content' }, { '사용 복지 포인트': 'point' }]}
           isPaging={false}
           rowData={rowData}
-          setRowData={setRowData}
         />
       ),
     },
@@ -71,7 +70,6 @@ const MyRaffleListPage = () => {
           ]}
           isPaging={false}
           rowData={rowData}
-          setRowData={setRowData}
         />
       ),
     },

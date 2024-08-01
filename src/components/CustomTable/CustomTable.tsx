@@ -5,12 +5,10 @@ import CustomTableRow from './CustomTableRow';
 
 const CustomTable = ({
   rowData,
-  setRowData,
   headList,
   isPaging,
 }: {
   rowData: { [key: string]: string | number }[];
-  setRowData: React.Dispatch<React.SetStateAction<{ [key: string]: string | number }[]>>;
   headList: { [key: string]: string }[];
   isPaging?: boolean;
 }) => {
