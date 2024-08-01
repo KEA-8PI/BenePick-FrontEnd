@@ -21,11 +21,6 @@ const CustomSelectTable = ({
   selected: any[];
   setSelected: React.Dispatch<React.SetStateAction<any[]>>;
 }) => {
-  // const [rowData, setRowData] = useState([
-  //   { id: 'alex.js', deptName: '서비스 개발팀', name: '김밤비', point: 5, penaltyCnt: 0 },
-  //   { id: 'bamb.kim', deptName: '서비스 개발팀', name: '김감기', point: 5, penaltyCnt: 2 },
-  //   { id: 'hello.js', deptName: '서비스 개발팀', name: '김미소', point: 5, penaltyCnt: 3 },
-  // ]);
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
@@ -77,6 +72,8 @@ const CustomSelectTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
+  const paginatedRowData = rowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
   return (
     <Card sx={{ borderRadius: '10px' }}>
       <SelectTableToolbar numSelected={selected.length} />
@@ -95,7 +92,7 @@ const CustomSelectTable = ({
             })}
           />
           <TableBody>
-            {rowData.map((row) => (
+            {paginatedRowData.map((row) => (
               <SelectTableRow
                 key={row.id}
                 id={row.id}
