@@ -15,8 +15,8 @@ const LeftDetailContents = ({ goodsStatus, info }) => {
       />
       <Date info={info} goodsStatus={goodsStatus} />
       <S.Row style={{ justifyContent: 'flex-start', alignItems: 'center', paddingTop: '10px' }}>
-        <Iconify icon="bi:person" sx={{ width: '20px', height: '20px', color: 'black', paddingRight: '10px' }} />
-        <Typography style={{ fontWeight: 'bold', fontSize: '13px' }}>{info.applicant}</Typography>
+        <Iconify icon="bi:person" sx={{ width: '20px', height: '22px', color: 'black', paddingRight: '10px' }} />
+        <Typography style={{ fontWeight: 'bold', fontSize: '13px' }}>{info.applicant}명</Typography>
       </S.Row>
     </div>
   );
