@@ -5,6 +5,7 @@ import { ChangePwdModal } from 'components/changePwdModal/ChangePwdModal';
 import * as S from 'components/common/Components.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 import { useToggle } from 'hooks/useToggle';
+import { useState } from 'react';
 import colors from 'theme/variableColors';
 
 const MemberInfoPage = () => {
@@ -22,6 +23,45 @@ const MemberInfoPage = () => {
     onClose: changePwdConfirmToggle.toggle,
     contents: <Typography>비밀번호가 변경되었습니다.</Typography>,
   };
+
+  const [rowData, setRowData] = useState([
+    {
+      date: '2021-10-15',
+      change: '-50',
+      content: 'MacBook Pro 14',
+      totalPoint: 950,
+      category: '전자기기',
+      point: 1000,
+      result: '당첨',
+    },
+    {
+      date: '2021-10-19',
+      change: '+50',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '여행/티켓',
+      point: 512,
+      result: '미당첨',
+    },
+    {
+      date: '2021-10-10',
+      change: '+500',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '문화생활',
+      point: 120,
+      result: '노쇼',
+    },
+    {
+      date: '2021-10-10',
+      change: '+500',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '문화생활',
+      point: 120,
+      result: '취소',
+    },
+  ]);
 
   return (
     <div style={{ padding: '0 10%' }}>
@@ -92,6 +132,8 @@ const MemberInfoPage = () => {
       <CustomTable
         headList={[{ 날짜: 'date' }, { 내역: 'content' }, { 변동: 'change' }, { '총 포인트': 'totalPoint' }]}
         isPaging={true}
+        rowData={rowData}
+        setRowData={setRowData}
       />
       <Typography variant="h5" style={{ margin: '80px 0 15px 0' }}>
         패널티 내역
@@ -99,6 +141,8 @@ const MemberInfoPage = () => {
       <CustomTable
         headList={[{ 날짜: 'date' }, { 내역: 'content' }, { 변동: 'change' }, { '잔여 패널티': 'totalPoint' }]}
         isPaging={true}
+        rowData={rowData}
+        setRowData={setRowData}
       />
       <ChangePwdModal modalConfig={modalConfig} />
       <CustomModal modalConfig={confirmModalConfig} />
