@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
-import { Button, IconButton, Box, Typography, InputAdornment } from '@mui/material';
+import { Button, Box, Typography, Card, Table, TableBody, TableContainer } from '@mui/material';
+
 import colors from 'theme/variableColors';
 import * as S from 'components/common/Components.styles';
 import { HashInput } from 'components/bigCustomModal/bigCustomModal.styles';
 import BigCustomModal from 'components/bigCustomModal/bigCustomModal';
 import { IModalConfig } from 'components/bigCustomModal/bigCustomModal.types';
+
+import TableHeader from 'components/CustomTable/TableHeader';
+import CustomTableRow from 'components/CustomTable/CustomTableRow';
 import { useToggle } from 'hooks/useToggle';
 
 const seeds = 13241342342798;
+
+const headList = [{ 아이디: 'id' }, { 이름: 'name' }, { '응모한 포인트': 'points' }];
+
+const rowData = [
+  { id: 'example@google.com', name: '김미소', points: 600 },
+  { id: 'example@google.com', name: '남소미', points: 650 },
+  { id: 'example@google.com', name: '변상연', points: 120 },
+  { id: 'benepick04', name: '박현서', points: 200 },
+  { id: 'benepick05', name: '이소정', points: 100 },
+];
 
 const RaffleResultButton = () => {
   const isFirstModalToggle = useToggle();
@@ -40,21 +53,62 @@ const RaffleResultButton = () => {
           alt="logo"
           width={230}
           height={67}
-          style={{ justifyContent: 'center', padding: '0 40% 0 40%' }}
+          style={{ justifyContent: 'center', paddingTop: '30px', paddingLeft: '150px' }}
         />
       </Box>
     ),
     buttons: {
       action: () => {
-        isSecondModalToggle.toggle(); // 두 번째 모달 열기
+        isSecondModalToggle.toggle();
       },
+      label: '결과 돌려보기',
     },
   };
 
-  const secondModalConfig = {
+  const secondModalConfig: IModalConfig = {
     open: isSecondModalToggle.isOpen,
     onClose: isSecondModalToggle.toggle,
-    contents: <Typography>응모가 완료되었습니다.</Typography>,
+    contents: (
+      <Box display="flex" flexDirection="column" height="100%">
+        <Typography style={{ fontSize: '17px', fontWeight: 'bold' }}>결과 돌려보기</Typography>
+        <Typography style={{ fontSize: '17px', display: 'flex', flexDirection: 'row', paddingTop: '20px' }}>
+          당첨자 목록
+        </Typography>
+
+        <S.Wrapper style={{ paddingTop: '20px', height: '70%', justifyContent: 'center', alignContent: 'center' }}>
+          <Card sx={{ borderRadius: '10px', overflow: 'auto' }}>
+            <TableContainer sx={{ overflow: 'auto', maxHeight: '100%', width: '100%' }}>
+              <Table sx={{ minWidth: '520px' }}>
+                <TableHeader
+                  headLabel={headList.map((head) => {
+                    const key = Object.keys(head)[0];
+                    return { id: head[key], label: key };
+                  })}
+                />
+                <TableBody>
+                  {rowData.map((row, index) => (
+                    <CustomTableRow
+                      key={index}
+                      index={index}
+                      columns={headList.map((head) => {
+                        const key = Object.keys(head)[0];
+                        return { id: head[key], label: row[head[key] as keyof typeof row] };
+                      })}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Card>
+        </S.Wrapper>
+      </Box>
+    ),
+    buttons: {
+      action: () => {
+        isFirstModalToggle.toggle();
+      },
+      label: '재실행',
+    },
   };
   return (
     <div>

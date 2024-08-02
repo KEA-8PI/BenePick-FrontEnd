@@ -1,5 +1,5 @@
 import { IModalConfig } from './bigCustomModal.types';
-import { Container, Box, Button, IconButton, Stack, Modal, Typography, TextField } from '@mui/material';
+import { Box, IconButton, Modal } from '@mui/material';
 import * as S from './bigCustomModal.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 
@@ -10,8 +10,8 @@ const BigCustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
     return null;
   }
 
-  const clickButton = () => {
-    if (buttons) {
+  const handleClickButton = () => {
+    if (buttons?.action) {
       buttons.action();
     }
     onClose();
@@ -42,15 +42,9 @@ const BigCustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
         >
           {contents}
         </Box>
-        {buttons ? (
-          <div style={{ justifyContent: 'center', display: 'flex', paddingTop: '40px' }}>
-            <S.StyledButton onClick={clickButton}>결과 돌려보기</S.StyledButton>
-          </div>
-        ) : (
-          <div style={{ justifyContent: 'center', display: 'flex', paddingTop: '40px' }}>
-            <S.StyledButton onClick={clickButton}>확인</S.StyledButton>
-          </div>
-        )}
+        <div style={{ justifyContent: 'center', display: 'flex', paddingTop: '40px' }}>
+          <S.StyledButton onClick={handleClickButton}>{buttons.label}</S.StyledButton>
+        </div>
       </S.Wrapper>
     </Modal>
   );
