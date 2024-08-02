@@ -39,8 +39,8 @@ const CustomCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
       >
         <div style={{ padding: '8px', flex: '1 1 auto' }}>
           <S.Row>
-            <C.CardLightFont>{info.category}</C.CardLightFont>
-            <C.CardBoldFont>{info.amounts}</C.CardBoldFont>
+            <C.CardLightFont>#{info.category}</C.CardLightFont>
+            <C.CardBoldFont>{info.amounts}개</C.CardBoldFont>
           </S.Row>
           {/* 상품 아이디, 상태, 상품 정보 -> 상품 상세 페이지로 전달 */}
           <Link
@@ -69,7 +69,7 @@ const CustomCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
               icon="bi:person"
               sx={{ width: '20px', height: '20px', color: colors.grey01, paddingRight: '4px' }}
             />
-            <C.CardLightFont style={{ fontWeight: 'bold' }}>{info.applicant}</C.CardLightFont>
+            <C.CardLightFont style={{ fontWeight: 'bold' }}>{info.count}명</C.CardLightFont>
           </div>
         </S.Row>
       </C.CardContent>

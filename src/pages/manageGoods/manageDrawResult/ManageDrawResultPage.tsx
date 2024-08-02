@@ -30,12 +30,13 @@ const ManageGoodsPage = () => {
     image: '/images/card/product1.png',
     name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트 MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트 MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
     category: '전자기기',
-    amounts: '3',
+    amounts: 3,
     raffleStartAt: new Date('2024.7.17(수) 00:00'),
     raffleEndAt: new Date('2024.7.31(수) 13:00'),
     applicant: '100',
     price: 1300000,
     discountPrice: 999000,
+    count: 100,
   };
   const goodsStatus = convertGoodsStatus['SCHEDULED'];
 

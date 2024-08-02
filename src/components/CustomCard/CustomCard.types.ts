@@ -3,12 +3,13 @@ export interface CustomCardData {
   image?: string;
   name?: string;
   category: string;
-  amounts: string;
+  amounts: number;
   raffleStartAt: Date;
   raffleEndAt: Date;
-  applicant: string;
+  count: number;
   price: number;
   discountPrice: number;
+  description?: string;
   children?: React.ReactNode;
 }
 
