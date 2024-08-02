@@ -18,6 +18,7 @@ export const Router = () => {
   const location = useLocation();
   const routes = useRoutes([
     {
+      path: '/',
       element: (
         // useRoutes 훅을 사용하여 라우트를 설정합니다.
         <Layout path={location.pathname}>
@@ -28,7 +29,7 @@ export const Router = () => {
       ),
       children: [
         {
-          //홈페이지
+          // 홈페이지
           element: <HomePage />,
           index: true,
         },
@@ -57,16 +58,23 @@ export const Router = () => {
           element: <GoodsPage />,
         },
         {
-          path: '/manageGoodsInfo',
+          path: 'manageGoodsInfo',
           element: <ManageGoodsInfoPage />,
         },
         {
-          path: '/manageDrawResult',
+          path: 'manageDrawResult',
           element: <ManageDrawResultPage />,
         },
       ],
     },
-    { path: 'login', element: <LoginPage /> },
+    {
+      path: 'login',
+      element: (
+        <Suspense>
+          <LoginPage />
+        </Suspense>
+      ),
+    },
   ]);
   return routes;
 };
