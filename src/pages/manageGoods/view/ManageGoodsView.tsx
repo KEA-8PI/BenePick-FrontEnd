@@ -27,37 +27,37 @@ const ManageGoodsView = () => {
       id: '1',
       name: 'MacBook Pro 15 WIFI 256GB',
       duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: '응모중',
+      result: 'PROGRESS',
     },
     {
       id: '2',
       name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
       duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: '결과 보기',
+      result: 'COMPLETED',
     },
     {
       id: '5',
       name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
       duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: '응모중',
+      result: 'SCHEDULED',
     },
     {
       id: '6',
       name: 'MacBook Pro 15 WIFI 256GB',
       duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: '응모중',
+      result: 'SCHEDULED',
     },
     {
       id: '11',
       name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
       duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: '결과 보기',
+      result: 'COMPLETED',
     },
     {
       id: '15',
       name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
       duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: '응모중',
+      result: 'PROGRESS',
     },
   ]);
 
@@ -78,10 +78,6 @@ const ManageGoodsView = () => {
     //서버에 파일 업로드
   };
 
-  const handleAddGoods = () => {
-    //상품 추가
-  };
-
   const handleDeleteMember = () => {
     //상품 삭제 api 호출
     confirmToggle.toggle();
@@ -91,33 +87,39 @@ const ManageGoodsView = () => {
       <UploadBox title="상품 등록" buttonAction={handleSubmit} width={100} />
 
       <Typography
-        style={{ marginTop: '90px', marginBottom: '15px', fontSize: '20px', fontWeight: 'bold', width: '100%' }}
+        style={{ marginTop: '90px', marginBottom: '20px', fontSize: '20px', fontWeight: 'bold', width: '100%' }}
       >
         상품 목록
       </Typography>
-      <div style={{ width: '80%' }}>
-        <OutlinedInput
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              setQuery(search);
-            }
-          }}
-          placeholder="상품을 입력하세요"
-          style={{ marginBottom: '20px', width: '100%' }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton aria-label="toggle password visibility" onClick={() => setQuery(search)}>
-                  <Iconify icon="eva:search-fill" sx={{ width: 25, height: 25, color: 'black' }} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </div>
-      <div style={{ width: '90%' }}>
+      <div style={{ width: '100%', alignItems: 'start' }}>
+        <div style={{ width: '50%' }}>
+          <OutlinedInput
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                setQuery(search);
+              }
+            }}
+            placeholder="상품을 입력하세요"
+            style={{ marginBottom: '20px', width: '100%' }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                height: '40px',
+              },
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton aria-label="toggle password visibility" onClick={() => setQuery(search)}>
+                    <Iconify icon="eva:search-fill" sx={{ width: 25, height: 25, color: 'black' }} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </div>
+
         <GoodsSelectTable
           headList={[{ 상품코드: 'id' }, { 상품: 'name' }, { '응모 기간': 'duration' }, { 결과: 'result' }]}
           rowData={rowData}

@@ -61,29 +61,35 @@ const ManageMemberView = () => {
       <Typography style={{ marginBottom: '15px', fontSize: '20px', fontWeight: 'bold', width: '100%' }}>
         사원 목록
       </Typography>
-      <div style={{ width: '80%' }}>
-        <OutlinedInput
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              setQuery(search);
-            }
-          }}
-          placeholder="성명을 입력하세요"
-          style={{ marginBottom: '20px', width: '100%' }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton aria-label="toggle password visibility" onClick={() => setQuery(search)}>
-                  <Iconify icon="eva:search-fill" sx={{ width: 25, height: 25, color: 'black' }} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </div>
-      <div style={{ width: '90%' }}>
+      <div style={{ width: '100%', alignItems: 'start' }}>
+        <div style={{ width: '50%' }}>
+          <OutlinedInput
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                setQuery(search);
+              }
+            }}
+            placeholder="성명을 입력하세요"
+            style={{ marginBottom: '20px', width: '100%' }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                height: '40px',
+              },
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton aria-label="toggle password visibility" onClick={() => setQuery(search)}>
+                    <Iconify icon="eva:search-fill" sx={{ width: 25, height: 25, color: 'black' }} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </div>
+
         <CustomSelectTable
           headList={[
             { 아이디: 'id' },
