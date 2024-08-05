@@ -4,6 +4,7 @@ import colors from 'theme/variableColors';
 
 export const OutlinedInput = styled(TextField)({
   '& .MuiOutlinedInput-root': {
+    height: '40px',
     '& fieldset': {
       borderColor: colors.primary,
       borderRadius: '50px',
