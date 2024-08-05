@@ -10,13 +10,8 @@ import CustomTab from 'components/tab/CustomTab';
 import CustomSelectTable from 'components/CustomTable/CustomTable';
 import CustomTable from 'components/CustomTable/CustomTable';
 import { CustomButton } from 'components/common/Components.styles';
-import WinnerTable from './components/WinnerTable/WinnderTable';
-
-const convertGoodsStatus = {
-  SCHEDULED: '예정',
-  PROGRESS: '진행중',
-  COMPLETED: '종료',
-};
+import WinnerTable from './components/WinnerTable/WinnerTable';
+import { ConvertResponse } from 'utils/ConvertResponse';
 
 const ManageGoodsPage = () => {
   //   const params = useParams();
@@ -36,8 +31,9 @@ const ManageGoodsPage = () => {
     applicant: '100',
     price: 1300000,
     discountPrice: 999000,
+    goodsStatus: ConvertResponse['SCHEDULED'],
   };
-  const goodsStatus = convertGoodsStatus['SCHEDULED'];
+  const goodsStatus = ConvertResponse['SCHEDULED'];
 
   const [rowData, setRowData] = useState([
     { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 1 },
@@ -47,10 +43,10 @@ const ManageGoodsPage = () => {
   ]);
 
   const [winnerData, setWinnerData] = useState([
-    { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: '당첨' },
-    { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: '확정대기' },
-    { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: '취소' },
-    { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: '노쇼' },
+    { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: 'CONFIRM' },
+    { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: 'WINNER' },
+    { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: 'CANCEL' },
+    { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: 'NO_SHOW' },
   ]);
 
   const TabData = [

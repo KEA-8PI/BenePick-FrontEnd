@@ -40,14 +40,14 @@ export const Row = styled.div`
 `;
 
 export const ColorBox = styled.div`
-  width: 65px;
+  width: 80px;
   height: 30px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
   background-color: ${({ color }: { color: string }) => color};
 `;
 

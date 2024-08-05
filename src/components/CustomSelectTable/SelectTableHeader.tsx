@@ -45,7 +45,7 @@ const SelectTableHeader: React.FC<SelectTableHeadProps> = ({
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.align || 'center'}
+            align={'center'}
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ width: headCell.width, minWidth: headCell.minWidth }}
           >
