@@ -73,6 +73,11 @@ const ManageMemberView = () => {
             }}
             placeholder="성명을 입력하세요"
             style={{ marginBottom: '20px', width: '100%' }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                height: '40px',
+              },
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
