@@ -5,7 +5,7 @@ import { CustomCardProps } from 'components/CustomCard/CustomCard.types';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 
-const formatDate = (date: Date) => {
+export const formatDate = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'numeric',
