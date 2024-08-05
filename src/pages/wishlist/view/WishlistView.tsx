@@ -18,7 +18,7 @@ const WishlistView = () => {
         <Typography sx={{ fontWeight: 'bold', fontSize: '26px', paddingBottom: '32px' }}>위시리스트</Typography>
         <S.Wrapper>
           <CustomTab tabs={tabData} showTabTitle={showTabTitle} showFilter={showFilter} />
-        </S.Wrapper>{' '}
+        </S.Wrapper>
       </div>
     </>
   );

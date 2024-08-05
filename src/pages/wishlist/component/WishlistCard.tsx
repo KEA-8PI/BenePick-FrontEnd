@@ -13,6 +13,7 @@ import CardImage from '../../../components/CustomCard/CardImage';
 const WishlistCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
   const [like, setLike] = useState(false);
 
+  // 좋아요 버튼 클릭 시 위시리스트 삭제 api 호출
   const handleLike = () => {
     setLike(!like);
   };
@@ -41,9 +42,9 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
         <S.Row>
           <IconButton>
             <Iconify
-              icon={like ? 'gridicons:heart' : 'gridicons:heart-outline'}
+              icon={like ? 'gridicons:heart-outline' : 'gridicons:heart'}
               onClick={handleLike}
-              color={like ? colors.primary : colors.grey01}
+              color={like ? colors.grey01 : colors.primary}
               sx={{ width: '20px', height: '20px' }}
             />
           </IconButton>
