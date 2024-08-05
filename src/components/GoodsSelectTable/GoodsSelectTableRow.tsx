@@ -7,6 +7,7 @@ import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import { ColorBox } from 'components/common/Components.styles';
 import { useNavigate } from 'react-router-dom';
+import { ConvertResponse } from 'utils/ConvertResponse';
 
 const GoodsSelectTableRow: React.FC<GoodsSelectTableRowProps> = ({
   id,
@@ -39,16 +40,16 @@ const GoodsSelectTableRow: React.FC<GoodsSelectTableRowProps> = ({
           }}
         />
       </TableCell>
-      {columns.map((column) => (
-        <TableCell key={column.id} align={'center'}>
+      {columns.map((column, index) => (
+        <TableCell key={column.id} align={index === 1 ? 'left' : 'center'}>
           {column.id === 'result' ? (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <ColorBox
-                color={column.label === '응모중' ? colors.buttonPink : colors.mint}
+                color={column.label === 'PROGRESS' || column.label === 'SCHEDULED' ? colors.buttonPink : colors.mint}
                 style={{ width: '80px', cursor: 'pointer' }}
                 onClick={() => navigate('/manageDrawResult')}
               >
-                {column.label}
+                {ConvertResponse(column.label.toString())}
               </ColorBox>
             </div>
           ) : (

@@ -15,7 +15,7 @@ const MyRaffleListPage = () => {
       totalPoint: 950,
       category: '전자기기',
       point: 1000,
-      result: '당첨',
+      result: 'WINNER',
     },
     {
       date: '2021-10-19',
@@ -24,7 +24,7 @@ const MyRaffleListPage = () => {
       totalPoint: 1000,
       category: '여행/티켓',
       point: 512,
-      result: '미당첨',
+      result: 'WAITLIST',
     },
     {
       date: '2021-10-10',
@@ -33,7 +33,7 @@ const MyRaffleListPage = () => {
       totalPoint: 1000,
       category: '문화생활',
       point: 120,
-      result: '노쇼',
+      result: 'CANCEL',
     },
     {
       date: '2021-10-10',
@@ -42,7 +42,16 @@ const MyRaffleListPage = () => {
       totalPoint: 1000,
       category: '문화생활',
       point: 120,
-      result: '취소',
+      result: 'NO_SHOW',
+    },
+    {
+      date: '2021-10-10',
+      change: '+500',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '문화생활',
+      point: 120,
+      result: 'NON_WINNER',
     },
   ]);
 
