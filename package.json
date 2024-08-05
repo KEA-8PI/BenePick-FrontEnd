@@ -16,6 +16,7 @@
     "@types/node": "^16.18.103",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "axios": "^1.7.3",
     "echarts": "^5.5.1",
     "moment": "^2.30.1",
     "react": "^18.3.1",
