@@ -7,7 +7,7 @@ import colors from 'theme/variableColors';
 import CardImage from 'components/CustomCard/CardImage';
 import Date from 'components/date/Date';
 
-const LeftDetailContents = ({ goodsStatus, info }) => {
+const LeftDetailContents = ({ info }) => {
   const [like, setLike] = useState(false);
 
   const handleLike = () => {
@@ -16,13 +16,9 @@ const LeftDetailContents = ({ goodsStatus, info }) => {
 
   return (
     <div>
-      <CardImage
-        info={info}
-        goodsStatus={goodsStatus}
-        style={{ width: '300px', height: '216px', marginBottom: '10px' }}
-      />
+      <CardImage info={info} style={{ width: '300px', height: '216px', marginBottom: '10px' }} />
       <S.Row>
-        <Date info={info} goodsStatus={goodsStatus} />
+        <Date info={info} />
         {handleLike && (
           <IconButton>
             <Iconify

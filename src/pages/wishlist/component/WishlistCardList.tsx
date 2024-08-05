@@ -20,6 +20,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -32,6 +33,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -44,6 +46,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -56,6 +59,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -68,6 +72,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -80,6 +85,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -92,6 +98,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -104,6 +111,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -116,6 +124,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
   ];
 
@@ -124,7 +133,7 @@ const WishlistCardList: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       {cardInfo.map((info, index) => (
         <C.Card key={index}>
           <S.ShadowBox padding="0">
-            <WishlistCard info={info} goodsStatus={goodsStatus} />
+            <WishlistCard info={info} />
           </S.ShadowBox>
         </C.Card>
       ))}

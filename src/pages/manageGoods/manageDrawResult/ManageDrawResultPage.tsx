@@ -36,6 +36,7 @@ const ManageGoodsPage = () => {
     applicant: '100',
     price: 1300000,
     discountPrice: 999000,
+    goodsStatus: 'SCHEDULED',
     count: 100,
   };
   const goodsStatus = convertGoodsStatus['SCHEDULED'];
@@ -106,7 +107,7 @@ const ManageGoodsPage = () => {
       <div style={{ padding: '0 13%' }}>
         <h2>추첨 결과</h2>
         <S.Row style={{ margin: '30px 0' }}>
-          <LeftDetailContents goodsStatus={goodsStatus} info={info} />
+          <LeftDetailContents info={info} />
           <RightDetailContents info={info} />
         </S.Row>
       </div>

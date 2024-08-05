@@ -16,7 +16,7 @@ const GoodsView = () => {
   return (
     <>
       <S.Wrapper>
-        <GoodsDetail info={info} goodsStatus={goodsStatus} />
+        <GoodsDetail info={info} />
       </S.Wrapper>
     </>
   );

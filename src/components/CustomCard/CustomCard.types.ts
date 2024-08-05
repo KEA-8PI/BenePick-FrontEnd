@@ -10,12 +10,12 @@ export interface CustomCardData {
   price: number;
   discountPrice: number;
   description?: string;
+  goodsStatus: string;
   children?: React.ReactNode;
 }
 
 export interface CustomCardProps {
   info: CustomCardData;
-  goodsStatus: string;
   style?: React.CSSProperties; // 스타일 속성 추가
 }
 

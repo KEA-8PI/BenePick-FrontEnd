@@ -15,7 +15,7 @@ const getBackgroundColor = (goodsStatus: string) => {
   }
 };
 
-const CardImage: React.FC<CustomCardProps> = ({ info, goodsStatus, style }) => {
+const CardImage: React.FC<CustomCardProps> = ({ info, style }) => {
   return (
     <Box sx={{ weight: '100%', height: '100%', position: 'relative', ...style }}>
       <CardMedia
@@ -34,7 +34,7 @@ const CardImage: React.FC<CustomCardProps> = ({ info, goodsStatus, style }) => {
         }}
       />
       <Chip
-        label={goodsStatus}
+        label={info.goodsStatus}
         sx={{
           position: 'absolute',
           top: '10px',
@@ -45,7 +45,7 @@ const CardImage: React.FC<CustomCardProps> = ({ info, goodsStatus, style }) => {
           borderRadius: '4px',
           fontWeight: 'bold',
           fontSize: '13px', // Typo fix
-          backgroundColor: getBackgroundColor(goodsStatus),
+          backgroundColor: getBackgroundColor(info.goodsStatus),
         }}
       />
     </Box>

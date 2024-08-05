@@ -20,6 +20,9 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
+      description:
+        '8코어 CPU10코어 GPU8GB 통합 메모리1TB SSD 저장 장치¹ 35.9cm Liquid Retina XDR 디스플레이² Thunderbolt/USB 4 포트 2개, HDMI 포트, SDXC 카드 슬롯, 헤드폰 잭, MagSafe 3 포트 Touch ID 탑재형 Magic Keyboard Force Touch 트랙패드 70W USB-C 전원 어댑터 8코어 CPU10코어 GPU8GB 통합 메모리1TB SSD 저장 장치¹ 35.9cm Liquid Retina XDR 디스플레이² Thunderbolt/USB 4 포트 2개, HDMI 포트, SDXC 카드 슬롯, 헤드폰 잭, MagSafe 3 포트 Touch ID 탑재형 Magic Keyboard Force Touch 트랙패드 70W USB-C 전원 어댑터',
     },
     {
       id: generateRandomId(),
@@ -32,6 +35,7 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -44,6 +48,7 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -56,6 +61,7 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -68,6 +74,7 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -80,6 +87,7 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -92,6 +100,7 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -104,6 +113,7 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
     {
       id: generateRandomId(),
@@ -116,6 +126,7 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       count: 100,
       price: 1300000,
       discountPrice: 999000,
+      goodsStatus: goodsStatus,
     },
   ];
 
@@ -124,7 +135,8 @@ const HomeCardPage: React.FC<HomeCardPageProps> = ({ goodsStatus }) => {
       {cardInfo.map((info, index) => (
         <C.Card key={index}>
           <S.ShadowBox padding="0">
-            <HomeCard info={info} goodsStatus={goodsStatus} />
+            {/* <HomeCard info={info} goodsStatus={goodsStatus} /> */}
+            <HomeCard info={info} />
           </S.ShadowBox>
         </C.Card>
       ))}
