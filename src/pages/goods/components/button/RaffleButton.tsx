@@ -75,7 +75,7 @@ const RaffleButton: React.FC = () => {
   return (
     <div style={{ width: '400px' }}>
       <S.Row style={{ alignContent: 'center', alignItems: 'center' }}>
-        <C.CardLightFont>{MIN}</C.CardLightFont>
+        <C.CardLightFont>{MIN} 포인트</C.CardLightFont>
         <OutlinedInput
           value={value}
           size="small"
@@ -90,7 +90,7 @@ const RaffleButton: React.FC = () => {
           }}
           style={{ width: 'auto', fontSize: '13px' }}
         />
-        <C.CardLightFont>{MAX}</C.CardLightFont>
+        <C.CardLightFont>{MAX} 포인트</C.CardLightFont>
       </S.Row>
 
       <Slider

@@ -19,7 +19,7 @@ export const formatDate = (date: Date) => {
   return formattedDate.replace(/(\d+)\.(\d+)\.(\d+)\.\s(\w+)\s(\d+:\d+)/, '$1.$2.$3($4) $5');
 };
 
-const Date: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
+const Date: React.FC<CustomCardProps> = ({ info }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
       <Iconify

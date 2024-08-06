@@ -10,7 +10,7 @@ import Iconify from 'components/common/Iconify/Iconify';
 import Date from 'components/date/Date';
 import CardImage from '../../../components/CustomCard/CardImage';
 
-const WishlistCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
+const WishlistCard: React.FC<CustomCardProps> = ({ info }) => {
   const [like, setLike] = useState(false);
 
   // 좋아요 버튼 클릭 시 위시리스트 삭제 api 호출
@@ -20,22 +20,18 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
 
   return (
     <div>
-      <CardImage info={info} goodsStatus={goodsStatus} style={{ paddingTop: '56.25%' }} />
+      <CardImage info={info} style={{ paddingTop: '56.25%' }} />
       <C.CardContent>
         <div style={{ padding: '8px' }}>
           <S.Row>
-            <C.CardLightFont>{info.category}</C.CardLightFont>
-            <C.CardBoldFont>{info.amounts}</C.CardBoldFont>
+            <C.CardLightFont>#{info.category}</C.CardLightFont>
+            <C.CardBoldFont>{info.amounts}개</C.CardBoldFont>
           </S.Row>
           {/* 상품 아이디, 상태, 상품 정보 -> 상품 상세 페이지로 전달 */}
-          <Link
-            to={`/goods/${info.id}?status=${goodsStatus}`}
-            style={{ textDecoration: 'none', color: 'black' }}
-            state={{ info }}
-          >
+          <Link to={`/goods/${info.id}`} style={{ textDecoration: 'none', color: 'black' }} state={{ info }}>
             <C.CardBoldFont>{info.name}</C.CardBoldFont>
           </Link>
-          <Date info={info} goodsStatus={goodsStatus} />
+          <Date info={info} />
         </div>
 
         <Divider sx={{ backgroundColor: colors.cardGrey, marginTop: '10px' }} />
@@ -53,7 +49,7 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info, goodsStatus }) => {
               icon="bi:person"
               sx={{ width: '20px', height: '20px', color: colors.grey01, paddingRight: '4px' }}
             />
-            <C.CardLightFont style={{ fontWeight: 'bold' }}>{info.applicant}</C.CardLightFont>
+            <C.CardLightFont style={{ fontWeight: 'bold' }}>{info.count}명</C.CardLightFont>
           </div>
         </S.Row>
       </C.CardContent>
