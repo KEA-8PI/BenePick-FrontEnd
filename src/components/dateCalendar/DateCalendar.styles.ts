@@ -11,7 +11,7 @@ export const CalendarContainer = styled.div`
 `;
 
 export const CalendarWrapper = styled.div<CalendarWrapperProps>`
-  z-index: 11;
+  // z-index: 11;
   position: absolute;
   top: 100%;
   left: 0;

@@ -21,7 +21,7 @@ const SelectCategory = () => {
   };
 
   return (
-    <FormControl sx={{ width: '140px', height: '62px' }} size="small">
+    <FormControl sx={{ width: '140px', height: '55px' }} size="small">
       <InputLabel id="demo-select-small-label" style={{ color: 'black' }}>
         {category === '' && '카테고리'}
       </InputLabel>
