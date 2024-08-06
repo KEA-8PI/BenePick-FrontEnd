@@ -18,11 +18,13 @@ const formatDate = (date: Date) => {
 };
 
 const DashboardView = () => {
+  const raffleStartAt = new Date('');
+  const raffleEndAt = new Date('');
   return (
     <>
       <Typography sx={{ fontWeight: 'bold', fontSize: '26px' }}>대시보드</Typography>
 
-      <DashboardFilter />
+      <DashboardFilter raffleStartAt={raffleStartAt} raffleEndAt={raffleEndAt} />
       <DashboardCard />
     </>
   );
