@@ -6,7 +6,7 @@ import colors from 'theme/variableColors';
 const RaffleNotice = forwardRef<HTMLElement, RaffleNoticeProps>(({ goodsStatus }, ref) => {
   return (
     <section ref={ref} style={{ width: '100%' }}>
-      <h3 style={{ paddingTop: '40px', paddingLeft: '10px' }}>응모 현황 정보</h3>
+      <h3 style={{ paddingTop: '40px', paddingLeft: '10px' }}>안내 사항</h3>
       <Divider variant="middle" style={{ width: '100%' }} />
       <Typography style={{ color: colors.grey01, fontSize: '15px', paddingTop: '10px', paddingLeft: '30px' }}>
         ※ 응모 후에는 취소가 불가능하오니 신중히 참여해 주시기 바랍니다.

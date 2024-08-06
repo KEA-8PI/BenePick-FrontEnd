@@ -8,12 +8,12 @@ import RaffleCurrentInfoView from './tab/raffleCurrentInfo/RaffleCurrentInfoView
 import RaffleNotice from './tab/raffleNotice/RaffleNotice';
 import DrawOutcomeView from './tab/drawOutcome/DrawOutcomeView';
 
-const GoodsDetail = ({ goodsStatus, info }): ReactElement => {
+const GoodsDetail = ({ info }): ReactElement => {
   useEffect(() => {
-    console.log('status', goodsStatus);
+    console.log('status', info.goodsStatus);
     console.log('info', info);
-    console.log('상품 상태: ', goodsStatus);
-  }, [goodsStatus, info]);
+    console.log('상품 상태: ', info.goodsStatus);
+  }, [info]);
 
   const [like, setLike] = useState(false);
 
@@ -21,19 +21,18 @@ const GoodsDetail = ({ goodsStatus, info }): ReactElement => {
     setLike(!like);
   };
 
-  // Initialize scrollRef as an array of refs
-  const scrollRef = useRef<(HTMLElement | null)[]>([]);
+  const scrollRefs = useRef([]);
 
-  // Function to assign refs to the array
-  const setRef = (index: number) => (element: HTMLElement | null) => {
-    scrollRef.current[index] = element;
-  };
+  // Ensure scrollRefs.current is an array
+  if (!scrollRefs.current) {
+    scrollRefs.current = [];
+  }
 
   return (
     <S.Wrapper>
       {/* 상품 이미지, 상품 정보 */}
       <S.Row style={{ justifyContent: 'flex-start' }}>
-        <LeftDetailContents goodsStatus={goodsStatus} info={info} />
+        <LeftDetailContents info={info} />
 
         {/* 설명란 */}
         <div style={{ paddingLeft: '150px' }}>
@@ -41,23 +40,23 @@ const GoodsDetail = ({ goodsStatus, info }): ReactElement => {
 
           {/* 버튼 */}
           <S.Row style={{ paddingTop: '30px', justifyContent: 'flex-end' }}>
-            <ButtonView goodsStatus={goodsStatus} />
+            <ButtonView goodsStatus={info.goodsStatus} />
           </S.Row>
         </div>
       </S.Row>
 
       {/* 탭 */}
-      <GoodsDetailTab scrollRef={scrollRef} />
+      <GoodsDetailTab scrollRef={scrollRefs} />
 
       {/* 탭 내용 */}
       <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-        <RaffleCurrentInfoView ref={setRef(0)} goodsStatus={goodsStatus} />
+        <RaffleCurrentInfoView ref={(el) => (scrollRefs.current[0] = el)} goodsStatus={info.goodsStatus} />
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-        <DrawOutcomeView ref={setRef(1)} goodsStatus={goodsStatus} info={info} />
+        <DrawOutcomeView ref={(el) => (scrollRefs.current[1] = el)} goodsStatus={info.goodsStatus} info={info} />
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-        <RaffleNotice ref={setRef(2)} goodsStatus={goodsStatus} />
+        <RaffleNotice ref={(el) => (scrollRefs.current[2] = el)} goodsStatus={info.goodsStatus} />
       </div>
     </S.Wrapper>
   );

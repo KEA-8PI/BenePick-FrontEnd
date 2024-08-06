@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Box, Tabs, Tab } from '@mui/material';
 import colors from 'theme/variableColors';
 
@@ -11,9 +11,35 @@ const tabData = [
 const GoodsDetailTab = ({ scrollRef }) => {
   const [navIndex, setNavIndex] = useState(0);
   const navRef = useRef([]); // 이동할 각각의 컴포넌트에 대응하는 목차 버튼을 저장할 ref 배열
+  const isInitialRender = useRef(true);
+
+  const handleChange = useCallback((event, newIndex) => {
+    console.log('Tab changed to:', newIndex);
+    setNavIndex(newIndex);
+    isInitialRender.current = false; // 탭 클릭 시 초기 렌더링 상태 해제
+  }, []);
+
+  const handleTabClick = (index) => {
+    setNavIndex(index);
+    isInitialRender.current = false; // 탭 클릭 시 초기 렌더링 상태 해제
+  };
 
   useEffect(() => {
-    scrollRef.current[navIndex]?.scrollIntoView({ behavior: 'smooth' });
+    if (isInitialRender.current) {
+      return;
+    }
+
+    if (navIndex !== null) {
+      const targetRef = scrollRef.current[navIndex];
+      const offsetTop = targetRef.offsetTop;
+      const elementHeight = targetRef.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      // 중앙으로 맞추기 위해 스크롤 위치 계산
+      const scrollToPosition = offsetTop - windowHeight / 2 + elementHeight / 2;
+
+      window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
+    }
   }, [scrollRef, navIndex]);
 
   // 현재 스크롤 위치에 따라 NavBar 버튼 스타일이 바뀌도록 클래스명을 지정한다.
@@ -21,17 +47,11 @@ const GoodsDetailTab = ({ scrollRef }) => {
     const changeNavBtnStyle = () => {
       scrollRef.current.forEach((ref, idx) => {
         if (ref.offsetTop - 180 < window.scrollY) {
-          navRef.current.forEach((navEl) => {
-            if (navEl) {
-              navEl.classList.remove('active');
-            }
+          navRef.current.forEach((ref) => {
+            ref.className = ref.className.replace(' active', '');
           });
 
-          if (navRef.current[idx]) {
-            navRef.current[idx].classList.add('active');
-          }
-          // // 현재 섹션의 인덱스를 콘솔에 출력
-          // console.log(`현재 섹션 인덱스: ${idx}`);
+          navRef.current[idx].className += ' active';
         }
       });
     };
@@ -42,10 +62,6 @@ const GoodsDetailTab = ({ scrollRef }) => {
       window.removeEventListener('scroll', changeNavBtnStyle);
     };
   }, [scrollRef]);
-
-  const handleChange = (event, newIndex) => {
-    setNavIndex(newIndex);
-  };
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -59,7 +75,7 @@ const GoodsDetailTab = ({ scrollRef }) => {
           TabIndicatorProps={{ style: { backgroundColor: colors.primary } }}
         >
           {tabData.map(({ idx, name }) => (
-            <Tab key={idx} label={name} ref={(el) => (navRef.current[idx] = el)} />
+            <Tab key={idx} label={name} ref={(el) => (navRef.current[idx] = el)} onClick={() => handleTabClick(idx)} />
           ))}
         </Tabs>
       </Box>
