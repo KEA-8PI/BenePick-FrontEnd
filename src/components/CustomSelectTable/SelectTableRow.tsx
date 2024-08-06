@@ -8,6 +8,15 @@ import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import { CustomButton } from 'components/common/Components.styles';
 import { CustomTextField } from 'components/CustomTextField/CustomTextField.styles';
+import { PatchMemberModify, PostMemberAdd } from 'api/memberAdmin.api';
+
+interface InputValues {
+  id: string;
+  deptName: string;
+  name: string;
+  point: number;
+  penaltyCnt: number;
+}
 
 const SelectTableRow: React.FC<SelectTableRowProps> = ({
   id,
@@ -19,17 +28,18 @@ const SelectTableRow: React.FC<SelectTableRowProps> = ({
   rowData,
   setRowData,
 }) => {
-  const [inputValues, setInputValues] = useState(() => {
-    const initialState = {};
+  const initializeInputValues = (): InputValues => {
+    const initialState: any = {};
     columns.forEach((column) => {
       initialState[column.id] = column.label;
     });
-    return initialState;
-  });
+    return initialState as InputValues;
+  };
 
+  const [inputValues, setInputValues] = useState<InputValues>(initializeInputValues);
   useEffect(() => {
     if (id !== '') {
-      const newInputValues = {};
+      const newInputValues = { ...initializeInputValues() };
       columns.forEach((column) => {
         newInputValues[column.id] = column.label;
       });
@@ -37,10 +47,13 @@ const SelectTableRow: React.FC<SelectTableRowProps> = ({
     }
   }, [id, columns]);
 
-  const handleInputChange = (columnId, value) => {
+  const handleInputChange = (columnId: keyof InputValues, value: string | number) => {
+    // Convert value to number if the column is for numeric input
+    const convertedValue = columnId === 'point' || columnId === 'penaltyCnt' ? Number(value) : value;
+
     setInputValues((prevValues) => ({
       ...prevValues,
-      [columnId]: value,
+      [columnId]: convertedValue,
     }));
   };
 
@@ -54,14 +67,31 @@ const SelectTableRow: React.FC<SelectTableRowProps> = ({
   const handleModify = () => {
     const newRowData = [...rowData];
     if (id === '') {
-      newRowData[0] = inputValues;
+      const newEntry = { ...inputValues, role: 'MEMBER' }; // Add role: 'MEMBER' for new entries
+      newRowData[0] = newEntry;
       // 추가 api 호출
+      PostMemberAdd(newEntry)
+        .then((res) => {
+          console.log('Post 멤버 추가 response:', res);
+        })
+        .catch((err) => {
+          console.error('Post 멤버 추가 error:', err);
+        });
     } else {
       const rowIndex = newRowData.findIndex((row) => row.id === id);
       newRowData[rowIndex] = { ...newRowData[rowIndex], ...inputValues };
       // 수정 api 호출
+      const newEntry = { ...inputValues, role: 'MEMBER' };
+      console.log(inputValues);
+      PatchMemberModify(id, newEntry)
+        .then((res) => {
+          console.log('Patch 멤버 수정 response:', res);
+        })
+        .catch((err) => {
+          console.error('Patch 멤버 수정 error:', err);
+        });
     }
-    console.log('수정', newRowData);
+    // console.log('수정', newRowData);
     setRowData(newRowData);
     setIsModify('');
   };
@@ -104,7 +134,7 @@ const SelectTableRow: React.FC<SelectTableRowProps> = ({
               defaultValue={inputValues[column.id]}
               size="small"
               sx={{ fontSize: '0.875rem' }}
-              onChange={(e) => handleInputChange(column.id, e.target.value)}
+              onChange={(e) => handleInputChange(column.id as keyof InputValues, e.target.value)}
             />
           ) : (
             column.label
