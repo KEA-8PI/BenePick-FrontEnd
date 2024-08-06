@@ -18,7 +18,7 @@ const managerNavItems = [
 // Layout 컴포넌트에서 path Prop을 받아서, MemberNavBar 컴포넌트에 전달합니다.
 const Layout = (props: { children: React.ReactNode; path: string }) => {
   const location = useLocation();
-  const role = location.state?.role || 'member'; // 일단 임시로 member로 설정
+  const role = location.state?.role || 'admin'; // 일단 임시로 member로 설정
 
   return (
     <div style={{ padding: '130px 12%' }}>

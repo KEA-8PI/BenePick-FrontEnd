@@ -7,6 +7,7 @@ import { OutlinedInput } from 'components/searchbar/SearchBar.styles';
 import CustomSelectTable from 'components/CustomSelectTable/CustomSelectTable';
 import CustomModal from 'components/CustomModal/CustomModal';
 import { useToggle } from 'hooks/useToggle';
+import { PostMemberUpload, PostMemberPointUpload } from 'api/memberAdmin.api';
 
 const ManageMemberView = () => {
   const deleteToggle = useToggle();
@@ -36,8 +37,24 @@ const ManageMemberView = () => {
     contents: <Typography variant="h6">삭제되었습니다.</Typography>,
   };
 
-  const handleSubmit = () => {
-    //서버에 파일 업로드
+  const handlePointSubmit = (formData: FormData) => {
+    PostMemberPointUpload(formData)
+      .then((res) => {
+        console.log('Post 멤버 복지포인트 response:', res);
+      })
+      .catch((err) => {
+        console.error('Post 멤버 복지포인트 error:', err);
+      });
+  };
+
+  const handleMemberSubmit = (formData: FormData) => {
+    PostMemberUpload(formData)
+      .then((res) => {
+        console.log('Post 멤버 추가 response:', res);
+      })
+      .catch((err) => {
+        console.error('Post 멤버 추가 error:', err);
+      });
   };
 
   const handleAddMember = () => {
@@ -54,8 +71,8 @@ const ManageMemberView = () => {
   return (
     <S.Wrapper style={{ height: 'auto' }}>
       <S.Row style={{ width: '100%', marginBottom: '90px' }}>
-        <UploadBox title="복지 포인트 등록" buttonAction={handleSubmit} width={48} />
-        <UploadBox title="사원 관리" buttonAction={handleSubmit} width={48} />
+        <UploadBox title="복지 포인트 등록" buttonAction={handlePointSubmit} width={48} />
+        <UploadBox title="사원 관리" buttonAction={handleMemberSubmit} width={48} />
       </S.Row>
 
       <Typography style={{ marginBottom: '15px', fontSize: '20px', fontWeight: 'bold', width: '100%' }}>
