@@ -25,9 +25,11 @@ const ManageMemberView = ({
   width,
 }: {
   title: string;
-  buttonAction: () => void;
+  buttonAction: (formData: FormData) => void;
   width: number;
 }) => {
+  const [file, setFile] = useState(null);
+
   const [isActive, setActive] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState(null);
 
@@ -47,6 +49,7 @@ const ManageMemberView = ({
 
     const file = event.dataTransfer.files[0];
     if (file && file.name.endsWith('.xlsx' || '.xls')) {
+      setFile(file);
       setFileInfo(file);
     } else {
       alert('지원하지 않는 파일 형식입니다. .xlsx / .xls 파일을 업로드해주세요');
@@ -56,6 +59,7 @@ const ManageMemberView = ({
   const handleUpload = ({ target }) => {
     const file = target.files[0];
     if (file && file.name.endsWith('.xlsx')) {
+      setFile(file);
       setFileInfo(file);
     } else {
       alert('지원하지 않는 파일 형식입니다. .xlsx / .xls 파일을 업로드해주세요.');
@@ -63,8 +67,10 @@ const ManageMemberView = ({
   };
 
   const handleSubmit = () => {
-    buttonAction();
-    window.location.reload();
+    const formData = new FormData();
+    formData.append('file', file);
+    buttonAction(formData);
+    // window.location.reload();
   };
 
   return (
