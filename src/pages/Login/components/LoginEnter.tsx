@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography, IconButton, InputAdornment, Button, Modal } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import colors from 'theme/variableColors';
-import * as S from '../components/Login.styles';
+import * as S from './Login.styles';
 import Login from './Login';
 import { IModalConfig } from './Login.types';
 import axios from 'axios';

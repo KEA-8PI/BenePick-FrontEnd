@@ -1,5 +1,5 @@
 import { Box, Modal } from '@mui/material';
-import * as S from '../components/Login.styles';
+import * as S from './Login.styles';
 import { IModalConfig } from './Login.types';
 
 const Login = ({ modalConfig }: { modalConfig: IModalConfig }) => {
