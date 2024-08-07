@@ -1,5 +1,5 @@
 import { Outlet, useRoutes, useLocation } from 'react-router-dom';
-import Layout from 'components/layout/Layout';
+import Layout from 'components/Layout/Layout';
 import { Suspense, lazy } from 'react';
 
 export const HomePage = lazy(() => import('../pages/home/HomePage'));
@@ -58,11 +58,11 @@ export const Router = () => {
           element: <GoodsPage />,
         },
         {
-          path: 'manageGoodsInfo',
+          path: 'manageGoodsInfo/:id?',
           element: <ManageGoodsInfoPage />,
         },
         {
-          path: 'manageDrawResult',
+          path: 'manageDrawResult/:id',
           element: <ManageDrawResultPage />,
         },
       ],
