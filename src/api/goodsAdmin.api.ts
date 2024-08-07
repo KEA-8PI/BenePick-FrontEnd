@@ -17,9 +17,12 @@ export const PostGoodsAdd = (data) => {
 };
 
 export const GetGoodsList = (page: number, size: number, keyword?: string) => {
-  return api.get(`/goods/list??page=${page}&size=${size}&keyword=${keyword}`);
+  const url = keyword
+    ? `/goods/list?page=${page}&size=${size}&keyword=${keyword}`
+    : `/goods/list?page=${page}&size=${size}`;
+  return api.get(url);
 };
 
 export const DeleteGoods = (goodsIdList) => {
-  return api.delete('/goods/delete/', goodsIdList);
+  return api.delete(`/goods/delete?deleteList=${goodsIdList}`);
 };
