@@ -7,7 +7,7 @@ import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import { ColorBox } from 'components/common/Components.styles';
 import { useNavigate } from 'react-router-dom';
-import { ConvertResponse } from 'utils/ConvertResponse';
+import { convertResponse } from 'utils/convertResponse';
 
 const GoodsSelectTableRow: React.FC<GoodsSelectTableRowProps> = ({
   id,
@@ -47,9 +47,9 @@ const GoodsSelectTableRow: React.FC<GoodsSelectTableRowProps> = ({
               <ColorBox
                 color={column.label === 'PROGRESS' || column.label === 'SCHEDULED' ? colors.buttonPink : colors.mint}
                 style={{ width: '80px', cursor: 'pointer' }}
-                onClick={() => navigate('/manageDrawResult')}
+                onClick={() => navigate(`/manageDrawResult/${columns[0].label}`)}
               >
-                {ConvertResponse(column.label.toString())}
+                {convertResponse(column.label.toString())}
               </ColorBox>
             </div>
           ) : (
@@ -58,7 +58,7 @@ const GoodsSelectTableRow: React.FC<GoodsSelectTableRowProps> = ({
         </TableCell>
       ))}
       <TableCell align={'right'}>
-        <IconButton aria-label="modify" size="small" onClick={() => navigate('/manageGoodsInfo')}>
+        <IconButton aria-label="modify" size="small" onClick={() => navigate(`/manageGoodsInfo/${columns[0].label}`)}>
           <Iconify icon="ph:pencil" width={20} />
         </IconButton>
       </TableCell>
