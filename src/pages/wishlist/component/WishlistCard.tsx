@@ -19,7 +19,16 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info }) => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        maxWidth: '300px',
+        maxHeight: '450px',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <CardImage info={info} style={{ paddingTop: '56.25%' }} />
       <C.CardContent>
         <div style={{ padding: '8px' }}>
