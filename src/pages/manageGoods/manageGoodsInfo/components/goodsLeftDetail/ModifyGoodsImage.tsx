@@ -2,12 +2,26 @@ import { Box, CardMedia } from '@mui/material';
 import Iconify from 'components/common/Iconify/Iconify';
 import { useEffect, useState } from 'react';
 import colors from 'theme/variableColors';
+import { GoodsInfoData } from '../../goodsInfo/GoodsInfo.types';
+import { PostImage } from 'api/image.api';
 
-const ModifyGoodsImage = ({ imgUrl }: { imgUrl?: string }) => {
-  // useEffect(() => {
-  //   console.log('info.image', imgUrl);
-  // }, []);
-  const [img, setImg] = useState(imgUrl || '');
+const ModifyGoodsImage = ({
+  imgUrl,
+  setState,
+}: {
+  imgUrl?: string;
+  setState: React.Dispatch<React.SetStateAction<GoodsInfoData>>;
+}) => {
+  useEffect(() => {
+    console.log('info.image: ', imgUrl);
+  }, [imgUrl]);
+  const [img, setImg] = useState<string | undefined>(imgUrl);
+
+  useEffect(() => {
+    if (imgUrl) {
+      setImg(imgUrl);
+    }
+  }, [imgUrl]);
 
   const handleClick = () => {
     const input = document.createElement('input');
@@ -20,14 +34,14 @@ const ModifyGoodsImage = ({ imgUrl }: { imgUrl?: string }) => {
         const formData = new FormData();
         formData.append('file', file);
         setImg(URL.createObjectURL(file));
-        // PostImage(formData)
-        //   .then((res) => {
-        //     console.log(res);
-        //     updateAccountInfo('profileImg', res.data);
-        //   })
-        //   .catch((err) => {
-        //     console.error(err);
-        //   });
+        PostImage(formData)
+          .then((res) => {
+            console.log(res);
+            setState((prev) => ({ ...prev, image: res.data }));
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       }
     };
     input.click();
