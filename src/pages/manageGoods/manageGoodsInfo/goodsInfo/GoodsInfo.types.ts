@@ -6,8 +6,9 @@ export interface GoodsInfoData {
   amounts: number;
   raffleStartAt: Date;
   raffleEndAt: Date;
-  applicant: number;
+  count: number;
   price: number;
   discountPrice: number;
   description: string;
+  goodsStatus: string;
 }

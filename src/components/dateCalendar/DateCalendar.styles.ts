@@ -8,13 +8,14 @@ interface CalendarWrapperProps {
 
 export const CalendarContainer = styled.div`
   position: relative;
+  z-index: 999;
 `;
 
 export const CalendarWrapper = styled.div<CalendarWrapperProps>`
   // z-index: 11;
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: 40px;
+  right: 2px;
   display: ${(props) => (props.isOpen ? 'block' : 'none')};
 `;
 

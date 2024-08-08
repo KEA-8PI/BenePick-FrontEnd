@@ -35,19 +35,19 @@ const GoodsSelectTable = ({
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rowData.filter((a) => a.id !== '').map((n) => n.id);
+      const newSelected = rowData.filter((a) => a.id !== '').map((n) => Number(n.id));
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: React.ChangeEvent<HTMLInputElement>, name: string | number) => {
+  const handleClick = (event: React.ChangeEvent<HTMLInputElement>, name: number) => {
     const selectedIndex = selected.indexOf(name);
-    let newSelected: string[] = [];
+    let newSelected: number[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name.toString());
+      newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -91,8 +91,8 @@ const GoodsSelectTable = ({
               <SelectTableRow
                 key={row.id}
                 id={row.id}
-                selected={selected.indexOf(row.id) !== -1}
-                handleClick={(event: React.ChangeEvent<HTMLInputElement>) => handleClick(event, row.id)}
+                selected={selected.indexOf(Number(row.id)) !== -1}
+                handleClick={(event: React.ChangeEvent<HTMLInputElement>) => handleClick(event, Number(row.id))}
                 columns={headList.map((head) => {
                   const key = Object.keys(head)[0];
                   return { id: head[key], label: row[head[key] as keyof typeof row] };

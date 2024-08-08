@@ -58,11 +58,11 @@ export const Router = () => {
           element: <GoodsPage />,
         },
         {
-          path: 'manageGoodsInfo',
+          path: 'manageGoodsInfo/:id?',
           element: <ManageGoodsInfoPage />,
         },
         {
-          path: 'manageDrawResult',
+          path: 'manageDrawResult/:id',
           element: <ManageDrawResultPage />,
         },
       ],
