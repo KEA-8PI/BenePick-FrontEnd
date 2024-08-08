@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import colors from 'theme/variableColors';
 import { TableRowProps } from './CustomTable.types';
 import { ColorBox } from 'components/common/Components.styles';
-import { ConvertResponse } from 'utils/ConvertResponse';
+import { convertResponse } from 'utils/convertResponse';
 
 const ResultColor = {
   WINNER: colors.mint,
@@ -27,7 +27,7 @@ const CustomTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
                 <ColorBox color={column.label[0] === '-' ? colors.buttonPink : colors.mint}>{column.label}</ColorBox>
               )}
               {column.id === 'result' && (
-                <ColorBox color={ResultColor[column.label]}>{ConvertResponse(column.label.toString())}</ColorBox>
+                <ColorBox color={ResultColor[column.label]}>{convertResponse(column.label.toString())}</ColorBox>
               )}
               {column.id === 'status' && <ColorBox color={colors.lemon}>{column.label}순위</ColorBox>}
             </div>

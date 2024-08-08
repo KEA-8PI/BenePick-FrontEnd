@@ -1,6 +1,6 @@
 import colors from 'theme/variableColors';
 
-export const ConvertResponse = (response: string) => {
+export const convertResponse = (response: string) => {
   const ResultJson = {
     WINNER: '당첨',
     WAITLIST: '대기',
@@ -14,7 +14,7 @@ export const ConvertResponse = (response: string) => {
   return ResultJson[response];
 };
 
-export const ConvertResponseColor = (response: string) => {
+export const convertResponseColor = (response: string) => {
   const ResultColor = {
     WINNER: colors.mint,
     NON_WINNER: colors.pinkGrey,
@@ -25,7 +25,7 @@ export const ConvertResponseColor = (response: string) => {
   return ResultColor[response];
 };
 
-export const ConvertStatus = (status: string) => {
+export const convertStatus = (status: string) => {
   const StatusJson = {
     CONFIRM: '확정',
     WINNER: '확정대기',
@@ -35,7 +35,7 @@ export const ConvertStatus = (status: string) => {
   return StatusJson[status];
 };
 
-export const ConvertStatusColor = (status: string) => {
+export const convertStatusColor = (status: string) => {
   const StatusColor = {
     CONFIRM: colors.mint,
     WINNER: colors.purple,
