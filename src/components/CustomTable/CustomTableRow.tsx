@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import colors from 'theme/variableColors';
 import { TableRowProps } from './CustomTable.types';
 import { ColorBox } from 'components/common/Components.styles';
-import { convertResponse } from 'utils/convertResponse';
+import { convertResponse } from 'utils/ConvertResponse';
 
 const ResultColor = {
   WINNER: colors.mint,
