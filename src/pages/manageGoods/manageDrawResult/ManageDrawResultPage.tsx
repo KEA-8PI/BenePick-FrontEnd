@@ -11,7 +11,7 @@ import CustomSelectTable from 'components/CustomTable/CustomTable';
 import CustomTable from 'components/CustomTable/CustomTable';
 import { CustomButton } from 'components/common/Components.styles';
 import WinnerTable from './components/WinnerTable/WinnerTable';
-import { convertResponse } from 'utils/convertResponse';
+import { convertResponse } from 'utils/ConvertResponse';
 import { GetGoodsInfo } from 'api/goods.api';
 import GoodsInfo from '../manageGoodsInfo/goodsInfo/GoodsInfo';
 import { GetDrawsResultExport } from 'api/draws.api';
