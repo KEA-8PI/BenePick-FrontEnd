@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PURGE } from 'redux-persist';
 
 interface UserState {
   userID: string | null;
@@ -24,6 +25,12 @@ const userSlice = createSlice({
       state.userID = null;
       state.role = null;
     },
+  },
+  // 초기화하고 싶은 state가 있는 slice마다 extraReducers를 사용해야함
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => {
+      return initialState;
+    });
   },
 });
 

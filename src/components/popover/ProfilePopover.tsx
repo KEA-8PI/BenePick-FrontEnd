@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import colors from 'theme/variableColors';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'reducer/store';
+import { persistStore } from 'redux-persist';
+import store from 'reducer/store';
 import { PostLogout } from 'api/auth.api';
 import { logoutUser } from 'reducer/userSlice';
 
@@ -37,6 +39,7 @@ const ProfilePopover = () => {
       console.log('로그아웃 성공', response.data);
 
       dispatch(logoutUser());
+      await persistStore(store).purge();
     } catch (error) {
       console.error('로그아웃 실패:', error.message);
     }
