@@ -40,7 +40,7 @@ pipeline {
                         docker pull ${DOCKER_IMAGE}
                         docker stop ${IMAGE_NAME} || true
                         docker rm ${IMAGE_NAME} || true
-                        docker run -d --name ${IMAGE_NAME} -p 80:80 ${DOCKER_IMAGE}
+                        docker run -d --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_IMAGE}
                         """
                     }
                 }
