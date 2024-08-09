@@ -1,5 +1,6 @@
 import api from './api';
+import httpApi from './http.api';
 
 export const GetGoodsInfo = (goodsId: number) => {
-  return api.get(`/goods/${goodsId}`);
+  return httpApi.get(`/goods/${goodsId}`);
 };
