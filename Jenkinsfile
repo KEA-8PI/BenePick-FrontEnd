@@ -8,12 +8,13 @@ pipeline {
         DOCKER_IMAGE = "${DOCKER_REGISTRY}/benepick-container/${IMAGE_NAME}:${IMAGE_TAG}"
         REGISTRY_CREDENTIALS_ID = "docker-registry-credentials"
         GITHUB_CREDENTIALS_ID = "github-token"
+        SSH_CREDENTIALS_ID = "deploy-server-ssh" // SSH 인증 정보
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'API-206--CI-CD-dev', credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/KEA-8PI/BenePick-Frontend.git'
+                git branch: 'main', credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/KEA-8PI/BenePick-Frontend.git'
             }
         }
         stage('Build Docker Image') {
@@ -40,7 +41,7 @@ pipeline {
                         docker pull ${DOCKER_IMAGE}
                         docker stop ${IMAGE_NAME} || true
                         docker rm ${IMAGE_NAME} || true
-                        docker run -d --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_IMAGE}
+                        docker run -d --restart unless-stopped --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_IMAGE}
                         """
                     }
                 }
