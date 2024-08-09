@@ -14,7 +14,8 @@ import WinnerTable from './components/WinnerTable/WinnerTable';
 import { convertResponse } from 'utils/convertResponse';
 import { GetGoodsInfo } from 'api/goods.api';
 import GoodsInfo from '../manageGoodsInfo/goodsInfo/GoodsInfo';
-import { GetDrawsResultExport } from 'api/draws.api';
+import { GetDrawsWaitList, GetDrawsWinnerList } from 'api/draws.api';
+import { GetRafflesApplicantList } from 'api/raffles.api';
 
 const ManageDrawResultPage = () => {
   const params = useParams();
@@ -23,7 +24,6 @@ const ManageDrawResultPage = () => {
   const { goodsInfo, setGoodsInfo } = GoodsInfo();
 
   useEffect(() => {
-    console.log('goodsId', goodsId);
     // 추첨 결과 api 호출
     GetGoodsInfo(goodsId)
       .then((res) => {
@@ -33,36 +33,34 @@ const ManageDrawResultPage = () => {
       .catch((error) => {
         console.error(error);
       });
+
+    goodsId &&
+      GetRafflesApplicantList(goodsId)
+        .then((res) => {
+          console.log('응모자 리스트:', res.data.result);
+          // setRowData(convertResponse(res.data.result.rafflesResponseByGoodsList));
+        })
+        .catch((error) => {
+          console.error('응모자 리스트 error:', error);
+        });
   }, [goodsId]);
 
-  // const info = {
-  //   id: 1,
-  //   image: '/images/card/product1.png',
-  //   name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트 MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트 MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
-  //   category: '전자기기',
-  //   amounts: 3,
-  //   raffleStartAt: new Date('2024.7.17(수) 00:00'),
-  //   raffleEndAt: new Date('2024.7.31(수) 13:00'),
-  //   applicant: '100',
-  //   price: 1300000,
-  //   discountPrice: 999000,
-  //   goodsStatus: 'SCHEDULED',
-  //   count: 100,
-  // };
+  // const [rowData, setRowData] = useState([
+  //   { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 1 },
+  //   { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 2 },
+  //   { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 2 },
+  //   { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 2 },
+  // ]);
 
-  const [rowData, setRowData] = useState([
-    { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 1 },
-    { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 2 },
-    { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 2 },
-    { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 2 },
-  ]);
-
-  const [winnerData, setWinnerData] = useState([
-    { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: 'CONFIRM' },
-    { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: 'WINNER' },
-    { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: 'CANCEL' },
-    { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: 'NO_SHOW' },
-  ]);
+  // const [winnerData, setWinnerData] = useState([
+  //   { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: 'CONFIRM' },
+  //   { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: 'WINNER' },
+  //   { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: 'CANCEL' },
+  //   { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: 'NO_SHOW' },
+  // ]);
+  const [rowData, setRowData] = useState([]);
+  const [winnerData, setWinnerData] = useState([]);
+  const [waitList, setWaitList] = useState([]);
 
   const TabData = [
     {
@@ -70,8 +68,13 @@ const ManageDrawResultPage = () => {
       content: (
         <CustomTable
           rowData={rowData}
-          headList={[{ '응모 날짜': 'date' }, { 아이디: 'id' }, { 이름: 'name' }, { '사용 복지 포인트': 'point' }]}
-          isPaging={true}
+          headList={[
+            { '응모 날짜': 'rafflesAt' },
+            { 아이디: 'id' },
+            { 이름: 'memberName' },
+            { '사용 복지 포인트': 'point' },
+          ]}
+          isPaging={false}
         />
       ),
     },
@@ -82,9 +85,9 @@ const ManageDrawResultPage = () => {
           rowData={winnerData}
           setRowData={setWinnerData}
           headList={[
-            { '응모 날짜': 'date' },
-            { 아이디: 'id' },
-            { 이름: 'name' },
+            { '응모 날짜': 'rafflesAt' },
+            { 아이디: 'memberId' },
+            { 이름: 'memberName' },
             { '사용 복지 포인트': 'point' },
             { 상태: 'status' },
           ]}
@@ -95,29 +98,19 @@ const ManageDrawResultPage = () => {
       label: '대기자',
       content: (
         <CustomTable
-          rowData={rowData}
+          rowData={waitList}
           headList={[
-            { '응모 날짜': 'date' },
-            { 아이디: 'id' },
-            { 이름: 'name' },
+            { '응모 날짜': 'rafflesAt' },
+            { 아이디: 'memberId' },
+            { 이름: 'memberName' },
             { '사용 복지 포인트': 'point' },
             { 상태: 'status' },
           ]}
-          isPaging={true}
+          isPaging={false}
         />
       ),
     },
   ];
-
-  const handleExport = () => {
-    GetDrawsResultExport(goodsId)
-      .then((res) => {
-        console.log('내보내기 response:', res);
-      })
-      .catch((error) => {
-        console.error('내보내기 error:', error);
-      });
-  };
 
   return (
     <div>
@@ -132,8 +125,25 @@ const ManageDrawResultPage = () => {
         </S.Row>
       </div>
       <div style={{ padding: '0 10%', alignItems: 'flex-end', display: 'flex', flexDirection: 'column' }}>
-        <CustomTab tabs={TabData} />
-        <CustomButton style={{ marginTop: '20px' }} onClick={handleExport}>
+        <CustomTab
+          tabs={TabData}
+          callGetAPI={[
+            () => GetRafflesApplicantList(goodsId),
+            () => GetDrawsWinnerList(goodsId),
+            () => GetDrawsWaitList(goodsId),
+          ]}
+          setState={[setRowData, setWinnerData, setWaitList]}
+          dtoName={[
+            'rafflesResponseByGoodsList',
+            'drawsResponseByWinnerGoodsIdDTOS',
+            'drawsResponseByWaitlistGoodsIdDTOS',
+          ]}
+        />
+
+        <CustomButton
+          style={{ marginTop: '20px' }}
+          onClick={() => window.open(`http://benepick.kro.kr:10001/draws/download/${goodsId}`)}
+        >
           내보내기
         </CustomButton>
       </div>

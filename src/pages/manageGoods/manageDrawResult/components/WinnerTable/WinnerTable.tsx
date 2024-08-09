@@ -24,8 +24,6 @@ const WinnerTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const paginatedRowData = rowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
   return (
     <Card sx={{ borderRadius: '10px' }}>
       <TableContainer sx={{ overflow: 'unset' }}>
@@ -37,7 +35,7 @@ const WinnerTable = ({
             })}
           />
           <TableBody>
-            {paginatedRowData.map((row, index) => (
+            {rowData.map((row, index) => (
               <WinnerTableRow
                 key={index}
                 index={index}
@@ -50,15 +48,6 @@ const WinnerTable = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        page={page}
-        component="div"
-        count={rowData.length}
-        rowsPerPage={rowsPerPage}
-        onPageChange={handleChangePage}
-        rowsPerPageOptions={[5, 10, 25]}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
     </Card>
   );
 };
