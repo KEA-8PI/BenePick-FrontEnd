@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useToggle } from 'hooks/useToggle';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, IconButton, InputAdornment, Button } from '@mui/material';
@@ -8,13 +7,13 @@ import colors from 'theme/variableColors';
 import * as S from './Login.styles';
 import Login from './Login';
 import { IModalConfig } from './Login.types';
-
+import { useAccountStore } from 'store/useAccountStore';
 import { PostLogin } from 'api/auth.api';
-import { setUser } from 'reducer/userSlice';
 
 const LoginEnter = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { setAccountInfo } = useAccountStore();
+  const { updateAccountInfo } = useAccountStore();
 
   // 비밀번호 보이기/숨기기
   const [showPassword, setShowPassword] = useState(false);
@@ -35,8 +34,11 @@ const LoginEnter = () => {
       console.log('로그인 성공', response.data);
 
       const { userID, role } = response.data.result;
-      dispatch(setUser({ userID, role }));
-      console.log('디스패치 성공: ', { userID, role });
+
+      setAccountInfo(userID, role);
+
+      // console.log('userID:', userID); // 디버깅용
+      // console.log('role:', role); // 디버깅용
 
       loginConfirmToggle.toggle();
     } catch (error) {

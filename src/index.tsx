@@ -6,10 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { CookiesProvider } from 'react-cookie';
-import { Provider } from 'react-redux';
-import store from 'reducer/store';
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistStore } from 'redux-persist';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -17,11 +13,7 @@ root.render(
     <HelmetProvider>
       <CookiesProvider>
         <BrowserRouter>
-          <Provider store={store}>
-            <PersistGate loading={null} persistor={persistStore(store)}>
-              <App />
-            </PersistGate>
-          </Provider>
+          <App />
         </BrowserRouter>
       </CookiesProvider>
     </HelmetProvider>

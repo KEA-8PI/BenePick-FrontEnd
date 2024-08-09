@@ -1,12 +1,12 @@
 import { Outlet, useRoutes, useLocation } from 'react-router-dom';
-import Layout from 'components/\bLayout/Layout';
+import Layout from 'components/Layout/Layout';
 import { Suspense, lazy } from 'react';
 
 export const HomePage = lazy(() => import('../pages/home/HomePage'));
 export const DashboardPage = lazy(() => import('../pages/dashboard/DashboardPage'));
 export const MyPage = lazy(() => import('../pages/mypage/MyPage'));
 export const WishListPage = lazy(() => import('../pages/wishlist/WishlistPage'));
-export const LoginPage = lazy(() => import('../pages/login/LoginPage'));
+export const LoginPage = lazy(() => import('../pages/Login/LoginPage'));
 export const ManageMemberPage = lazy(() => import('../pages/manageMember/ManageMemberPage'));
 export const GoodsPage = lazy(() => import('../pages/goods/GoodsPage'));
 export const ManageGoodsPage = lazy(() => import('../pages/manageGoods/ManageGoodsPage'));

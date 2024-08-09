@@ -10,12 +10,7 @@ import Iconify from 'components/common/Iconify/Iconify';
 import Date from 'components/date/Date';
 import CardImage from '../../../components/CustomCard/CardImage';
 
-import { useSelector } from 'react-redux';
-import { RootState } from 'reducer/store';
-
 const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
-  const userRole = useSelector((state: RootState) => state.user.role);
-
   const [like, setLike] = useState(false);
 
   const handleLike = () => {
@@ -57,7 +52,15 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
 
         <Divider sx={{ backgroundColor: colors.cardGrey, marginTop: '10px' }} />
         <S.Row>
-          {(userRole === 'MEMBER' || userRole === null) && (
+          <IconButton>
+            <Iconify
+              icon={like ? 'gridicons:heart' : 'gridicons:heart-outline'}
+              onClick={handleLike}
+              color={like ? colors.primary : colors.grey01}
+              sx={{ width: '20px', height: '20px' }}
+            />
+          </IconButton>
+          {/* {(userRole === 'MEMBER' || userRole === null) && (
             <IconButton>
               <Iconify
                 icon={like ? 'gridicons:heart' : 'gridicons:heart-outline'}
@@ -66,7 +69,7 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
                 sx={{ width: '20px', height: '20px' }}
               />
             </IconButton>
-          )}
+          )} */}
           <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <Iconify
               icon="bi:person"
