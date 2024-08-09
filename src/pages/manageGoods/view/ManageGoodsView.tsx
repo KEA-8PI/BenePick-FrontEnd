@@ -1,4 +1,5 @@
 import { IconButton, InputAdornment, Typography } from '@mui/material';
+import { DeleteGoods, GetGoodsList, PostGoodsUpload } from 'api/goodsAdmin.api';
 import CustomModal from 'components/CustomModal/CustomModal';
 import GoodsSelectTable from 'components/GoodsSelectTable/GoodsSelectTable';
 import * as S from 'components/common/Components.styles';
@@ -6,10 +7,23 @@ import Iconify from 'components/common/Iconify/Iconify';
 import { OutlinedInput } from 'components/searchbar/SearchBar.styles';
 import UploadBox from 'components/uploadBox/UploadBox';
 import { useToggle } from 'hooks/useToggle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { formatData } from '../utils/formatData';
 
 const ManageGoodsView = () => {
+  const [rowData, setRowData] = useState([]);
+  useEffect(() => {
+    GetGoodsList(0, 25)
+      .then((res) => {
+        console.log('Get 상품 목록 response:', res.data.result.goodsDTOList);
+
+        setRowData(formatData(res.data.result.goodsDTOList));
+      })
+      .catch((err) => {
+        console.error('Get 상품 목록 error:', err);
+      });
+  }, []);
   const navigate = useNavigate();
 
   const deleteToggle = useToggle();
@@ -17,55 +31,13 @@ const ManageGoodsView = () => {
 
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState([]);
-
-  const raffleStartAt = '2021-10-01';
-  const raffleEndAt = '2021-10-31';
-
-  const [rowData, setRowData] = useState([
-    {
-      id: '1',
-      name: 'MacBook Pro 15 WIFI 256GB',
-      duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: 'PROGRESS',
-    },
-    {
-      id: '2',
-      name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
-      duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: 'COMPLETED',
-    },
-    {
-      id: '5',
-      name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
-      duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: 'SCHEDULED',
-    },
-    {
-      id: '6',
-      name: 'MacBook Pro 15 WIFI 256GB',
-      duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: 'SCHEDULED',
-    },
-    {
-      id: '11',
-      name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
-      duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: 'COMPLETED',
-    },
-    {
-      id: '15',
-      name: 'MacBook Air 15 M2 CPU 8코어 GPU 10코어 8GB 256GB 미드나이트',
-      duration: `${raffleStartAt}~${raffleEndAt}`,
-      result: 'PROGRESS',
-    },
-  ]);
+  const [selected, setSelected] = useState<number[]>([]);
 
   const modalConfig = {
     open: deleteToggle.isOpen,
     onClose: deleteToggle.toggle,
     contents: <Typography variant="h6">상품 {selected.length}개를 삭제하시겠습니까?</Typography>,
-    buttons: { label: '확인', action: () => handleDeleteMember() },
+    buttons: { label: '확인', action: () => handleDeleteGoods() },
   };
 
   const confirmModalConfig = {
@@ -74,14 +46,42 @@ const ManageGoodsView = () => {
     contents: <Typography variant="h6">삭제되었습니다.</Typography>,
   };
 
-  const handleSubmit = () => {
-    //서버에 파일 업로드
+  const handleSubmit = (formData: FormData) => {
+    PostGoodsUpload(formData)
+      .then((res) => {
+        console.log('Post 상품 추가 response:', res);
+      })
+      .catch((err) => {
+        console.error('Post 상품 추가 error:', err);
+      });
   };
 
-  const handleDeleteMember = () => {
-    //상품 삭제 api 호출
+  const handleDeleteGoods = () => {
+    DeleteGoods(selected)
+      .then((res) => {
+        console.log('Delete 상품 response:', res);
+        setRowData(rowData.filter((row) => !selected.includes(Number(row.id))));
+        setSelected([]);
+      })
+      .catch((err) => {
+        console.error('Delete 상품 error:', err);
+      });
+
     confirmToggle.toggle();
   };
+
+  const handleSearch = () => {
+    GetGoodsList(0, 25, search)
+      .then((res) => {
+        console.log('Get 검색 결과 response:', res.data.result.goodsDTOList);
+
+        setRowData(formatData(res.data.result.goodsDTOList));
+      })
+      .catch((err) => {
+        console.error('Get 검색 결과 error:', err);
+      });
+  };
+
   return (
     <S.Wrapper style={{ height: 'auto' }}>
       <UploadBox title="상품 등록" buttonAction={handleSubmit} width={100} />
@@ -98,7 +98,7 @@ const ManageGoodsView = () => {
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
-                setQuery(search);
+                handleSearch();
               }
             }}
             placeholder="상품을 입력하세요"
@@ -111,7 +111,7 @@ const ManageGoodsView = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility" onClick={() => setQuery(search)}>
+                  <IconButton aria-label="toggle password visibility" onClick={() => handleSearch()}>
                     <Iconify icon="eva:search-fill" sx={{ width: 25, height: 25, color: 'black' }} />
                   </IconButton>
                 </InputAdornment>

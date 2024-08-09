@@ -6,24 +6,18 @@ const GoodsInfo = () => {
     id: null,
     image: '',
     name: '',
-    category: '',
+    category: '전자기기',
     amounts: 0,
     raffleStartAt: new Date(),
-    raffleEndAt: new Date(),
-    applicant: 0,
+    raffleEndAt: new Date(new Date().setDate(new Date().getDate() + 6)),
+    count: 0,
     price: 0,
     discountPrice: 0,
     description: '',
+    goodsStatus: '',
   });
 
-  const updateGoodsInfo = (key: string, value: string | number | Date) => {
-    //특정 key에 대한 value를 업데이트하는 함수
-    setGoodsInfo((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  return { goodsInfo, setGoodsInfo, updateGoodsInfo };
+  return { goodsInfo, setGoodsInfo };
 };
+
 export default GoodsInfo;

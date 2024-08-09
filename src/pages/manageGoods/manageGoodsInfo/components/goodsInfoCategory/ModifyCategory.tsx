@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { InputLabel, MenuItem, FormControl, ListItemIcon, ListItemText } from '@mui/material';
+import { MenuItem, FormControl, ListItemIcon, ListItemText } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Iconify from 'components/common/Iconify/Iconify';
+import { GoodsInfoData } from '../../goodsInfo/GoodsInfo.types';
 
 const categoryList = [
-  ,
   { label: '전자기기', icon: <Iconify icon="ph:laptop" /> },
   { label: '문화생활', icon: <Iconify icon="fluent-mdl2:my-movies-t-v" /> },
   { label: '여행/티켓', icon: <Iconify icon="ph:airplane" /> },
@@ -13,15 +13,16 @@ const categoryList = [
   { label: '문구/오피스', icon: <Iconify icon="ph:pencil" /> },
   { label: '기타', icon: <Iconify icon="ph:dots-three-circle" /> },
 ];
+
 const ModifyCategory = ({
   category,
-  setCategory,
+  setGoodsInfo,
 }: {
   category: string;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
+  setGoodsInfo: React.Dispatch<React.SetStateAction<GoodsInfoData>>;
 }) => {
   const handleSelect = (event: SelectChangeEvent) => {
-    setCategory(event.target.value);
+    setGoodsInfo((prev) => ({ ...prev, category: event.target.value }));
   };
 
   return (
@@ -29,7 +30,7 @@ const ModifyCategory = ({
       <Select
         labelId="demo-select-small-label"
         id="demo-select-small"
-        value={category}
+        value={category || '전자기기'}
         label="Category"
         onChange={handleSelect}
         sx={{

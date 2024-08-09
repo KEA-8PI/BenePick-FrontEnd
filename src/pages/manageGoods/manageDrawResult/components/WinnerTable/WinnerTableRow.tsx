@@ -5,10 +5,11 @@ import colors from 'theme/variableColors';
 import { TableRowProps } from 'components/CustomTable/CustomTable.types';
 import { ColorBox } from 'components/common/Components.styles';
 import { MenuItem, Popover, Typography } from '@mui/material';
-import { ConvertStatusColor, ConvertStatus } from 'utils/ConvertResponse';
+import { convertStatusColor, convertStatus } from 'utils/convertResponse';
 import Iconify from 'components/common/Iconify/Iconify';
 import CustomModal from 'components/CustomModal/CustomModal';
 import { useToggle } from 'hooks/useToggle';
+import { Wrapper } from 'components/common/Components.styles';
 
 const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
   const [status, setStatus] = React.useState<string>(columns[columns.length - 1].label.toString());
@@ -19,12 +20,15 @@ const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
     open: changeToggle.isOpen,
     onClose: changeToggle.toggle,
     contents: (
-      <>
-        <Typography variant="h6" color={colors.primary}>
-          {ConvertStatus(status)}
+      <Wrapper>
+        <Typography variant="h5" color={colors.primary}>
+          {convertStatus(status)}
         </Typography>
         <Typography variant="h6">(으)로 변경하시겠습니까?</Typography>
-      </>
+        <Typography variant="body2" color={colors.grey01} sx={{ textDecoration: 'underline', marginTop: 3 }}>
+          변경 후에는 취소할 수 없습니다.
+        </Typography>
+      </Wrapper>
     ),
     buttons: { label: '확인', action: () => changeStatus() },
   };
@@ -67,11 +71,11 @@ const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
             {column.id === 'status' ? (
               <>
                 <ColorBox
-                  color={ConvertStatusColor(column.label.toString())}
-                  onClick={handleClick}
-                  style={{ cursor: 'pointer' }}
+                  color={convertStatusColor(column.label.toString())}
+                  onClick={column.label === 'WINNER' ? handleClick : undefined}
+                  style={{ cursor: column.label === 'WINNER' && 'pointer' }}
                 >
-                  {ConvertStatus(column.label.toString())}
+                  {convertStatus(column.label.toString())}
                   <Iconify icon="iconamoon:arrow-down-2-fill" sx={{ ml: 0.5 }} />
                 </ColorBox>
                 <Popover
@@ -92,12 +96,6 @@ const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
                     <>
                       <Iconify icon="codicon:circle-filled" sx={{ mr: 2, color: colors.mint }} />
                       확정
-                    </>
-                  </MenuItem>
-                  <MenuItem onClick={() => handleButtonClick('WINNER')} disabled={status === 'WINNER'}>
-                    <>
-                      <Iconify icon="codicon:circle-filled" sx={{ mr: 2, color: colors.purple }} />
-                      확정 대기
                     </>
                   </MenuItem>
                   <MenuItem onClick={() => handleButtonClick('CANCEL')} disabled={status === 'CANCEL'}>

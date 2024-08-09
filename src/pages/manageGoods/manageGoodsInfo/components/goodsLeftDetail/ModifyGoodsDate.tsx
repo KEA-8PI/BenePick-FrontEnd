@@ -4,30 +4,41 @@ import * as C from 'components/CustomCard/CustomCard.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import { formatDate } from 'components/date/Date';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DateCalendar from 'components/dateCalendar/DateCalendar';
+import { GoodsInfoData } from '../../goodsInfo/GoodsInfo.types';
 
-const ModifyGoodsDate = ({ raffleStartAt, raffleEndAt }: { raffleStartAt: Date; raffleEndAt: Date }) => {
-  const [startDate, setStartDate] = useState(raffleStartAt);
-  const [endDate, setEndDate] = useState(raffleEndAt);
+const ModifyGoodsDate = ({
+  raffleStartAt,
+  raffleEndAt,
+  setState,
+}: {
+  raffleStartAt: Date;
+  raffleEndAt: Date;
+  setState: React.Dispatch<React.SetStateAction<GoodsInfoData>>;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // useEffect(() => {
+  //   console.log('raffleStartAt', raffleStartAt);
+  //   console.log('raffleEndAt', raffleEndAt);
+  // }, [raffleStartAt, raffleEndAt]);
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
       <IconButton sx={{ marginRight: '8px' }} onClick={() => setIsOpen(!isOpen)}>
         <Iconify icon="lets-icons:date-range" sx={{ width: '20px', height: '20px', color: colors.grey01 }} />
       </IconButton>
-
       <S.Wrapper>
-        <C.CardLightFont>{formatDate(startDate)}</C.CardLightFont>
-        <C.CardLightFont>~{formatDate(endDate)}</C.CardLightFont>
+        <C.CardLightFont>{formatDate(raffleStartAt)}</C.CardLightFont>
+        <C.CardLightFont>~{formatDate(raffleEndAt)}</C.CardLightFont>
       </S.Wrapper>
       <DateCalendar
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
+        startDate={raffleStartAt}
+        endDate={raffleEndAt}
+        setState={setState}
       />
     </Box>
   );
