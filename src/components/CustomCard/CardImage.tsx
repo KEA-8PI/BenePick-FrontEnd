@@ -1,6 +1,7 @@
 import { CustomCardProps } from './CustomCard.types';
 import { Box, Chip, CardMedia } from '@mui/material';
 import colors from 'theme/variableColors';
+import { convertGoodsStatus } from 'utils/convertResponse';
 
 const getBackgroundColor = (goodsStatus: string) => {
   switch (goodsStatus) {
@@ -34,7 +35,7 @@ const CardImage: React.FC<CustomCardProps> = ({ info, style }) => {
         }}
       />
       <Chip
-        label={info.goodsStatus}
+        label={convertGoodsStatus(info.goodsStatus)}
         sx={{
           position: 'absolute',
           top: '10px',

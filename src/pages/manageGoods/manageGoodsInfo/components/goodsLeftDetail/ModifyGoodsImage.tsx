@@ -12,9 +12,6 @@ const ModifyGoodsImage = ({
   imgUrl?: string;
   setState: React.Dispatch<React.SetStateAction<GoodsInfoData>>;
 }) => {
-  useEffect(() => {
-    console.log('info.image: ', imgUrl);
-  }, [imgUrl]);
   const [img, setImg] = useState<string | undefined>(imgUrl);
 
   useEffect(() => {

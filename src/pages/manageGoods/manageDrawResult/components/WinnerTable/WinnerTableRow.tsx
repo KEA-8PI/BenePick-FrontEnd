@@ -10,6 +10,8 @@ import Iconify from 'components/common/Iconify/Iconify';
 import CustomModal from 'components/CustomModal/CustomModal';
 import { useToggle } from 'hooks/useToggle';
 import { Wrapper } from 'components/common/Components.styles';
+import { formatDateTime } from 'pages/manageGoods/utils/formatData';
+import { PatchDrawsWinner } from 'api/draws.api';
 
 const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
   const [status, setStatus] = React.useState<string>(columns[columns.length - 1].label.toString());
@@ -51,6 +53,13 @@ const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
 
   const changeStatus = () => {
     // 당첨자 상태 관리 api 호출
+    PatchDrawsWinner(Number(columns[1].label), status)
+      .then((res) => {
+        console.log('Patch 당첨자 상태 변경 response:', res);
+      })
+      .catch((err) => {
+        console.error('Patch 당첨자 상태 변경 error:', err);
+      });
     confirmToggle.toggle();
   };
 
@@ -68,50 +77,54 @@ const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
       {columns.map((column) => (
         <TableCell key={column.label} align={'center'}>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            {column.id === 'status' ? (
-              <>
-                <ColorBox
-                  color={convertStatusColor(column.label.toString())}
-                  onClick={column.label === 'WINNER' ? handleClick : undefined}
-                  style={{ cursor: column.label === 'WINNER' && 'pointer' }}
-                >
-                  {convertStatus(column.label.toString())}
-                  <Iconify icon="iconamoon:arrow-down-2-fill" sx={{ ml: 0.5 }} />
-                </ColorBox>
-                <Popover
-                  id={column.label.toString()}
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                >
-                  <MenuItem onClick={() => handleButtonClick('CONFIRM')} disabled={status === 'CONFIRM'}>
-                    <>
-                      <Iconify icon="codicon:circle-filled" sx={{ mr: 2, color: colors.mint }} />
-                      확정
-                    </>
-                  </MenuItem>
-                  <MenuItem onClick={() => handleButtonClick('CANCEL')} disabled={status === 'CANCEL'}>
-                    <>
-                      <Iconify icon="codicon:circle-filled" sx={{ mr: 2, color: colors.pinkGrey }} />
-                      취소
-                    </>
-                  </MenuItem>
-                  <MenuItem onClick={() => handleButtonClick('NO_SHOW')} disabled={status === 'NO_SHOW'}>
-                    <>
-                      <Iconify icon="codicon:circle-filled" sx={{ mr: 2, color: colors.buttonPink }} />
-                      노쇼
-                    </>
-                  </MenuItem>
-                </Popover>
-              </>
+            {column.id === 'status' || column.id === 'rafflesAt' ? (
+              column.id === 'rafflesAt' ? (
+                formatDateTime(column.label)
+              ) : (
+                <>
+                  <ColorBox
+                    color={convertStatusColor(column.label.toString())}
+                    onClick={column.label === 'WINNER' ? handleClick : undefined}
+                    style={{ cursor: column.label === 'WINNER' && 'pointer' }}
+                  >
+                    {convertStatus(column.label.toString())}
+                    {column.label === 'WINNER' && <Iconify icon="iconamoon:arrow-down-2-fill" />}
+                  </ColorBox>
+                  <Popover
+                    id={column.label.toString()}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <MenuItem onClick={() => handleButtonClick('CONFIRM')} disabled={status === 'CONFIRM'}>
+                      <>
+                        <Iconify icon="codicon:circle-filled" sx={{ mr: 2, color: colors.mint }} />
+                        확정
+                      </>
+                    </MenuItem>
+                    <MenuItem onClick={() => handleButtonClick('CANCEL')} disabled={status === 'CANCEL'}>
+                      <>
+                        <Iconify icon="codicon:circle-filled" sx={{ mr: 2, color: colors.pinkGrey }} />
+                        취소
+                      </>
+                    </MenuItem>
+                    <MenuItem onClick={() => handleButtonClick('NO_SHOW')} disabled={status === 'NO_SHOW'}>
+                      <>
+                        <Iconify icon="codicon:circle-filled" sx={{ mr: 2, color: colors.buttonPink }} />
+                        노쇼
+                      </>
+                    </MenuItem>
+                  </Popover>
+                </>
+              )
             ) : (
               column.label
             )}
