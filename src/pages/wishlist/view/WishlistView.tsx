@@ -4,8 +4,8 @@ import { Typography } from '@mui/material';
 import WishlistCardList from '../component/WishlistCardList';
 
 const tabData = [
-  { label: '진행중', content: <WishlistCardList goodsStatus="진행" />, tabTitle: '총 123개' },
-  { label: '응모 예정', content: <WishlistCardList goodsStatus="예정" />, tabTitle: '총 123개' },
+  { label: '진행중', content: '<WishlistCardList goodsStatus="진행" />', tabTitle: '총 123개' },
+  { label: '응모 예정', content: '<WishlistCardList goodsStatus="예정" />', tabTitle: '총 123개' },
 ];
 
 const WishlistView = () => {

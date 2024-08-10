@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 export const HashInput = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     // Class for the border around the input field
-    width: '250px',
+    width: '350px',
     height: '35px',
 
     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {

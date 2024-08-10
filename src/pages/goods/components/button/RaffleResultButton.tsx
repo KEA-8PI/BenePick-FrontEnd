@@ -1,16 +1,15 @@
+import { useEffect, useState } from 'react';
 import { Button, Box, Typography, Card, Table, TableBody, TableContainer } from '@mui/material';
-
 import colors from 'theme/variableColors';
 import * as S from 'components/common/Components.styles';
 import { HashInput } from 'components/bigCustomModal/bigCustomModal.styles';
 import BigCustomModal from 'components/bigCustomModal/bigCustomModal';
 import { IModalConfig } from 'components/bigCustomModal/bigCustomModal.types';
-
 import TableHeader from 'components/CustomTable/TableHeader';
 import CustomTableRow from 'components/CustomTable/CustomTableRow';
 import { useToggle } from 'hooks/useToggle';
 
-const seeds = 13241342342798;
+import { GetGoodsSeed } from 'api/goods.api';
 
 const headList = [{ 아이디: 'id' }, { 이름: 'name' }, { '응모한 포인트': 'points' }];
 
@@ -22,7 +21,18 @@ const rowData = [
   { id: 'benepick05', name: '이소정', points: 100 },
 ];
 
-const RaffleResultButton = () => {
+const RaffleResultButton = ({ info }) => {
+  const [seeds, setSeeds] = useState();
+
+  useEffect(() => {
+    const getSeeds = async () => {
+      const response = await GetGoodsSeed(info.id);
+      console.log('시드값 조회:', response.data.result.seeds);
+      setSeeds(response.data.result.seeds);
+    };
+    getSeeds();
+  }, [info]);
+
   const isFirstModalToggle = useToggle();
   const isSecondModalToggle = useToggle();
 
@@ -40,13 +50,24 @@ const RaffleResultButton = () => {
             paddingTop: '20px',
           }}
         >
-          <Typography style={{ paddingRight: '70px' }}>설정된 해시 </Typography>
-          <Typography>{seeds} </Typography>
+          <Typography style={{ paddingRight: '70px', whiteSpace: 'nowrap' }}>설정된 해시 </Typography>
+          <Box style={{ width: '350px', maxWidth: 'calc(100% - 50px)', wordBreak: 'break-word' }}>
+            <Typography>{seeds}</Typography>
+          </Box>
         </Box>
-        <S.Row style={{ fontSize: '17px', alignContent: 'center', alignItems: 'center', paddingTop: '20px' }}>
+        <Box
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            fontSize: '17px',
+            alignContent: 'center',
+            alignItems: 'center',
+            paddingTop: '20px',
+          }}
+        >
           <Typography style={{ paddingRight: '100px' }}>테스트</Typography>
           <HashInput placeholder="해시 값을 입력해주세요." />
-        </S.Row>
+        </Box>
 
         <img
           src="/images/benepickLogo.png"

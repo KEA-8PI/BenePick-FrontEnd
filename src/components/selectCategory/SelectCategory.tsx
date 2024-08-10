@@ -1,8 +1,8 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { InputLabel, MenuItem, FormControl, ListItemIcon, ListItemText } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Iconify from 'components/common/Iconify/Iconify';
+import { SelectCategoryProps } from './SelectCategory.types';
 
 const categoryList = [
   { label: '전체', icon: <Iconify icon="fluent:grid-circles-24-regular" /> },
@@ -13,10 +13,13 @@ const categoryList = [
   { label: '문구/오피스', icon: <Iconify icon="ph:pencil" /> },
   { label: '기타', icon: <Iconify icon="ph:dots-three-circle" /> },
 ];
-const SelectCategory = () => {
-  const [category, setCategory] = React.useState('');
+const SelectCategory: React.FC<SelectCategoryProps> = ({ onCategoryChange }) => {
+  // HomeView로 전달할 카테고리 상태
+  const [category, setCategory] = useState('');
+
   const handleSelect = (event: SelectChangeEvent) => {
     setCategory(event.target.value);
+    onCategoryChange(event.target.value);
   };
 
   return (

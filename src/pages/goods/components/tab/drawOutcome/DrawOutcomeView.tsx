@@ -12,9 +12,9 @@ const DrawOutcomeView = forwardRef<HTMLElement, DrawOutcomeProps>(({ goodsStatus
       <h3 style={{ paddingTop: '40px', paddingLeft: '10px' }}>결과 발표</h3>
       <Divider variant="middle" style={{ width: '100%' }} />
       <div>
-        {goodsStatus === '예정' ? (
+        {goodsStatus === 'SCHEDULED' ? (
           <DrawOutcomeBefore goodsStatus={goodsStatus} info={info} />
-        ) : goodsStatus === '진행' ? (
+        ) : goodsStatus === 'PROGRESS' ? (
           <DrawOutcomeIng goodsStatus={goodsStatus} info={info} />
         ) : (
           <DrawOutcomeAfter goodsStatus={goodsStatus} info={info} />

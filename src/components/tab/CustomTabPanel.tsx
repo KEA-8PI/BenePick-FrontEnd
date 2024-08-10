@@ -1,29 +1,15 @@
-// import { Box } from '@mui/material';
-// import { TabPanelProps } from './CustomTab.types';
-
-// // 탭 안의 내용
-// const CustomTabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other }) => {
-//   return (
-//     <div
-//       role="tabpanel"
-//       hidden={value !== index}
-//       id={`simple-tabpanel-${index}`}
-//       aria-labelledby={`simple-tab-${index}`}
-//       {...other}
-//     >
-//       {/* 탭 하단 찐 내용 */}
-//       {value === index && <Box sx={{ paddingTop: '25px' }}>{children}</Box>}
-//     </div>
-//   );
-// };
-// export default CustomTabPanel;
-
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Radio, RadioGroup, FormControl, FormControlLabel } from '@mui/material';
 import { TabPanelProps } from './CustomTab.types';
 import CustomTabTitle from './CustomTabTitle';
 import * as S from 'components/common/Components.styles';
 import colors from 'theme/variableColors';
+
+const filterMapping = {
+  '종료 임박순': 'END',
+  인기순: 'POPULAR',
+  최신순: 'NEWEST',
+};
 
 // 탭 안의 내용
 const CustomTabPanel: React.FC<TabPanelProps> = ({
@@ -33,23 +19,22 @@ const CustomTabPanel: React.FC<TabPanelProps> = ({
   showTabTitle,
   title,
   showFilter,
+  onFilterChange,
+  selectedFilter, // 현재 탭의 필터 상태를 받음
   ...other
 }) => {
-  const [selectedFilter, setSelectedFilter] = useState('종료 임박순');
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const filter = event.target.value;
 
-  const handleFilterChange = (filter: string) => {
-    setSelectedFilter(filter);
-    console.log(filter);
-  };
+    // 한글 필터 값을 영문 API 호출 값으로 변환
+    const apiFilter = filterMapping[filter];
 
-  const renderFilteredContent = () => {
-    if (selectedFilter === '종료 임박순') {
-      return children;
-    } else if (selectedFilter === '인기순') {
-      return children;
-    } else if (selectedFilter === '최신순') {
-      return children;
+    // 부모 컴포넌트에 필터 값 전달
+    if (onFilterChange) {
+      onFilterChange(apiFilter);
     }
+
+    console.log('선택된 필터:', apiFilter);
   };
 
   return (
@@ -74,12 +59,13 @@ const CustomTabPanel: React.FC<TabPanelProps> = ({
               alignItems: 'center',
             }}
           >
-            <FormControl>
+            <FormControl component="fieldset">
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
-                value={selectedFilter} // Set the value to selectedFilter
+                value={Object.keys(filterMapping).find((key) => filterMapping[key] === selectedFilter)} // 부모 컴포넌트로부터 받은 현재 필터 상태값을 한국어로 변환하여 사용
+                onChange={handleFilterChange} // 변경 핸들러
               >
                 <FormControlLabel
                   value="종료 임박순"
@@ -94,7 +80,6 @@ const CustomTabPanel: React.FC<TabPanelProps> = ({
                     />
                   }
                   label="종료 임박순"
-                  onClick={() => handleFilterChange('종료 임박순')}
                 />
                 <FormControlLabel
                   value="인기순"
@@ -109,7 +94,6 @@ const CustomTabPanel: React.FC<TabPanelProps> = ({
                     />
                   }
                   label="인기순"
-                  onClick={() => handleFilterChange('인기순')}
                 />
                 <FormControlLabel
                   value="최신순"
@@ -124,7 +108,6 @@ const CustomTabPanel: React.FC<TabPanelProps> = ({
                     />
                   }
                   label="최신순"
-                  onClick={() => handleFilterChange('최신순')}
                 />
               </RadioGroup>
             </FormControl>
@@ -133,7 +116,7 @@ const CustomTabPanel: React.FC<TabPanelProps> = ({
       </S.Row>
 
       {/* 탭 하단 찐 내용 */}
-      {value === index && <Box sx={{ paddingTop: '25px' }}>{renderFilteredContent()}</Box>}
+      {value === index && <Box sx={{ paddingTop: '25px' }}>{children}</Box>}
     </div>
   );
 };
