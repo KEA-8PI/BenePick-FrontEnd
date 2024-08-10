@@ -5,7 +5,7 @@ import colors from 'theme/variableColors';
 import { TableRowProps } from 'components/CustomTable/CustomTable.types';
 import { ColorBox } from 'components/common/Components.styles';
 import { MenuItem, Popover, Typography } from '@mui/material';
-import { convertStatusColor, convertStatus } from 'utils/convertResponse';
+import { convertStatusColor, convertStatus } from 'utils/ConvertResponse';
 import Iconify from 'components/common/Iconify/Iconify';
 import CustomModal from 'components/CustomModal/CustomModal';
 import { useToggle } from 'hooks/useToggle';

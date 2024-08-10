@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as S from '../../../components/common/Components.styles';
@@ -16,10 +16,6 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
   const handleLike = () => {
     setLike(!like);
   };
-
-  useEffect(() => {
-    console.log('info', info);
-  }, [info]);
 
   return (
     <div
@@ -64,6 +60,16 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
               sx={{ width: '20px', height: '20px' }}
             />
           </IconButton>
+          {/* {(userRole === 'MEMBER' || userRole === null) && (
+            <IconButton>
+              <Iconify
+                icon={like ? 'gridicons:heart' : 'gridicons:heart-outline'}
+                onClick={handleLike}
+                color={like ? colors.primary : colors.grey01}
+                sx={{ width: '20px', height: '20px' }}
+              />
+            </IconButton>
+          )} */}
           <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <Iconify
               icon="bi:person"

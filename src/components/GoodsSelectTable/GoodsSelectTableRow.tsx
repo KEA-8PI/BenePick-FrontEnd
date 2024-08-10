@@ -7,7 +7,7 @@ import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import { ColorBox } from 'components/common/Components.styles';
 import { useNavigate } from 'react-router-dom';
-import { convertResponse } from 'utils/convertResponse';
+import { convertResponse } from 'utils/ConvertResponse';
 
 const GoodsSelectTableRow: React.FC<GoodsSelectTableRowProps> = ({
   id,
