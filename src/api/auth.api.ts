@@ -1,4 +1,3 @@
-import api from './api';
 import httpApi from './http.api';
 
 export const PostLogin = async (id: string, password: string) => {

@@ -1,7 +1,7 @@
-import api from './api';
+import httpApi from './http.api';
 
 export const PostImage = (data: FormData) => {
-  return api.post('/image', data, {
+  return httpApi.post('/image', data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
