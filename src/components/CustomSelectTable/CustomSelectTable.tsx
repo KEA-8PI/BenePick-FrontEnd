@@ -1,22 +1,29 @@
-// @ts-nocheck
-
 import { Card, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
 import SelectTableHeader from './SelectTableHeader';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SelectTableToolbar from './SelectTableToolbar';
 import SelectTableRow from './SelectTableRow';
 
-const CustomSelectTable = () => {
-  const [rowData, setRowData] = useState([
-    { id: 'alex.js', date: '2021-10-10', point: 5, content: 'This is a test1' },
-    { id: 'bamb.kim', date: '2021-10-10', point: 5, content: 'This is a test2' },
-    { id: 'hello.js', date: '2021-10-10', point: 5, content: 'This is a test3' },
-  ]);
+const CustomSelectTable = ({
+  headList,
+  rowData,
+  isModify,
+  setIsModify,
+  setRowData,
+  selected,
+  setSelected,
+}: {
+  headList: { [key: string]: string }[];
+  rowData: { [key: string]: string | number }[];
+  isModify: string;
+  setIsModify: React.Dispatch<React.SetStateAction<string>>;
+  setRowData: React.Dispatch<React.SetStateAction<{ [key: string]: string | number }[]>>;
+  selected: any[];
+  setSelected: React.Dispatch<React.SetStateAction<any[]>>;
+}) => {
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-
-  const [selected, setSelected] = useState([]);
 
   const [orderBy, setOrderBy] = useState('name');
 
@@ -32,19 +39,19 @@ const CustomSelectTable = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rowData.map((n) => n.id);
+      const newSelected = rowData.filter((a) => a.id !== '').map((n) => n.id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const handleClick = (event: React.ChangeEvent<HTMLInputElement>, name: string | number) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, name.toString());
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -65,37 +72,40 @@ const CustomSelectTable = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
+  const paginatedRowData = rowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
   return (
-    <Card>
+    <Card sx={{ borderRadius: '10px' }}>
       <SelectTableToolbar numSelected={selected.length} />
       <TableContainer sx={{ overflow: 'unset' }}>
         <Table sx={{ minWidth: 800 }}>
           <SelectTableHeader
             order={order}
             orderBy={orderBy}
-            rowCount={rowData.length}
+            rowCount={isModify === 'null' ? rowData.length - 1 : rowData.length}
             numSelected={selected.length}
             onRequestSort={handleSort}
             onSelectAllClick={handleSelectAllClick}
-            headLabel={[
-              { id: 'content', label: 'Content' },
-              { id: 'id', label: '아이디' },
-              { id: 'date', label: 'Date' },
-              { id: 'point', label: 'Point', align: 'center' },
-            ]}
+            headLabel={headList.map((head) => {
+              const key = Object.keys(head)[0];
+              return { id: head[key], label: key };
+            })}
           />
           <TableBody>
-            {rowData.map((row) => (
+            {paginatedRowData.map((row) => (
               <SelectTableRow
                 key={row.id}
-                content={row.content}
+                id={row.id}
                 selected={selected.indexOf(row.id) !== -1}
-                handleClick={(event) => handleClick(event, row.id)}
-                columns={[
-                  { id: '아이디', label: row.id, type: 'string' },
-                  { id: 'date', label: row.date, type: 'string' },
-                  { id: 'point', label: row.point, type: 'number' },
-                ]}
+                handleClick={(event: React.ChangeEvent<HTMLInputElement>) => handleClick(event, row.id)}
+                columns={headList.map((head) => {
+                  const key = Object.keys(head)[0];
+                  return { id: head[key], label: row[head[key] as keyof typeof row] };
+                })}
+                isModify={isModify === 'null' ? row.id === '' : isModify === row.id}
+                setIsModify={setIsModify}
+                rowData={rowData}
+                setRowData={setRowData}
               />
             ))}
           </TableBody>
@@ -104,8 +114,7 @@ const CustomSelectTable = () => {
       <TablePagination
         page={page}
         component="div"
-        count={rowData.length}
-        // count={5}
+        count={isModify === 'null' ? rowData.length - 1 : rowData.length}
         rowsPerPage={rowsPerPage}
         onPageChange={handleChangePage}
         rowsPerPageOptions={[5, 10, 25]}

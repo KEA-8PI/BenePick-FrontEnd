@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Button } from '@mui/material';
 import colors from 'theme/variableColors';
 
 // Header.styles.ts
@@ -75,12 +76,21 @@ export const CardLightFont = styled.div`
 `;
 
 export const ColorBox = styled.div`
-  width: 60px;
+  width: 80px;
   height: 30px;
   border-radius: 10px;
-  display: 'flex';
-  justify-content: 'center';
-  align-items: 'center';
-  text-align: 'center';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
   background-color: ${({ color }: { color: string }) => color};
+`;
+
+export const CustomButton = styled(Button)`
+  width: ${({ width }: { width?: string }) => (width ? `${width}` : '81px')};
+  border-radius: 3px;
+  background-color: ${colors.buttonPink};
+  height: 28px;
+  color: black;
 `;

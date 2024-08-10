@@ -24,7 +24,7 @@ const SelectTableHeader: React.FC<SelectTableHeadProps> = ({
   };
 
   return (
-    <TableHead sx={{ bgcolor: colors.tableGrey, '& .MuiTableCell-root': { paddingTop: '5px', paddingBottom: '5px' } }}>
+    <TableHead sx={{ bgcolor: colors.tableGrey, '& .MuiTableCell-root': { paddingTop: '7px', paddingBottom: '7px' } }}>
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
@@ -35,6 +35,9 @@ const SelectTableHeader: React.FC<SelectTableHeadProps> = ({
               '&.MuiCheckbox-indeterminate': {
                 color: colors.primary,
               },
+              '&.Mui-checked': {
+                color: colors.primary,
+              },
             }}
           />
         </TableCell>
@@ -42,7 +45,7 @@ const SelectTableHeader: React.FC<SelectTableHeadProps> = ({
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.align || 'left'}
+            align={'center'}
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ width: headCell.width, minWidth: headCell.minWidth }}
           >

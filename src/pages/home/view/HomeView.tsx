@@ -1,5 +1,5 @@
 import * as S from 'components/common/Components.styles';
-import SelectCategory from 'components/select/SelectCategory';
+import SelectCategory from 'components/selectCategory/SelectCategory';
 import SearchBar from 'components/searchbar/SearchBar';
 import CustomTab from 'components/tab/CustomTab';
 import HomeCardList from 'pages/home/components/HomeCardList';

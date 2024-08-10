@@ -1,9 +1,11 @@
 import { Avatar, Divider, Typography } from '@mui/material';
-import { CustomModal } from 'components/CustomModal/CustomModal';
+import CustomModal from 'components/CustomModal/CustomModal';
 import CustomTable from 'components/CustomTable/CustomTable';
+import { ChangePwdModal } from 'components/changePwdModal/ChangePwdModal';
 import * as S from 'components/common/Components.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 import { useToggle } from 'hooks/useToggle';
+import { useState } from 'react';
 import colors from 'theme/variableColors';
 
 const MemberInfoPage = () => {
@@ -13,16 +15,60 @@ const MemberInfoPage = () => {
   const modalConfig = {
     open: changePwdToggle.isOpen,
     onClose: changePwdToggle.toggle,
-    contents: <Typography>비밀번호가 변경되었습니다.</Typography>,
-    buttons: { label: '닫기', action: changePwdToggle.toggle },
+    buttonAction: changePwdConfirmToggle.toggle,
   };
+
+  const confirmModalConfig = {
+    open: changePwdConfirmToggle.isOpen,
+    onClose: changePwdConfirmToggle.toggle,
+    contents: <Typography>비밀번호가 변경되었습니다.</Typography>,
+  };
+
+  const [rowData, setRowData] = useState([
+    {
+      date: '2021-10-15',
+      change: '-50',
+      content: 'MacBook Pro 14',
+      totalPoint: 950,
+      category: '전자기기',
+      point: 1000,
+      result: '당첨',
+    },
+    {
+      date: '2021-10-19',
+      change: '+50',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '여행/티켓',
+      point: 512,
+      result: '미당첨',
+    },
+    {
+      date: '2021-10-10',
+      change: '+500',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '문화생활',
+      point: 120,
+      result: '노쇼',
+    },
+    {
+      date: '2021-10-10',
+      change: '+500',
+      content: 'MacBook Pro 14',
+      totalPoint: 1000,
+      category: '문화생활',
+      point: 120,
+      result: '취소',
+    },
+  ]);
 
   return (
     <div style={{ padding: '0 10%' }}>
       <S.Row width={100}>
-        <S.ShadowBox width={31}>
+        <S.ShadowBox width={25} padding={'3%'}>
           <Avatar
-            src={'https://raw.githubusercontent.com/alexjskim/alexjskim/main/alexjskim.jpg '}
+            src={'https://img.khan.co.kr/news/2017/01/02/l_2017010301000210000020622.jpg'}
             sx={{ width: 100, height: 100 }}
           />
           <div>
@@ -36,7 +82,7 @@ const MemberInfoPage = () => {
             </S.Row>
           </div>
         </S.ShadowBox>
-        <S.ShadowBox width={66}>
+        <S.ShadowBox width={60}>
           <S.Row width={70} style={{ height: '100%', alignItems: 'center' }}>
             <div style={{ alignItems: 'center', width: '30%', display: 'flex', flexDirection: 'column' }}>
               <Typography variant="h6" sx={{ mb: '15%' }}>
@@ -85,14 +131,19 @@ const MemberInfoPage = () => {
       </Typography>
       <CustomTable
         headList={[{ 날짜: 'date' }, { 내역: 'content' }, { 변동: 'change' }, { '총 포인트': 'totalPoint' }]}
+        isPaging={true}
+        rowData={rowData}
       />
       <Typography variant="h5" style={{ margin: '80px 0 15px 0' }}>
         패널티 내역
       </Typography>
       <CustomTable
         headList={[{ 날짜: 'date' }, { 내역: 'content' }, { 변동: 'change' }, { '잔여 패널티': 'totalPoint' }]}
+        isPaging={true}
+        rowData={rowData}
       />
-      <CustomModal modalConfig={modalConfig} />
+      <ChangePwdModal modalConfig={modalConfig} />
+      <CustomModal modalConfig={confirmModalConfig} />
     </div>
   );
 };

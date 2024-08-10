@@ -3,12 +3,19 @@ import { Container, Box, Button, IconButton, Stack, Modal, Typography, TextField
 import * as S from './CustomModal.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 
-export const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
+const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
   const { buttons, size, open, onClose, contents } = modalConfig;
 
   if (!open) {
     return null;
   }
+
+  const clickButton = () => {
+    if (buttons) {
+      buttons.action();
+    }
+    onClose();
+  };
 
   return (
     <Modal
@@ -29,21 +36,24 @@ export const CustomModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
             justifyContent: 'center',
             alignItems: 'center',
             display: 'flex',
-            backgroundColor: 'grey',
             height: '63%',
           }}
         >
           {contents}
         </Box>
         {buttons ? (
-          <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-around' }}>
+          <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-around', padding: '0 7%' }}>
             <S.LeftButton onClick={onClose}>취소</S.LeftButton>
-            <S.RightButton onClick={buttons.action}>{buttons.label}</S.RightButton>
+            <S.RightButton onClick={clickButton}>{buttons.label}</S.RightButton>
           </Stack>
         ) : (
-          <S.RightButton onClick={close}>확인</S.RightButton>
+          <div style={{ justifyContent: 'center', display: 'flex' }}>
+            <S.RightButton onClick={onClose}>확인</S.RightButton>
+          </div>
         )}
       </S.Wrapper>
     </Modal>
   );
 };
+
+export default CustomModal;

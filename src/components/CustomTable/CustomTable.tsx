@@ -1,16 +1,18 @@
 import { Card, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
 import TableHeader from './TableHeader';
 import { useState } from 'react';
-import SelectTableRow from './CustomTableRow';
+import CustomTableRow from './CustomTableRow';
 
-const CustomSelectTable = ({ headList, isPaging }: { headList: { [key: string]: string }[]; isPaging?: boolean }) => {
-  const [rowData, setRowData] = useState([
-    { date: '2021-10-15', change: '-50', content: 'This is a test1', totalPoint: 950 },
-    { date: '2021-10-19', change: '+50', content: 'This is a test2', totalPoint: 1000 },
-    { date: '2021-10-10', change: '+500', content: 'This is a test3', totalPoint: 1000 },
-  ]);
+const CustomTable = ({
+  rowData,
+  headList,
+  isPaging,
+}: {
+  rowData: { [key: string]: string | number }[];
+  headList: { [key: string]: string }[];
+  isPaging?: boolean;
+}) => {
   const [page, setPage] = useState(0);
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -21,6 +23,10 @@ const CustomSelectTable = ({ headList, isPaging }: { headList: { [key: string]: 
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
   };
+
+  const paginatedRowData = Array.isArray(rowData)
+    ? rowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    : [];
 
   return (
     <Card sx={{ borderRadius: '10px' }}>
@@ -33,11 +39,10 @@ const CustomSelectTable = ({ headList, isPaging }: { headList: { [key: string]: 
             })}
           />
           <TableBody>
-            {rowData.map((row, index) => (
-              <SelectTableRow
-                key={row.content}
+            {paginatedRowData.map((row, index) => (
+              <CustomTableRow
+                key={index} // Changed key to use index instead of row.content
                 index={index}
-                totalNum={rowData.length}
                 columns={headList.map((head) => {
                   const key = Object.keys(head)[0];
                   return { id: head[key], label: row[head[key] as keyof typeof row] };
@@ -62,4 +67,4 @@ const CustomSelectTable = ({ headList, isPaging }: { headList: { [key: string]: 
   );
 };
 
-export default CustomSelectTable;
+export default CustomTable;
