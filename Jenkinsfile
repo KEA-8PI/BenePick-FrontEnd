@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/KEA-8PI/BenePick-Frontend.git'
+                git branch: 'API-306-separate-jenkins-and-deploy-server', credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/KEA-8PI/BenePick-Frontend.git'
             }
         }
         stage('Build Docker Image') {
@@ -33,19 +33,22 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploy to Remote Server') {
             steps {
                 script {
-                    docker.withRegistry("https://${DOCKER_REGISTRY}", "${REGISTRY_CREDENTIALS_ID}") {
+                    sshagent(["${SSH_CREDENTIALS_ID}"]) {
                         sh """
-                        docker pull ${DOCKER_IMAGE}
-                        docker stop ${IMAGE_NAME} || true
-                        docker rm ${IMAGE_NAME} || true
-                        docker run -d --restart unless-stopped --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_IMAGE}
+                        ssh -o StrictHostKeyChecking=no -t ${REMOTE_SERVER} << EOF
+                            docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
+                            docker pull ${DOCKER_IMAGE}
+                            docker stop ${IMAGE_NAME} || true
+                            docker rm ${IMAGE_NAME} || true
+                            docker run -d --restart unless-stopped --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_IMAGE}
+EOF
                         """
                     }
                 }
             }
-        }   
+        }
     }
 }
