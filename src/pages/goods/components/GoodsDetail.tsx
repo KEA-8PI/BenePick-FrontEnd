@@ -7,13 +7,28 @@ import GoodsDetailTab from './tab/GoodsDetailTab';
 import RaffleCurrentInfoView from './tab/raffleCurrentInfo/RaffleCurrentInfoView';
 import RaffleNotice from './tab/raffleNotice/RaffleNotice';
 import DrawOutcomeView from './tab/drawOutcome/DrawOutcomeView';
+import { CustomCardData } from 'components/CustomCard/CustomCard.types';
+import { GetGoodsInfo } from 'api/goods.api';
 
 const GoodsDetail = ({ info }): ReactElement => {
+  const [goodsInfo, setGoodsInfo] = useState<CustomCardData | null>(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    console.log('status', info.goodsStatus);
-    console.log('info', info);
-    console.log('상품 상태: ', info.goodsStatus);
-  }, [info]);
+    // 상품 정보를 가져오는 API 호출
+    GetGoodsInfo(info.id)
+      .then((res) => {
+        const goodsInfo = res.data.result;
+        setGoodsInfo(res.data.result);
+        setLoading(false); // 데이터 로딩이 완료되면 상태 변경
+
+        console.log('goodsInfo:', goodsInfo);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false); // 데이터 로딩 실패 시 상태 변경
+      });
+  }, [info.id]);
 
   const [like, setLike] = useState(false);
 
@@ -28,19 +43,27 @@ const GoodsDetail = ({ info }): ReactElement => {
     scrollRefs.current = [];
   }
 
+  if (loading) {
+    return <div>Loading...</div>; // 로딩 화면 표시 필요
+  }
+
+  if (!goodsInfo) {
+    return <div>No data available</div>; // 404 화면 표시
+  }
+
   return (
     <S.Wrapper>
       {/* 상품 이미지, 상품 정보 */}
       <S.Row style={{ justifyContent: 'flex-start' }}>
-        <LeftDetailContents info={info} />
+        <LeftDetailContents info={goodsInfo} />
 
         {/* 설명란 */}
         <div style={{ paddingLeft: '150px' }}>
-          <RightDetailContents info={info} like={like} handleLike={handleLike} />
+          <RightDetailContents info={goodsInfo} like={like} handleLike={handleLike} />
 
           {/* 버튼 */}
           <S.Row style={{ paddingTop: '30px', justifyContent: 'flex-end' }}>
-            <ButtonView goodsStatus={info.goodsStatus} />
+            <ButtonView info={goodsInfo} goodsStatus={goodsInfo.goodsStatus} />
           </S.Row>
         </div>
       </S.Row>
@@ -50,13 +73,17 @@ const GoodsDetail = ({ info }): ReactElement => {
 
       {/* 탭 내용 */}
       <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-        <RaffleCurrentInfoView ref={(el) => (scrollRefs.current[0] = el)} goodsStatus={info.goodsStatus} />
+        <RaffleCurrentInfoView ref={(el) => (scrollRefs.current[0] = el)} goodsStatus={goodsInfo.goodsStatus} />
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-        <DrawOutcomeView ref={(el) => (scrollRefs.current[1] = el)} goodsStatus={info.goodsStatus} info={info} />
+        <DrawOutcomeView
+          ref={(el) => (scrollRefs.current[1] = el)}
+          goodsStatus={goodsInfo.goodsStatus}
+          info={goodsInfo}
+        />
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-        <RaffleNotice ref={(el) => (scrollRefs.current[2] = el)} goodsStatus={info.goodsStatus} />
+        <RaffleNotice ref={(el) => (scrollRefs.current[2] = el)} goodsStatus={goodsInfo.goodsStatus} />
       </div>
     </S.Wrapper>
   );
