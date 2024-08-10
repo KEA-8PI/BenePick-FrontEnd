@@ -12,12 +12,21 @@ const a11yProps = (index: number) => {
   };
 };
 
-const CustomTab: React.FC<TabsProps> = ({ tabs, showTabTitle, showFilter }) => {
+const CustomTab: React.FC<TabsProps> = ({ tabs, showTabTitle, showFilter, callGetAPI, setState, dtoName }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newIndex: number) => {
-    console.log('탭 변경:', tabs[newIndex].label);
+    // console.log('탭 변경:', tabs[newIndex].label);
     setValue(newIndex);
+    callGetAPI[newIndex]()
+      .then((res) => {
+        const response = dtoName ? res.data.result[dtoName[newIndex]] : '';
+        console.log('API 호출 결과:', res.data.result[dtoName[newIndex]]);
+        setState[newIndex](res.data.result[dtoName[newIndex]]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

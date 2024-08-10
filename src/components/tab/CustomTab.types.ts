@@ -5,10 +5,15 @@ export interface TabData {
   tabTitle?: string; // 탭 하단에 제목을 표시하기 위한 prop 추가
 }
 
+import { AxiosResponse } from 'axios';
+
 export interface TabsProps {
   tabs: TabData[];
   showTabTitle?: boolean; // HomeFilter 표시 여부를 결정하는 prop 추가
   showFilter?: boolean;
+  callGetAPI?: (() => Promise<AxiosResponse<any, any>>)[];
+  setState?: React.Dispatch<React.SetStateAction<any>>[];
+  dtoName?: string[];
 }
 
 export interface TabPanelProps {

@@ -54,7 +54,7 @@ const RightDetailContents = ({ info }: { info: CustomCardData; like?: boolean; h
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={5}>
             <Paper sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <Typography sx={{ p: 2 }}>{info.description}</Typography>
+              <Typography sx={{ p: 2, whiteSpace: 'pre-wrap' }}>{info.description}</Typography>
               <Button onClick={handleClose} style={{ color: colors.grey01, alignSelf: 'flex-end', bottom: 0 }}>
                 닫기
               </Button>

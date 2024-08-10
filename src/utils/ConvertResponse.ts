@@ -44,3 +44,23 @@ export const convertStatusColor = (status: string) => {
   };
   return StatusColor[status];
 };
+
+export const convertGoodsStatus = (status: string) => {
+  const GoodsStatusJson = {
+    PROGRESS: '진행',
+    SCHEDULED: '예정',
+    COMPLETED: '종료',
+  };
+  return GoodsStatusJson[status];
+};
+
+export const convertGoodsStatusColor = (status: string) => {
+  switch (status) {
+    case 'PROGRESS':
+      return colors.primary;
+    case 'SCHEDULED':
+      return colors.tertiary;
+    case 'COMPLETED':
+      return colors.pinkGrey;
+  }
+};
