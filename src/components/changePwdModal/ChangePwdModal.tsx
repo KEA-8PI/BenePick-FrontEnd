@@ -7,6 +7,8 @@ import colors from 'theme/variableColors';
 import { useEffect, useState } from 'react';
 import { ConnectingAirportsOutlined, Visibility, VisibilityOff } from '@mui/icons-material';
 import { Container, PasswordInput } from './ChangePwdModal.styles';
+import { PatchPassword } from 'api/members.api';
+import { GetPointHists } from 'api/pointHists.api';
 
 export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
   const { open, onClose, buttonAction } = modalConfig;
@@ -18,6 +20,9 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
   const [passwordCheck, setPasswordCheck] = useState('');
   const [isValidatePassword, setIsValidatePassword] = useState(false);
   const [isValidatePasswordCheck, setIsValidatePasswordCheck] = useState(false);
+
+  const [pointHistPage, setPointHistPage] = useState(0);
+  const [penaltyHistPage, setPenaltyHistPage] = useState(0);
 
   const handleClickShowPassword = (change: React.Dispatch<React.SetStateAction<boolean>>) => {
     return () => {
@@ -50,9 +55,32 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
 
   const clickConfirmButton = () => {
     // 비밀번호 재설정 api 호출
+    PatchPassword(password).then((res) => {
+      console.log('비밀번호 변경 성공', res);
+    });
     buttonAction();
     onClose();
   };
+
+  useEffect(() => {
+    GetPointHists(pointHistPage, 25)
+      .then((res) => {
+        console.log('포인트 내역', res);
+      })
+      .catch((err) => {
+        console.log('포인트 내역 에러', err);
+      });
+  }, [pointHistPage]);
+
+  useEffect(() => {
+    GetPointHists(penaltyHistPage, 25)
+      .then((res) => {
+        console.log('패널티 내역', res);
+      })
+      .catch((err) => {
+        console.log('패널티 내역 에러', err);
+      });
+  }, [penaltyHistPage]);
 
   if (!open) {
     return null;
@@ -77,6 +105,13 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
           <Row width={90} style={{ alignItems: 'center' }}>
             <Typography style={{ fontSize: '13px', fontWeight: '600' }}>새 비밀번호</Typography>
             <div style={{ width: 'auto', alignItems: 'center', display: 'flex' }}>
+              {password.length !== 0 && (
+                <Iconify
+                  icon={isValidatePassword ? 'icon-park-outline:check-one' : 'akar-icons:circle-x'}
+                  color={isValidatePassword ? '#49CC92' : colors.primary}
+                  sx={{ width: '18px', height: '18px', marginRight: '5px' }}
+                />
+              )}
               <PasswordInput
                 // sx={{
                 //   width: '70%',
@@ -104,13 +139,6 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
                   ),
                 }}
               />
-              {password.length !== 0 && (
-                <Iconify
-                  icon={isValidatePassword ? 'icon-park-outline:check-one' : 'akar-icons:circle-x'}
-                  color={isValidatePassword ? '#49CC92' : colors.primary}
-                  sx={{ width: '18px', height: '18px', marginLeft: '5px' }}
-                />
-              )}
             </div>
           </Row>
           <Typography
@@ -121,6 +149,13 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
           <Row width={90} style={{ alignItems: 'center' }}>
             <Typography style={{ fontSize: '13px', fontWeight: '600' }}>비밀번호 확인</Typography>
             <div style={{ width: 'auto', alignItems: 'center', display: 'flex' }}>
+              {passwordCheck.length !== 0 && (
+                <Iconify
+                  icon={isValidatePasswordCheck ? 'icon-park-outline:check-one' : 'akar-icons:circle-x'}
+                  color={isValidatePasswordCheck ? '#49CC92' : colors.primary}
+                  sx={{ width: '18px', height: '18px', marginRight: '5px' }}
+                />
+              )}
               <PasswordInput
                 // sx={{
                 //   width: '70%',
@@ -148,13 +183,6 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
                   ),
                 }}
               />
-              {passwordCheck.length !== 0 && (
-                <Iconify
-                  icon={isValidatePasswordCheck ? 'icon-park-outline:check-one' : 'akar-icons:circle-x'}
-                  color={isValidatePasswordCheck ? '#49CC92' : colors.primary}
-                  sx={{ width: '18px', height: '18px', marginLeft: '5px' }}
-                />
-              )}
             </div>
           </Row>
         </Container>
