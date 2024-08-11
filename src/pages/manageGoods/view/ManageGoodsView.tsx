@@ -66,7 +66,9 @@ const ManageGoodsView = () => {
     GetGoodsList(apiPage, 25, searchTerm)
       .then((res) => {
         console.log('Get 상품 목록 response:', res.data.result.goodsDTOList);
-        setRowData(formatData(res.data.result.goodsDTOList));
+        apiPage === 0
+          ? setRowData(formatData(res.data.result.goodsDTOList))
+          : setRowData((prev) => [...prev, formatData(res.data.result.goodsDTOList)]);
       })
       .catch((err) => {
         console.error('Get 상품 목록 error:', err);
