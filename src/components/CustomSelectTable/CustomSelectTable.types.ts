@@ -7,12 +7,9 @@ export interface HeadLabel {
 }
 
 export interface SelectTableHeadProps {
-  order: 'asc' | 'desc';
-  orderBy: string;
   rowCount: number;
   headLabel: HeadLabel[];
   numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
