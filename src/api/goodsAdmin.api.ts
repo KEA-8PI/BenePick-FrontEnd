@@ -1,6 +1,6 @@
 import httpApi from './http.api';
 
-export const PostGoodsUpload = (data) => {
+export const PostGoodsUpload = (data: FormData) => {
   return httpApi.post('/goods/upload', data, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -23,6 +23,6 @@ export const GetGoodsList = (page: number, size: number, keyword?: string) => {
   return httpApi.get(url);
 };
 
-export const DeleteGoods = (goodsIdList) => {
+export const DeleteGoods = (goodsIdList: number[]) => {
   return httpApi.delete(`/goods/delete?deleteList=${goodsIdList}`);
 };
