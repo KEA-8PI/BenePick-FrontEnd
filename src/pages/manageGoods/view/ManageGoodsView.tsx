@@ -13,24 +13,14 @@ import { formatData } from '../utils/formatData';
 
 const ManageGoodsView = () => {
   const [rowData, setRowData] = useState([]);
-  useEffect(() => {
-    GetGoodsList(0, 25)
-      .then((res) => {
-        console.log('Get 상품 목록 response:', res.data.result.goodsDTOList);
+  const [apiPage, setApiPage] = useState(0);
 
-        setRowData(formatData(res.data.result.goodsDTOList));
-      })
-      .catch((err) => {
-        console.error('Get 상품 목록 error:', err);
-      });
-  }, []);
   const navigate = useNavigate();
 
   const deleteToggle = useToggle();
   const confirmToggle = useToggle();
 
   const [search, setSearch] = useState('');
-  const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<number[]>([]);
 
   const modalConfig = {
@@ -50,9 +40,11 @@ const ManageGoodsView = () => {
     PostGoodsUpload(formData)
       .then((res) => {
         console.log('Post 상품 추가 response:', res);
+        window.location.reload();
       })
       .catch((err) => {
         console.error('Post 상품 추가 error:', err);
+        alert('상품 추가에 실패했습니다. 올바른 형식을 사용했는지 확인해주세요.');
       });
   };
 
@@ -70,16 +62,24 @@ const ManageGoodsView = () => {
     confirmToggle.toggle();
   };
 
-  const handleSearch = () => {
-    GetGoodsList(0, 25, search)
+  const fetchGoodsList = (apiPage: number, searchTerm = '') => {
+    GetGoodsList(apiPage, 25, searchTerm)
       .then((res) => {
-        console.log('Get 검색 결과 response:', res.data.result.goodsDTOList);
-
+        console.log('Get 상품 목록 response:', res.data.result.goodsDTOList);
         setRowData(formatData(res.data.result.goodsDTOList));
       })
       .catch((err) => {
-        console.error('Get 검색 결과 error:', err);
+        console.error('Get 상품 목록 error:', err);
       });
+  };
+
+  useEffect(() => {
+    fetchGoodsList(apiPage, search);
+  }, [apiPage, search]);
+
+  const handleSearch = () => {
+    setApiPage(0); // Reset to first apiPage on new search
+    fetchGoodsList(0, search);
   };
 
   return (
@@ -126,6 +126,8 @@ const ManageGoodsView = () => {
           setRowData={setRowData}
           selected={selected}
           setSelected={setSelected}
+          apiPage={apiPage}
+          setApiPage={setApiPage}
         />
         <S.Row style={{ width: '100%', justifyContent: 'flex-end', marginTop: '20px' }}>
           <S.CustomButton sx={{ mr: '1%' }} onClick={() => deleteToggle.toggle()} disabled={selected.length === 0}>
