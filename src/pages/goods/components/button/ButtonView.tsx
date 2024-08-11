@@ -5,7 +5,7 @@ import RaffleResultButton from './RaffleResultButton';
 const ButtonView = ({ info, goodsStatus }) => {
   return (
     <div>
-      {goodsStatus === 'PROGRESS' && <RaffleButton />}
+      {goodsStatus === 'PROGRESS' && <RaffleButton info={info} />}
       {goodsStatus === 'SCHEDULED' && <RaffleBeforeButton />}
       {goodsStatus === 'COMPLETED' && <RaffleResultButton info={info} />}
     </div>

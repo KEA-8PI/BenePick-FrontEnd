@@ -14,6 +14,7 @@ const httpApi = axios.create({
       'Content-Type': 'application/json',
     },
   },
+  withCredentials: true, // 쿠키 기반 인증
 });
 
 export default httpApi;

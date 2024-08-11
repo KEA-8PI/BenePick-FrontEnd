@@ -17,7 +17,14 @@ const TableHeader: React.FC<TableHeadProps> = ({ headLabel }) => {
           <TableCell
             key={headCell.id}
             align={headCell.align || 'center'}
-            sx={{ width: headCell.width, minWidth: headCell.minWidth, fontWeight: 'bold' }}
+            sx={{
+              width: headCell.width,
+              minWidth: headCell.minWidth,
+              fontWeight: 'bold',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
           >
             {headCell.label}
           </TableCell>
