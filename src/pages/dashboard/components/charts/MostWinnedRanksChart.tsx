@@ -2,20 +2,28 @@ import PieChart from 'components/pieChart/PieChart';
 import colors from 'theme/variableColors';
 
 const MostWinnedRanks = ({ data }) => {
-  const legendData = [
-    { name: '1등', icon: 'circle' },
-    { name: '2등', icon: 'circle' },
-    { name: '3등', icon: 'circle' },
-    { name: '4등', icon: 'circle' },
-    { name: '5등', icon: 'circle' },
-  ];
-  const seriesData = [
-    { value: data.mostWinnedRanks[0], name: '1등', itemStyle: { color: colors.primary } },
-    { value: data.mostWinnedRanks[1], name: '2등', itemStyle: { color: colors.secondary } },
-    { value: data.mostWinnedRanks[2], name: '3등', itemStyle: { color: colors.tertiary } },
-    { value: data.mostWinnedRanks[3], name: '4등', itemStyle: { color: colors.buttonPink } },
-    { value: data.mostWinnedRanks[4], name: '5등', itemStyle: { color: colors.tablePink } },
-  ];
+  const colorMap = [colors.primary, colors.secondary, colors.tertiary, colors.buttonPink, colors.tablePink];
+
+  // mostWinnedRanks 데이터를 기반으로 legendData와 seriesData 생성
+  const mostWinnedRanks = data.mostWinnedRanks;
+
+  const legendData = mostWinnedRanks.map((item, index) => {
+    const rank = Object.keys(item)[index];
+    return {
+      name: `${rank}등`,
+      icon: 'circle',
+    };
+  });
+
+  const seriesData = mostWinnedRanks.map((item, index) => {
+    const rank = Object.keys(item)[index];
+    const value = item[rank];
+    return {
+      value: value,
+      name: `${rank}등`,
+      itemStyle: { color: colorMap[index % colorMap.length] },
+    };
+  });
 
   return <PieChart legendData={legendData} seriesData={seriesData} />;
 };
