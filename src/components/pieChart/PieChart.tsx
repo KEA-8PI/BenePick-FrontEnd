@@ -42,7 +42,7 @@ const PieChart = ({ legendData, seriesData }) => {
       const { width, height } = chartRef.current.getBoundingClientRect();
       console.log(`Chart width: ${width}px, height: ${height}px`);
     }
-  }, []);
+  }, [legendData, seriesData]);
 
   return <div ref={chartRef} style={{ width: '100%', height: '100%' }} />;
 };
