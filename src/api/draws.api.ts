@@ -15,3 +15,7 @@ export const PatchDrawsWinner = (winnersId: number, status) => {
 export const GetDrawVerification = (goodsId: number, seed: string) => {
   return httpApi.get(`/draws/verification/${goodsId}`, { params: { seed } });
 };
+
+export const GetDrawList = (goodsId: number) => {
+  return httpApi.get(`/draws/result/${goodsId}`);
+};
