@@ -1,8 +1,8 @@
-import api from './api';
+import httpApi from './http.api';
 
 export const GetMemberList = async () => {
   try {
-    const response = await api.get('/member/list');
+    const response = await httpApi.get('/member/list');
     console.log('Get 멤버 목록 response:', response);
     return response;
   } catch (error) {
@@ -11,7 +11,7 @@ export const GetMemberList = async () => {
 };
 
 export const PostMemberPointUpload = async (data) => {
-  return api.post('/member/point/upload', data, {
+  return httpApi.post('/member/point/upload', data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -19,7 +19,7 @@ export const PostMemberPointUpload = async (data) => {
 };
 
 export const PostMemberUpload = async (data) => {
-  return api.post('/member/add/upload', data, {
+  return httpApi.post('/member/add/upload', data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -27,12 +27,12 @@ export const PostMemberUpload = async (data) => {
 };
 
 export const PostMemberAdd = async (data) => {
-  return api.post('/member/add', data);
+  return httpApi.post('/member/add', data);
 };
 
 export const PatchMemberModify = async (
   memberId,
   data: { id: string; deptName: string; name: string; point: number; penaltyCnt: number; role: string },
 ) => {
-  return api.patch(`/member/info/${memberId}`, data);
+  return httpApi.patch(`/member/info/${memberId}`, data);
 };

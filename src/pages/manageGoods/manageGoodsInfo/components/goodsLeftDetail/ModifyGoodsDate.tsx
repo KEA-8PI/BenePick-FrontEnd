@@ -7,6 +7,7 @@ import { formatDate } from 'components/date/Date';
 import { useEffect, useState } from 'react';
 import DateCalendar from 'components/dateCalendar/DateCalendar';
 import { GoodsInfoData } from '../../goodsInfo/GoodsInfo.types';
+import { formatDateSecond } from 'pages/manageGoods/utils/formatData';
 
 const ModifyGoodsDate = ({
   raffleStartAt,
@@ -19,19 +20,14 @@ const ModifyGoodsDate = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // useEffect(() => {
-  //   console.log('raffleStartAt', raffleStartAt);
-  //   console.log('raffleEndAt', raffleEndAt);
-  // }, [raffleStartAt, raffleEndAt]);
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
       <IconButton sx={{ marginRight: '8px' }} onClick={() => setIsOpen(!isOpen)}>
         <Iconify icon="lets-icons:date-range" sx={{ width: '20px', height: '20px', color: colors.grey01 }} />
       </IconButton>
       <S.Wrapper>
-        <C.CardLightFont>{formatDate(raffleStartAt)}</C.CardLightFont>
-        <C.CardLightFont>~{formatDate(raffleEndAt)}</C.CardLightFont>
+        <C.CardLightFont>{formatDateSecond(raffleStartAt)}</C.CardLightFont>
+        <C.CardLightFont>~{formatDateSecond(raffleEndAt)}</C.CardLightFont>
       </S.Wrapper>
       <DateCalendar
         isOpen={isOpen}

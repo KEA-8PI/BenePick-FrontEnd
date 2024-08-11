@@ -5,6 +5,7 @@ import colors from 'theme/variableColors';
 import { TableRowProps } from './CustomTable.types';
 import { ColorBox } from 'components/common/Components.styles';
 import { convertResponse } from 'utils/ConvertResponse';
+import { formatDateTime } from 'pages/manageGoods/utils/formatData';
 
 const ResultColor = {
   WINNER: colors.mint,
@@ -21,7 +22,7 @@ const CustomTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
       {columns.map((column) => (
         // label이 상품일 시 상품명을 클릭하면 상품 상세 페이지로 이동하게 추가
         <TableCell key={column.label} align={'center'}>
-          {column.id === 'change' || column.id === 'result' || column.id === 'status' ? (
+          {column.id === 'change' || column.id === 'result' || column.id === 'status' || column.id === 'rafflesAt' ? (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               {column.id === 'change' && (
                 <ColorBox color={column.label[0] === '-' ? colors.buttonPink : colors.mint}>{column.label}</ColorBox>
@@ -30,6 +31,7 @@ const CustomTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
                 <ColorBox color={ResultColor[column.label]}>{convertResponse(column.label.toString())}</ColorBox>
               )}
               {column.id === 'status' && <ColorBox color={colors.lemon}>{column.label}순위</ColorBox>}
+              {column.id === 'rafflesAt' && formatDateTime(column.label)}
             </div>
           ) : (
             column.label

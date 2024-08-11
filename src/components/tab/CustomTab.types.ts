@@ -9,6 +9,9 @@ export interface TabsProps {
   tabs: TabData[];
   showTabTitle?: boolean; // HomeFilter 표시 여부를 결정하는 prop 추가
   showFilter?: boolean;
+  callGetAPI?: Array<(sortBy: string) => Promise<any>>; // 인자를 받는 함수 타입으로 수정 (sortBy: 이중 필터 구현 시 사용)
+  setState?: React.Dispatch<React.SetStateAction<any>>[];
+  dtoName?: string[];
 }
 
 export interface TabPanelProps {
@@ -18,6 +21,8 @@ export interface TabPanelProps {
   showTabTitle?: boolean; // HomeFilter 표시 여부를 결정하는 prop 추가
   showFilter?: boolean;
   title?: string;
+  onFilterChange?: (filter: string) => void;
+  selectedFilter?: string;
 }
 
 // 탭 하단에 제목 부분

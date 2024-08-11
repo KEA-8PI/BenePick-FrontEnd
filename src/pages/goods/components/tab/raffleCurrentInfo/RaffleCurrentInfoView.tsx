@@ -34,7 +34,7 @@ const RaffleCurrentInfoView = forwardRef<HTMLElement, RaffleCurrentInfoViewProps
       <h3 style={{ paddingTop: '40px', paddingLeft: '10px' }}>응모 현황 정보</h3>
       <Divider variant="middle" style={{ width: '100%' }} />
       <div>
-        {goodsStatus === '예정' ? (
+        {goodsStatus === 'SCHEDULED' ? (
           <RaffleBeforeInfo />
         ) : (
           <RaffleCurrentInfo legendData={legendData} seriesData={seriesData} />

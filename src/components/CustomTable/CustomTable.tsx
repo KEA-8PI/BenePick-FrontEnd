@@ -24,7 +24,9 @@ const CustomTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const paginatedRowData = rowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const paginatedRowData = Array.isArray(rowData)
+    ? rowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    : [];
 
   return (
     <Card sx={{ borderRadius: '10px' }}>

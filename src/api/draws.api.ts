@@ -1,5 +1,13 @@
-import api from './api';
+import httpApi from './http.api';
 
-export const GetDrawsResultExport = (goodsId: number) => {
-  return api.get(`/draws/download/${goodsId}`);
+export const GetDrawsWinnerList = (goodsId: number) => {
+  return httpApi.get(`/draws/winners/${goodsId}`);
+};
+
+export const GetDrawsWaitList = (goodsId: number) => {
+  return httpApi.get(`/draws/waitlist/${goodsId}`);
+};
+
+export const PatchDrawsWinner = (winnersId: number, status) => {
+  return httpApi.patch(`/draws/winners/edit/${winnersId}`, { status });
 };

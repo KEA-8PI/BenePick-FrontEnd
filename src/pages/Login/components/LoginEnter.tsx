@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { useToggle } from 'hooks/useToggle';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, IconButton, InputAdornment, Button, Modal } from '@mui/material';
+import { Box, Typography, IconButton, InputAdornment, Button } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import colors from 'theme/variableColors';
 import * as S from './Login.styles';
 import Login from './Login';
 import { IModalConfig } from './Login.types';
-import axios from 'axios';
+import { useAccountStore } from 'store/useAccountStore';
+import { PostLogin } from 'api/auth.api';
 
 const LoginEnter = () => {
   const navigate = useNavigate();
+  const { setAccountInfo } = useAccountStore();
+  const { updateAccountInfo } = useAccountStore();
 
   // 비밀번호 보이기/숨기기
   const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +22,28 @@ const LoginEnter = () => {
     return () => {
       change((prev) => !prev);
     };
+  };
+
+  // 로그인 api 연결
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLoginClick = async () => {
+    try {
+      const response = await PostLogin(id, password);
+      console.log('로그인 성공', response.data);
+
+      const { userID, role } = response.data.result;
+
+      setAccountInfo(userID, role);
+
+      // console.log('userID:', userID); // 디버깅용
+      // console.log('role:', role); // 디버깅용
+
+      loginConfirmToggle.toggle();
+    } catch (error) {
+      console.error('로그인 실패:', error.message);
+    }
   };
 
   // 로그인 확인 모달
@@ -71,7 +96,7 @@ const LoginEnter = () => {
         }}
       >
         <Typography style={{ fontWeight: 'bold', fontSize: '15px', paddingRight: '100px' }}>ID</Typography>
-        <S.HashInput style={{ backgroundColor: colors.tableGrey }} />
+        <S.HashInput style={{ backgroundColor: colors.tableGrey }} onChange={(e) => setId(e.target.value)} />
       </Box>
       <Box
         style={{
@@ -87,6 +112,7 @@ const LoginEnter = () => {
           style={{ backgroundColor: colors.tableGrey }}
           type={showPassword ? 'text' : 'password'}
           size="small"
+          onChange={(e) => setPassword(e.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -124,7 +150,8 @@ const LoginEnter = () => {
             color: 'white',
             display: 'flex',
           }}
-          onClick={() => loginConfirmToggle.toggle()}
+          onClick={handleLoginClick}
+          // onClick={() => loginConfirmToggle.toggle()}
         >
           로그인
         </Button>
