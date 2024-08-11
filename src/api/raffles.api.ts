@@ -10,3 +10,7 @@ export const PostRaffleApply = (goodsId: number, point: number) => {
 
   return httpApi.post(`/raffles/apply/${goodsId}`, { point });
 };
+
+export const GetMyRafflesList = () => {
+  return httpApi.get('/raffles/progress/member');
+};

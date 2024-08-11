@@ -19,3 +19,7 @@ export const GetDrawVerification = (goodsId: number, seed: string) => {
 export const GetDrawList = (goodsId: number) => {
   return httpApi.get(`/draws/result/${goodsId}`);
 };
+
+export const GetMyDrawsList = () => {
+  return httpApi.get('/draws/complete/list');
+};
