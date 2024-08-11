@@ -6,13 +6,13 @@ import TableHeader from 'components/CustomTable/TableHeader';
 import CustomTableRow from 'components/CustomTable/CustomTableRow';
 import { GetDrawList } from 'api/draws.api';
 
-const rowData = [
-  { id: 'benepick01', name: '김미소', points: 600 },
-  { id: 'benepick02', name: '남소미', points: 650 },
-  { id: 'benepick03', name: '변상연', points: 120 },
-  { id: 'benepick04', name: '박현서', points: 200 },
-  { id: 'benepick05', name: '이소정', points: 100 },
-];
+// const rowData = [
+//   { id: 'benepick01', name: '김미소', points: 600 },
+//   { id: 'benepick02', name: '남소미', points: 650 },
+//   { id: 'benepick03', name: '변상연', points: 120 },
+//   { id: 'benepick04', name: '박현서', points: 200 },
+//   { id: 'benepick05', name: '이소정', points: 100 },
+// ];
 
 const DrawOutcomeAfter = forwardRef<HTMLElement, DrawOutcomeProps>(({ info }) => {
   const headList = [{ 아이디: 'id' }, { 이름: 'name' }, { '응모한 포인트': 'points' }];
