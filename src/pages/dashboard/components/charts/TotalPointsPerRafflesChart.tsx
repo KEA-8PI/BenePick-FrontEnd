@@ -9,14 +9,15 @@ const TotalPointsPerRafflesChart = ({ data }) => {
   useEffect(() => {
     if (chartRef.current) {
       const myChart = echarts.init(chartRef.current);
+      // xAxis의 데이터를 data.avgWinnerPointsPerRaffles 배열의 길이에 따라 동적으로 생성
+      const xAxisData = data.avgWinnerPointsPerRaffles.map((_, index) => `${index + 1}회차`);
+
       const option: echarts.EChartsOption = {
         tooltip: {
           trigger: 'axis',
         },
         xAxis: {
-          // 회차별 정보는 어떻게 넣어야할지?
-          // 인터페이스 명세서에는 일단 회차 관련 정보가 없음
-          data: ['1회차', '2회차', '3회차', '4회차', '5회차'],
+          data: xAxisData,
         },
         yAxis: {
           type: 'value',

@@ -1,5 +1,5 @@
 import * as S from 'components/common/Components.styles';
-import { Typography, Box, IconButton, Tooltip } from '@mui/material';
+import { Typography, Box, Tooltip } from '@mui/material';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import AvgWinnerPointsPerRafflesChart from './charts/AvgWinnerPointsPerRaffleChart';
@@ -7,17 +7,10 @@ import TotalPointsPerRafflesChart from './charts/TotalPointsPerRafflesChart';
 import RefillRatesPerRaffleChart from './charts/RefillRatesPerRaffleChart';
 import MostWinnedRanksChart from './charts/MostWinnedRanksChart';
 import AvgWinnerPointsChart from './charts/AvgWinnerPointsChart';
+import EmptyChart from './charts/EmptyChart';
 
-const data = {
-  avgWinnerPointsPerRaffles: [1.0, 2.0, 3.0, 4.0, 5.0],
-  totalPointsPerRaffles: [1.0, 2.0, 3.0, 4.0, 5.0],
-  refillRatesPerRaffles: [0.9, 0.8, 0.7, 0.6],
-  // 최다 당첨 순위 Top 5 가져올 때 순위랑 해당 순위가 당첨된 비율도 가져와야 할 것 같은데?
-  mostWinnedRanks: [1, 2, 3, 4, 5],
-  avgWinnerPoints: 100.5,
-};
-
-const DashboardCard = () => {
+const DashboardCard = ({ data }) => {
+  console.log('DashboardCard data', data);
   return (
     <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
       <Box style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -33,7 +26,12 @@ const DashboardCard = () => {
           </Tooltip>
         </Box>
         <S.ShadowBox style={{ height: '300px' }}>
-          <AvgWinnerPointsPerRafflesChart data={data} />
+          {/* <AvgWinnerPointsPerRafflesChart data={data} /> */}
+          {data.avgWinnerPointsPerRaffles && data.avgWinnerPointsPerRaffles.length > 0 ? (
+            <AvgWinnerPointsPerRafflesChart data={data} />
+          ) : (
+            <EmptyChart />
+          )}
         </S.ShadowBox>
 
         {/* 2. */}
@@ -48,7 +46,11 @@ const DashboardCard = () => {
           </Tooltip>
         </Box>
         <S.ShadowBox style={{ height: '300px' }}>
-          <TotalPointsPerRafflesChart data={data} />
+          {data.totalPointsPerRaffles && data.totalPointsPerRaffles.length > 0 ? (
+            <TotalPointsPerRafflesChart data={data} />
+          ) : (
+            <EmptyChart />
+          )}
         </S.ShadowBox>
 
         {/* 3. */}
@@ -63,7 +65,11 @@ const DashboardCard = () => {
           </Tooltip>
         </Box>
         <S.ShadowBox style={{ height: '300px' }}>
-          <RefillRatesPerRaffleChart data={data} />
+          {data.refillRatesPerRaffles && data.refillRatesPerRaffles.length > 0 ? (
+            <RefillRatesPerRaffleChart data={data} />
+          ) : (
+            <EmptyChart />
+          )}
         </S.ShadowBox>
 
         {/* 4. */}
@@ -80,7 +86,11 @@ const DashboardCard = () => {
               </Tooltip>
             </Box>
             <S.ShadowBox style={{ height: '300px' }}>
-              <MostWinnedRanksChart data={data} />
+              {data.mostWinnedRanks && data.mostWinnedRanks.length > 0 ? (
+                <MostWinnedRanksChart data={data} />
+              ) : (
+                <EmptyChart />
+              )}
             </S.ShadowBox>
           </div>
 
@@ -107,5 +117,3 @@ const DashboardCard = () => {
 };
 
 export default DashboardCard;
-
-// 설명 추가한게 그냥 명사 -> 동사 느낌인데 ;;
