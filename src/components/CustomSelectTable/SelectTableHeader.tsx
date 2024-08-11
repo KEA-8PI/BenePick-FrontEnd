@@ -10,19 +10,7 @@ import { visuallyHidden } from '../CustomTable/utils';
 import { SelectTableHeadProps } from './CustomSelectTable.types';
 import colors from 'theme/variableColors';
 
-const SelectTableHeader: React.FC<SelectTableHeadProps> = ({
-  order,
-  orderBy,
-  rowCount,
-  headLabel,
-  numSelected,
-  onRequestSort,
-  onSelectAllClick,
-}) => {
-  const onSort = (property: string) => (event: React.MouseEvent<unknown>) => {
-    onRequestSort(event, property);
-  };
-
+const SelectTableHeader: React.FC<SelectTableHeadProps> = ({ rowCount, headLabel, numSelected, onSelectAllClick }) => {
   return (
     <TableHead sx={{ bgcolor: colors.tableGrey, '& .MuiTableCell-root': { paddingTop: '7px', paddingBottom: '7px' } }}>
       <TableRow>
@@ -43,23 +31,8 @@ const SelectTableHeader: React.FC<SelectTableHeadProps> = ({
         </TableCell>
 
         {headLabel.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={'center'}
-            sortDirection={orderBy === headCell.id ? order : false}
-            sx={{ width: headCell.width, minWidth: headCell.minWidth }}
-          >
-            <TableSortLabel
-              hideSortIcon
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={onSort(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box sx={{ ...visuallyHidden }}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</Box>
-              ) : null}
-            </TableSortLabel>
+          <TableCell key={headCell.id} align={'center'} sx={{ width: headCell.width, minWidth: headCell.minWidth }}>
+            {headCell.label}
           </TableCell>
         ))}
         <TableCell> </TableCell>

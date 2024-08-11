@@ -10,28 +10,20 @@ const GoodsSelectTable = ({
   setRowData,
   selected,
   setSelected,
+  apiPage,
+  setApiPage,
 }: {
   headList: { [key: string]: string }[];
   rowData: { [key: string]: string | number }[];
   setRowData: React.Dispatch<React.SetStateAction<{ [key: string]: string | number }[]>>;
   selected: any[];
   setSelected: React.Dispatch<React.SetStateAction<any[]>>;
+  apiPage: number;
+  setApiPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const [page, setPage] = useState(0);
 
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-
-  const [orderBy, setOrderBy] = useState('name');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleSort = (event: React.MouseEvent<unknown>, id: string) => {
-    const isAsc = orderBy === id && order === 'asc';
-    if (id !== '') {
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    }
-  };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -60,6 +52,9 @@ const GoodsSelectTable = ({
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
+    if (newPage > page && (newPage + 1) * rowsPerPage >= rowData.length) {
+      setApiPage(apiPage + 1);
+    }
     setPage(newPage);
   };
 
@@ -69,17 +64,15 @@ const GoodsSelectTable = ({
   };
 
   const paginatedRowData = rowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
   return (
     <Card sx={{ borderRadius: '10px' }}>
       <SelectTableToolbar numSelected={selected.length} />
       <TableContainer sx={{ overflow: 'unset' }}>
         <Table sx={{ minWidth: 800 }}>
           <SelectTableHeader
-            order={order}
-            orderBy={orderBy}
             rowCount={rowData.length}
             numSelected={selected.length}
-            onRequestSort={handleSort}
             onSelectAllClick={handleSelectAllClick}
             headLabel={headList.map((head) => {
               const key = Object.keys(head)[0];

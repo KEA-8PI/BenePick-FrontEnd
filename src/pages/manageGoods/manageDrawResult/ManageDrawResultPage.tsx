@@ -18,12 +18,16 @@ import { GetDrawsWaitList, GetDrawsWinnerList } from 'api/draws.api';
 import { GetRafflesApplicantList } from 'api/raffles.api';
 
 const ManageDrawResultPage = () => {
+  const [loading, setLoading] = useState(true);
   const params = useParams();
   const goodsId = Number(params.id);
 
   const { goodsInfo, setGoodsInfo } = GoodsInfo();
 
   useEffect(() => {
+    if (!goodsId) return; // Prevent unnecessary calls when goodsId is not available
+
+    setLoading(true);
     // 추첨 결과 api 호출
     GetGoodsInfo(goodsId)
       .then((res) => {
@@ -34,30 +38,19 @@ const ManageDrawResultPage = () => {
         console.error(error);
       });
 
-    goodsId &&
-      GetRafflesApplicantList(goodsId)
-        .then((res) => {
-          console.log('응모자 리스트:', res.data.result);
-          // setRowData(convertResponse(res.data.result.rafflesResponseByGoodsList));
-        })
-        .catch((error) => {
-          console.error('응모자 리스트 error:', error);
-        });
+    GetRafflesApplicantList(goodsId)
+      .then((res) => {
+        console.log('응모자 리스트:', res.data.result.rafflesResponseByGoodsList);
+        setRowData(res.data.result.rafflesResponseByGoodsList);
+      })
+      .catch((error) => {
+        console.error('응모자 리스트 error:', error);
+      })
+      .finally(() => {
+        setLoading(false); // End loading after fetching data
+      });
   }, [goodsId]);
 
-  // const [rowData, setRowData] = useState([
-  //   { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 1 },
-  //   { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 2 },
-  //   { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 2 },
-  //   { date: '2021-10-15 00:00:00', id: 'example@google.com', name: '홍길동', point: 1000, status: 2 },
-  // ]);
-
-  // const [winnerData, setWinnerData] = useState([
-  //   { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: 'CONFIRM' },
-  //   { date: '2021-10-15 00:00:00', id: 'althcjstk08@gahcon.ac.kr', name: '홍길동', point: 1000, status: 'WINNER' },
-  //   { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: 'CANCEL' },
-  //   { date: '2021-10-15 00:00:00', id: 'exampleexample@google.com', name: '홍길동', point: 1000, status: 'NO_SHOW' },
-  // ]);
   const [rowData, setRowData] = useState([]);
   const [winnerData, setWinnerData] = useState([]);
   const [waitList, setWaitList] = useState([]);
@@ -65,7 +58,9 @@ const ManageDrawResultPage = () => {
   const TabData = [
     {
       label: '응모자',
-      content: (
+      content: loading ? (
+        <div>Loading...</div>
+      ) : (
         <CustomTable
           rowData={rowData}
           headList={[
