@@ -77,7 +77,11 @@ const GoodsDetail = () => {
 
       {/* 탭 내용 */}
       <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-        <RaffleCurrentInfoView ref={(el) => (scrollRefs.current[0] = el)} goodsStatus={goodsInfo.goodsStatus} />
+        <RaffleCurrentInfoView
+          ref={(el) => (scrollRefs.current[0] = el)}
+          info={goodsInfo.id}
+          goodsStatus={goodsInfo.goodsStatus}
+        />
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
         <DrawOutcomeView
