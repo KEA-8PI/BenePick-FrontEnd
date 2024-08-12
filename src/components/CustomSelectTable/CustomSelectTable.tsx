@@ -58,12 +58,7 @@ const CustomSelectTable = ({
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    console.log('page:', page);
-    console.log('newPage:', newPage);
-    console.log('rowsPerPage:', rowsPerPage);
-    console.log('rowData.length:', rowData.length);
     if (newPage > page && (newPage + 1) * rowsPerPage >= rowData.length) {
-      console.log('Incrementing apiPage');
       setApiPage(apiPage + 1);
     }
     setPage(newPage);
