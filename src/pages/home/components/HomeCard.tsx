@@ -87,8 +87,8 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
         </div>
 
         <Divider sx={{ backgroundColor: colors.cardGrey, marginTop: '10px' }} />
-        <S.Row>
-          {(userRole === 'MEMBER' || userRole === '') && (
+        <S.Row style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {(userRole === 'MEMBER' || userRole === '') && info.goodsStatus !== 'COMPLETED' ? (
             <IconButton>
               <Iconify
                 icon={like ? 'gridicons:heart' : 'gridicons:heart-outline'}
@@ -97,8 +97,11 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
                 sx={{ width: '20px', height: '20px' }}
               />
             </IconButton>
+          ) : (
+            // Placeholder for the heart icon
+            <div style={{ width: '20px' }} />
           )}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '8px' }}>
             <Iconify
               icon="bi:person"
               sx={{ width: '20px', height: '20px', color: colors.grey01, paddingRight: '4px' }}
