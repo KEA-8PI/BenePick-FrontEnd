@@ -9,14 +9,18 @@ import RaffleNotice from './tab/raffleNotice/RaffleNotice';
 import DrawOutcomeView from './tab/drawOutcome/DrawOutcomeView';
 import { CustomCardData } from 'components/CustomCard/CustomCard.types';
 import { GetGoodsInfo } from 'api/goods.api';
+import { useParams } from 'react-router-dom';
 
-const GoodsDetail = ({ info }): ReactElement => {
+const GoodsDetail = () => {
+  const params = useParams();
+  const goodsId = Number(params.id);
+
   const [goodsInfo, setGoodsInfo] = useState<CustomCardData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // 상품 정보를 가져오는 API 호출
-    GetGoodsInfo(info.id)
+    GetGoodsInfo(goodsId)
       .then((res) => {
         const goodsInfo = res.data.result;
         setGoodsInfo(res.data.result);
@@ -28,7 +32,7 @@ const GoodsDetail = ({ info }): ReactElement => {
         console.error('Error fetching data:', error);
         setLoading(false); // 데이터 로딩 실패 시 상태 변경
       });
-  }, [info.id]);
+  }, [goodsId]);
 
   const [like, setLike] = useState(false);
 
