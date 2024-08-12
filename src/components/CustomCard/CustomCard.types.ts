@@ -16,9 +16,10 @@ export interface CustomCardData {
 
 export interface CustomCardProps {
   info: CustomCardData;
-  style?: React.CSSProperties; // 스타일 속성 추가
+  style?: React.CSSProperties;
 }
 
 export interface HomeCardPageProps {
   goodsStatus: string;
+  data: CustomCardData[];
 }

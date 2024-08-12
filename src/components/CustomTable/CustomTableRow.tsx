@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import colors from 'theme/variableColors';
 import { TableRowProps } from './CustomTable.types';
 import { ColorBox } from 'components/common/Components.styles';
-import { convertResponse } from 'utils/convertResponse';
+import { convertResponse } from 'utils/ConvertResponse';
 import { formatDateTime } from 'pages/manageGoods/utils/formatData';
 
 const ResultColor = {
@@ -15,23 +15,49 @@ const ResultColor = {
   NO_SHOW: colors.buttonPink,
 };
 
-const CustomTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
+const CustomTableRow: React.FC<TableRowProps> = ({ columns, index, sequence, propsId }) => {
   return (
     <TableRow hover tabIndex={-1} sx={{ '& .MuiTableCell-root': { paddingTop: '10px', paddingBottom: '10px' } }}>
       <TableCell>{index + 1}</TableCell>
       {columns.map((column) => (
         // label이 상품일 시 상품명을 클릭하면 상품 상세 페이지로 이동하게 추가
         <TableCell key={column.label} align={'center'}>
-          {column.id === 'change' || column.id === 'result' || column.id === 'status' || column.id === 'rafflesAt' ? (
+          {column.id === 'penaltyCount' ||
+          column.id === 'pointChange' ||
+          column.id === 'drawStatus' ||
+          column.id === 'status' ||
+          column.id === 'createdAt' ||
+          column.id === 'goodsName' ||
+          column.id === 'rafflesAt' ? (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              {column.id === 'change' && (
-                <ColorBox color={column.label[0] === '-' ? colors.buttonPink : colors.mint}>{column.label}</ColorBox>
+              {(column.id === 'penaltyCount' || column.id === 'pointChange') && (
+                <ColorBox color={column.label.toString().startsWith('-') ? colors.buttonPink : colors.mint}>
+                  {column.label.toString().startsWith('-') ? column.label : `+${column.label}`}
+                </ColorBox>
               )}
-              {column.id === 'result' && (
-                <ColorBox color={ResultColor[column.label]}>{convertResponse(column.label.toString())}</ColorBox>
+              {column.id === 'drawStatus' && (
+                <ColorBox color={ResultColor[column.label]}>
+                  {convertResponse(column.label.toString())}
+                  {column.label === 'WAITLIST' && ` ${sequence}순위`}
+                </ColorBox>
               )}
               {column.id === 'status' && <ColorBox color={colors.lemon}>{column.label}순위</ColorBox>}
-              {column.id === 'rafflesAt' && formatDateTime(column.label)}
+              {(column.id === 'rafflesAt' || column.id === 'createdAt') && formatDateTime(column.label)}
+              {column.id === 'goodsName' && (
+                <div
+                  style={{
+                    cursor: 'pointer',
+                    // '&:hover': {
+                    //   textDecoration: 'underline',
+                    // },
+                  }}
+                  onClick={() => {
+                    window.location.href = `/goods/${propsId}`;
+                  }}
+                >
+                  {column.label}
+                </div>
+              )}
             </div>
           ) : (
             column.label

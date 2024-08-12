@@ -70,7 +70,6 @@ const ManageMemberView = ({
     const formData = new FormData();
     formData.append('file', file);
     buttonAction(formData);
-    window.location.reload();
   };
 
   return (

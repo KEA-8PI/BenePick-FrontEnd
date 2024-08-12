@@ -5,14 +5,16 @@ import { Box, Button, Slider, OutlinedInput, Typography } from '@mui/material';
 import CustomModal from 'components/CustomModal/CustomModal';
 import { IModalConfig } from 'components/CustomModal/CustomModal.types';
 import { useToggle } from 'hooks/useToggle';
-
 import colors from 'theme/variableColors';
+import { useAccountStore } from 'store/useAccountStore';
+import { PostRaffleApply } from 'api/raffles.api';
 
 const MIN = 0;
 const MAX = 3200;
 const MID = (MIN + MAX) / 2;
 
-const RaffleButton: React.FC = () => {
+const RaffleButton = ({ info }) => {
+  const userID = useAccountStore((state) => state.accountInfo.id);
   const [value, setValue] = useState(MID);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +35,8 @@ const RaffleButton: React.FC = () => {
 
   useEffect(() => {
     console.log('value', value);
+    console.log('info', info);
+    console.log('userID', userID);
   }, [value]);
 
   const isFirstModalToggle = useToggle();
@@ -50,7 +54,7 @@ const RaffleButton: React.FC = () => {
         height="100%"
         textAlign="center"
       >
-        <Typography style={{ fontSize: '18px' }}>응모 하시겠습니까?</Typography>
+        <Typography style={{ fontSize: '18px' }}>{value} 포인트 응모 하시겠습니까?</Typography>
         <Typography
           style={{ color: colors.primary, textDecoration: 'underline', fontSize: '13px', paddingTop: '15px' }}
         >
@@ -61,7 +65,24 @@ const RaffleButton: React.FC = () => {
     buttons: {
       label: '확인',
       action: () => {
-        isSecondModalToggle.toggle(); // 두 번째 모달 열기
+        PostRaffleApply(info.id, value)
+          .then((res) => {
+            const response = res.data.result;
+            console.log('응모 결과:', response);
+            isSecondModalToggle.toggle(); // 두 번째 모달 열기
+          })
+          .catch((error) => {
+            if (error.response) {
+              // 서버가 응답을 반환한 경우
+              console.error('응모 에러:', error.response.data);
+            } else if (error.request) {
+              // 요청이 전송되었으나 응답이 없는 경우
+              console.error('응모 에러: 서버로부터 응답이 없습니다.', error.request);
+            } else {
+              // 요청 설정 중에 오류가 발생한 경우
+              console.error('응모 에러:', error.message);
+            }
+          });
       },
     },
   };

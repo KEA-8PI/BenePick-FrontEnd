@@ -9,6 +9,7 @@ import colors from 'theme/variableColors';
 import Iconify from 'components/common/Iconify/Iconify';
 import Date from 'components/date/Date';
 import CardImage from '../../../components/CustomCard/CardImage';
+import { PostAddWishlist, DeleteWishlist } from 'api/wishlists.api';
 
 const WishlistCard: React.FC<CustomCardProps> = ({ info }) => {
   const [like, setLike] = useState(false);
@@ -16,24 +17,48 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info }) => {
   // 좋아요 버튼 클릭 시 위시리스트 삭제 api 호출
   const handleLike = () => {
     setLike(!like);
+    console.log('like:', like);
+    DeleteWishlist(info.id)
+      .then((res) => {
+        console.log(res);
+        console.log('위시리스트 삭제 성공:', res.data.result.id);
+        console.log('위시리스트 삭제한 상품:', res.data.result.goods);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
-    <div>
-      <CardImage info={info} style={{ paddingTop: '56.25%' }} />
-      <C.CardContent>
-        <div style={{ padding: '8px' }}>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        maxWidth: '300px',
+        maxHeight: '450px',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <CardImage info={info} style={{ paddingTop: '56.25%', flex: '0 0 60%' }} />
+      <C.CardContent
+        style={{ flex: '0 0 40%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+      >
+        <div style={{ padding: '8px', flex: '1 1 auto' }}>
           <S.Row>
             <C.CardLightFont>#{info.category}</C.CardLightFont>
             <C.CardBoldFont>{info.amounts}개</C.CardBoldFont>
           </S.Row>
           {/* 상품 아이디, 상태, 상품 정보 -> 상품 상세 페이지로 전달 */}
-          <Link to={`/goods/${info.id}`} style={{ textDecoration: 'none', color: 'black' }} state={{ info }}>
+          <Link
+            to={`/goods/${info.id}`}
+            style={{ textDecoration: 'none', color: 'black', alignContent: 'center', alignItems: 'center' }}
+            state={{ info }}
+          >
             <C.CardBoldFont>{info.name}</C.CardBoldFont>
           </Link>
           <Date info={info} />
         </div>
-
         <Divider sx={{ backgroundColor: colors.cardGrey, marginTop: '10px' }} />
         <S.Row>
           <IconButton>

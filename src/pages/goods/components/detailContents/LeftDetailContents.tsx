@@ -6,6 +6,7 @@ import colors from 'theme/variableColors';
 
 import CardImage from 'components/CustomCard/CardImage';
 import Date from 'components/date/Date';
+import { useAccountStore } from 'store/useAccountStore';
 
 const LeftDetailContents = ({ info }) => {
   const [like, setLike] = useState(false);
@@ -13,13 +14,15 @@ const LeftDetailContents = ({ info }) => {
   const handleLike = () => {
     setLike(!like);
   };
+  const { accountInfo } = useAccountStore();
+  const { role } = accountInfo;
 
   return (
     <div>
       <CardImage info={info} style={{ width: '300px', height: '216px', marginBottom: '10px' }} />
       <S.Row>
         <Date info={info} />
-        {handleLike && (
+        {role === 'MEMBER' && (
           <IconButton>
             <Iconify
               icon={like ? 'gridicons:heart' : 'gridicons:heart-outline'}

@@ -7,15 +7,28 @@ const CustomTable = ({
   rowData,
   headList,
   isPaging,
+  total,
+  apiPage,
+  setApiPage,
+  etcNum,
+  propsIdList,
 }: {
   rowData: { [key: string]: string | number }[];
   headList: { [key: string]: string }[];
   isPaging?: boolean;
+  total?: number;
+  apiPage?: number;
+  setApiPage?: React.Dispatch<React.SetStateAction<number>>;
+  propsIdList?: number[];
+  etcNum?: number[];
 }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
+    if (newPage > page && (newPage + 1) * rowsPerPage >= rowData.length) {
+      setApiPage(apiPage + 1);
+    }
     setPage(newPage);
   };
 
@@ -38,25 +51,31 @@ const CustomTable = ({
               return { id: head[key], label: key };
             })}
           />
-          <TableBody>
-            {paginatedRowData.map((row, index) => (
-              <CustomTableRow
-                key={index} // Changed key to use index instead of row.content
-                index={index}
-                columns={headList.map((head) => {
-                  const key = Object.keys(head)[0];
-                  return { id: head[key], label: row[head[key] as keyof typeof row] };
-                })}
-              />
-            ))}
-          </TableBody>
+          {rowData.length === 0 ? (
+            <div style={{ flex: 1 }}>No data</div>
+          ) : (
+            <TableBody>
+              {paginatedRowData.map((row, index) => (
+                <CustomTableRow
+                  key={index} // Changed key to use index instead of row.content
+                  index={index}
+                  columns={headList.map((head) => {
+                    const key = Object.keys(head)[0];
+                    return { id: head[key], label: row[head[key] as keyof typeof row] };
+                  })}
+                  propsId={propsIdList ? propsIdList[index] : undefined}
+                  sequence={etcNum ? etcNum[index] : undefined}
+                />
+              ))}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
-      {isPaging && (
+      {isPaging && total && (
         <TablePagination
           page={page}
           component="div"
-          count={rowData.length}
+          count={total}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

@@ -13,10 +13,11 @@ export interface TableHeadProps {
 export interface TableRowProps {
   columns: IColumnList[];
   index: number;
+  sequence?: number;
+  propsId?: string | number;
 }
 
 export interface IColumnList {
   id: string | number;
   label: string | number;
-  type?: string;
 }
