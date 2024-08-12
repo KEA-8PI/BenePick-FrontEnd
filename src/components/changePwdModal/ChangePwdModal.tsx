@@ -21,9 +21,6 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
   const [isValidatePassword, setIsValidatePassword] = useState(false);
   const [isValidatePasswordCheck, setIsValidatePasswordCheck] = useState(false);
 
-  const [pointHistPage, setPointHistPage] = useState(0);
-  const [penaltyHistPage, setPenaltyHistPage] = useState(0);
-
   const handleClickShowPassword = (change: React.Dispatch<React.SetStateAction<boolean>>) => {
     return () => {
       change((prev) => !prev);
@@ -61,26 +58,6 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
     buttonAction();
     onClose();
   };
-
-  useEffect(() => {
-    GetPointHists(pointHistPage, 25)
-      .then((res) => {
-        console.log('포인트 내역', res);
-      })
-      .catch((err) => {
-        console.log('포인트 내역 에러', err);
-      });
-  }, [pointHistPage]);
-
-  useEffect(() => {
-    GetPointHists(penaltyHistPage, 25)
-      .then((res) => {
-        console.log('패널티 내역', res);
-      })
-      .catch((err) => {
-        console.log('패널티 내역 에러', err);
-      });
-  }, [penaltyHistPage]);
 
   if (!open) {
     return null;
