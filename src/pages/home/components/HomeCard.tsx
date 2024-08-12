@@ -10,30 +10,47 @@ import Date from 'components/date/Date';
 import CardImage from '../../../components/CustomCard/CardImage';
 import { useAccountStore } from 'store/useAccountStore';
 import { PostAddWishlist, DeleteWishlist } from 'api/wishlists.api';
+import { useEffect } from 'react';
 
 const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
   const userID = useAccountStore((state) => state.accountInfo.id);
   const userRole = useAccountStore((state) => state.accountInfo.role);
-  const [like, setLike] = useState(false);
+  // like 상태를 info.wishlist로 초기화
+  const [like, setLike] = useState(info.wishlist || false);
   const navigate = useNavigate();
 
+  // 좋아요 정보 상품마다 업데이트
+  useEffect(() => {
+    setLike(info.wishlist);
+  }, [info.wishlist]);
+
   const handleLike = () => {
+    if (!userID) {
+      navigate('/login');
+      return;
+    }
+
     setLike(!like);
     console.log('like:', like);
 
-    if (!userID) {
-      navigate('/login');
+    if (!like) {
+      PostAddWishlist(info.id)
+        .then((res) => {
+          console.log('위시리스트 추가 성공:', res.data.result.id);
+          console.log('위시리스트 추가한 상품:', res.data.result.goods);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      DeleteWishlist(info.id)
+        .then((res) => {
+          console.log('위시리스트 삭제 성공:', res.data.result.id);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
-
-    PostAddWishlist(info.id)
-      .then((res) => {
-        console.log(res);
-        console.log('위시리스트 추가 성공:', res.data.result.id);
-        console.log('위시리스트 추가한 상품:', res.data.result.goods);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
   };
 
   return (

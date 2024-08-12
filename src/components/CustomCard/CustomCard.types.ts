@@ -11,6 +11,7 @@ export interface CustomCardData {
   discountPrice: number;
   description?: string;
   goodsStatus: string;
+  wishlist?: boolean;
   children?: React.ReactNode;
 }
 
