@@ -79,6 +79,7 @@ const MyRaffleListPage = () => {
           ]}
           isPaging={false}
           rowData={progressList}
+          propsIdList={propsIdList}
         />
       ),
     },
@@ -109,6 +110,7 @@ const MyRaffleListPage = () => {
       GetMyRafflesList()
         .then((res) => {
           setProgressList(res.data.result.rafflesResponseByMembersList);
+          setPropsIdList(res.data.result.rafflesResponseByMembersList.map((raffle: any) => raffle.goodsId));
         })
         .catch((err) => {
           console.log(err);

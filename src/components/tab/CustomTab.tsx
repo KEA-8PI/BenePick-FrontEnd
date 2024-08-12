@@ -19,15 +19,16 @@ const CustomTab: React.FC<TabsProps> = ({ tabs, showTabTitle, showFilter, callGe
 
   const handleChange = (event: React.SyntheticEvent, newIndex: number) => {
     setValue(newIndex);
-    callGetAPI[newIndex](selectedFilters[newIndex])
-      .then((res) => {
-        const response = dtoName ? res.data.result[dtoName[newIndex]] : '';
-        console.log('API 호출 결과:', response);
-        setState[newIndex](response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    callGetAPI &&
+      callGetAPI[newIndex](selectedFilters[newIndex])
+        .then((res) => {
+          const response = dtoName ? res.data.result[dtoName[newIndex]] : '';
+          console.log('API 호출 결과:', response);
+          setState[newIndex](response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
   const handleFilterChange = (filter: string) => {
