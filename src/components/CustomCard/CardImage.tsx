@@ -1,5 +1,6 @@
 import { CustomCardProps } from './CustomCard.types';
 import { Box, Chip, CardMedia } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import colors from 'theme/variableColors';
 import { convertGoodsStatus } from 'utils/ConvertResponse';
 
@@ -20,9 +21,9 @@ const CardImage: React.FC<CustomCardProps> = ({ info, style }) => {
   return (
     <Box sx={{ weight: '100%', height: '100%', position: 'relative', ...style }}>
       <CardMedia
-        component="img"
-        image={info.image}
-        alt="card image"
+        component="div"
+        onClick={() => (window.location.href = `/goods/${info.id}`)}
+        image={info.image || '/images/benepickLogo.png'}
         sx={{
           position: 'absolute',
           top: 0,
@@ -30,8 +31,10 @@ const CardImage: React.FC<CustomCardProps> = ({ info, style }) => {
           width: '100%',
           height: '100%',
           borderRadius: '10px',
-          backgroundPosition: 'top center',
-          backgroundSize: 'cover',
+          // backgroundPosition: 'top center',
+          backgroundSize: info.image !== null ? 'cover' : 'contain',
+          cursor: 'pointer',
+          backgroundColor: info.image || 'white',
         }}
       />
       <Chip
