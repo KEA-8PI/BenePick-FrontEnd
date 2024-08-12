@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import * as S from 'components/common/Components.styles';
 import CustomTab from 'components/tab/CustomTab';
 import MemberInfoPage from './MemberInfoPage';
@@ -9,9 +10,16 @@ const TabData = [
 ];
 
 const MyPageView = () => {
+  const [filter, setFilter] = useState('');
+
+  const handleFilterChange = (filter: string) => {
+    setFilter(filter);
+    console.log('HomeView filter:', filter);
+  };
+
   return (
     <S.Wrapper style={{ height: 'auto' }}>
-      <CustomTab tabs={TabData} />
+      <CustomTab tabs={TabData} onFilterChange={handleFilterChange} />
     </S.Wrapper>
   );
 };
