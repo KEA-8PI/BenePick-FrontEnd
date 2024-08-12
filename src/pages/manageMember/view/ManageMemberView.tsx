@@ -96,7 +96,7 @@ const ManageMemberView = () => {
 
   useEffect(() => {
     fetchMemberList(apiPage, search);
-  }, [apiPage, search]);
+  }, [apiPage]);
 
   const handleSearch = () => {
     setApiPage(0); // Reset to first apiPage on new search

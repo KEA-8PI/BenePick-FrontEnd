@@ -12,6 +12,7 @@ export interface TabsProps {
   callGetAPI?: Array<(sortBy: string) => Promise<any>>; // 인자를 받는 함수 타입으로 수정 (sortBy: 이중 필터 구현 시 사용)
   setState?: React.Dispatch<React.SetStateAction<any>>[];
   dtoName?: string[];
+  setDrawIdList?: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 export interface TabPanelProps {

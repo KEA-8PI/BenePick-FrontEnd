@@ -12,7 +12,15 @@ const a11yProps = (index: number) => {
   };
 };
 
-const CustomTab: React.FC<TabsProps> = ({ tabs, showTabTitle, showFilter, callGetAPI, setState, dtoName }) => {
+const CustomTab: React.FC<TabsProps> = ({
+  tabs,
+  showTabTitle,
+  showFilter,
+  callGetAPI,
+  setState,
+  dtoName,
+  setDrawIdList,
+}) => {
   const [value, setValue] = React.useState(0);
   // 각 탭의 sortBy 상태를 탭마다 독립적으로 관리
   const [selectedFilters, setSelectedFilters] = useState<string[]>(['END', 'END', 'END']);
@@ -25,6 +33,8 @@ const CustomTab: React.FC<TabsProps> = ({ tabs, showTabTitle, showFilter, callGe
           const response = dtoName ? res.data.result[dtoName[newIndex]] : '';
           console.log('API 호출 결과:', response);
           setState[newIndex](response);
+          dtoName[newIndex] === 'drawsResponseByWinnerGoodsIdDTOS' &&
+            setDrawIdList(response.map((item: any) => item.drawId));
         })
         .catch((error) => {
           console.log(error);

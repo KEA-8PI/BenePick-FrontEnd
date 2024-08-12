@@ -23,6 +23,8 @@ const ManageGoodsView = () => {
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<number[]>([]);
 
+  const [rowDataNum, setRowDataNum] = useState(0);
+
   const modalConfig = {
     open: deleteToggle.isOpen,
     onClose: deleteToggle.toggle,
@@ -66,9 +68,14 @@ const ManageGoodsView = () => {
     GetGoodsList(apiPage, 25, searchTerm)
       .then((res) => {
         console.log('Get 상품 목록 response:', res.data.result.goodsDTOList);
-        apiPage === 0
-          ? setRowData(formatData(res.data.result.goodsDTOList))
-          : setRowData((prev) => [...prev, formatData(res.data.result.goodsDTOList)]);
+        const formattedData = formatData(res.data.result.goodsDTOList);
+
+        if (apiPage === 0) {
+          setRowData(formattedData);
+          setRowDataNum(res.data.result.totalCnt);
+        } else {
+          setRowData((prev) => [...prev, ...formattedData]);
+        }
       })
       .catch((err) => {
         console.error('Get 상품 목록 error:', err);
@@ -77,7 +84,11 @@ const ManageGoodsView = () => {
 
   useEffect(() => {
     fetchGoodsList(apiPage, search);
-  }, [apiPage, search]);
+  }, [apiPage]);
+
+  useEffect(() => {
+    console.log('rowData:', rowData);
+  }, [rowData]);
 
   const handleSearch = () => {
     setApiPage(0); // Reset to first apiPage on new search
@@ -130,6 +141,7 @@ const ManageGoodsView = () => {
           setSelected={setSelected}
           apiPage={apiPage}
           setApiPage={setApiPage}
+          totalNum={rowDataNum}
         />
         <S.Row style={{ width: '100%', justifyContent: 'flex-end', marginTop: '20px' }}>
           <S.CustomButton sx={{ mr: '1%' }} onClick={() => deleteToggle.toggle()} disabled={selected.length === 0}>

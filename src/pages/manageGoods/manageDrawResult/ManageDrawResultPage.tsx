@@ -54,6 +54,7 @@ const ManageDrawResultPage = () => {
   const [rowData, setRowData] = useState([]);
   const [winnerData, setWinnerData] = useState([]);
   const [waitList, setWaitList] = useState([]);
+  const [drawIdList, setDrawIdList] = useState([]);
 
   const TabData = [
     {
@@ -86,6 +87,7 @@ const ManageDrawResultPage = () => {
             { '사용 복지 포인트': 'point' },
             { 상태: 'status' },
           ]}
+          drawIdList={drawIdList}
         />
       ),
     },
@@ -133,6 +135,7 @@ const ManageDrawResultPage = () => {
             'drawsResponseByWinnerGoodsIdDTOS',
             'drawsResponseByWaitlistGoodsIdDTOS',
           ]}
+          setDrawIdList={setDrawIdList}
         />
 
         <CustomButton
