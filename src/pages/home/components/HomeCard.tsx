@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as S from '../../../components/common/Components.styles';
 import * as C from '../../../components/CustomCard/CustomCard.styles';
 import { CustomCardProps } from '../../../components/CustomCard/CustomCard.types';
@@ -12,12 +12,19 @@ import { useAccountStore } from 'store/useAccountStore';
 import { PostAddWishlist, DeleteWishlist } from 'api/wishlists.api';
 
 const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
+  const userID = useAccountStore((state) => state.accountInfo.id);
   const userRole = useAccountStore((state) => state.accountInfo.role);
   const [like, setLike] = useState(false);
+  const navigate = useNavigate();
 
   const handleLike = () => {
     setLike(!like);
     console.log('like:', like);
+
+    if (!userID) {
+      navigate('/login');
+    }
+
     PostAddWishlist(info.id)
       .then((res) => {
         console.log(res);
@@ -64,7 +71,7 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
 
         <Divider sx={{ backgroundColor: colors.cardGrey, marginTop: '10px' }} />
         <S.Row>
-          {(userRole === 'MEMBER' || userRole === null) && (
+          {(userRole === 'MEMBER' || userRole === '') && (
             <IconButton>
               <Iconify
                 icon={like ? 'gridicons:heart' : 'gridicons:heart-outline'}
