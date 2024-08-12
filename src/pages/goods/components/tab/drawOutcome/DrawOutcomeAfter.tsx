@@ -27,7 +27,7 @@ const DrawOutcomeAfter = forwardRef<HTMLElement, DrawOutcomeProps>(({ info }) =>
         console.log('DrawOutcomeAfter response: ', response);
         const result = response
 
-          .filter((item) => item.drawStatus === 'WINNER')
+          .filter((item) => item.drawStatus === 'CONFIRM')
           .map((item) => ({
             id: item.memberId,
             name: item.memberName,
