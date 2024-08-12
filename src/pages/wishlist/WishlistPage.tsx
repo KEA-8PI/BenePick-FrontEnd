@@ -8,9 +8,7 @@ const Wishlist = () => {
       <Helmet>
         <title>BenePick | 위시리스트</title>
       </Helmet>
-      <div style={{ display: 'flex' }}>
-        <WishlistView />
-      </div>
+      <WishlistView />
     </div>
   );
 };

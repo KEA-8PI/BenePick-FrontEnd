@@ -9,6 +9,7 @@ import Iconify from 'components/common/Iconify/Iconify';
 import Date from 'components/date/Date';
 import CardImage from '../../../components/CustomCard/CardImage';
 import { useAccountStore } from 'store/useAccountStore';
+import { PostAddWishlist, DeleteWishlist } from 'api/wishlists.api';
 
 const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
   const userRole = useAccountStore((state) => state.accountInfo.role);
@@ -16,6 +17,16 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
 
   const handleLike = () => {
     setLike(!like);
+    console.log('like:', like);
+    PostAddWishlist(info.id)
+      .then((res) => {
+        console.log(res);
+        console.log('위시리스트 추가 성공:', res.data.result.id);
+        console.log('위시리스트 추가한 상품:', res.data.result.goods);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
