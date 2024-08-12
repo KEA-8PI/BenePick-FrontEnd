@@ -33,6 +33,7 @@ const WinnerTable = ({
                   const key = Object.keys(head)[0];
                   return { id: head[key], label: row[head[key] as keyof typeof row] };
                 })}
+                setColumns={setRowData}
                 propsId={drawIdList[index]}
               />
             ))}
