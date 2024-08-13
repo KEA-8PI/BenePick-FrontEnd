@@ -13,7 +13,6 @@ import { PostAddWishlist, DeleteWishlist } from 'api/wishlists.api';
 import { useEffect } from 'react';
 
 const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
-  const userID = useAccountStore((state) => state.accountInfo.id);
   const userRole = useAccountStore((state) => state.accountInfo.role);
   // like 상태를 info.wishlist로 초기화
   const [like, setLike] = useState(info.wishlist || false);
@@ -25,11 +24,6 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
   }, [info.wishlist]);
 
   const handleLike = () => {
-    if (!userID) {
-      navigate('/login');
-      return;
-    }
-
     setLike(!like);
     console.log('like:', like);
 
@@ -88,7 +82,7 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
 
         <Divider sx={{ backgroundColor: colors.cardGrey, marginTop: '10px' }} />
         <S.Row style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          {(userRole === 'MEMBER' || userRole === '') && info.goodsStatus !== 'COMPLETED' ? (
+          {userRole === 'MEMBER' && info.goodsStatus !== 'COMPLETED' ? (
             <IconButton>
               <Iconify
                 icon={like ? 'gridicons:heart' : 'gridicons:heart-outline'}
