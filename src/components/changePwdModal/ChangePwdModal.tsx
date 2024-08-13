@@ -5,10 +5,10 @@ import { Row } from 'components/common/Components.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import { useEffect, useState } from 'react';
-import { ConnectingAirportsOutlined, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Container, PasswordInput } from './ChangePwdModal.styles';
 import { PatchPassword } from 'api/members.api';
-import { GetPointHists } from 'api/pointHists.api';
+import { SHA256 } from 'crypto-js';
 
 export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
   const { open, onClose, buttonAction } = modalConfig;
@@ -52,7 +52,7 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
 
   const clickConfirmButton = () => {
     // 비밀번호 재설정 api 호출
-    PatchPassword(password).then((res) => {
+    PatchPassword(SHA256(password).toString()).then((res) => {
       console.log('비밀번호 변경 성공', res);
     });
     buttonAction();
