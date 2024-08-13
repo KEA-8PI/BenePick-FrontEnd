@@ -8,40 +8,29 @@ import colors from 'theme/variableColors';
 import DateCalendar from 'components/dateCalendar/DateCalendar';
 import { formatDate } from 'components/date/Date';
 import { GetDashboard } from 'api/dashboard.api';
+import { convertISOtoKST } from 'pages/manageGoods/utils/formatData';
 
 const DashboardFilter = ({
-  raffleStartAt,
-  raffleEndAt,
   setDashboardData,
   setLoading,
 }: {
-  raffleStartAt: Date;
-  raffleEndAt: Date;
   setDashboardData: (data: any) => void;
   setLoading: (loading: boolean) => void;
 }) => {
-  const [startDate, setStartDate] = useState(raffleStartAt);
-  const [endDate, setEndDate] = useState(raffleEndAt);
+  const [startDate, setStartDate] = useState(convertISOtoKST(new Date().toISOString().slice(0, 19)));
+  const [endDate, setEndDate] = useState(convertISOtoKST(new Date().toISOString().slice(0, 19)));
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState('');
 
-  const handleSearchClick = async (startDate: Date, endDate: Date) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
+  const handleSearchClick = async (startDate: string, endDate: string) => {
     setLoading(true);
     setIsOpen(false); // 달력 닫기
 
-    // Format dates to 'YYYY-MM-DDTHH:mm:ss'
-    const formattedStartDate = startDate.toISOString().slice(0, 19);
-    const formattedEndDate = endDate.toISOString().slice(0, 19);
-
-    console.log('formattedStartDate:', formattedStartDate);
-    console.log('formattedEndDate:', formattedEndDate);
     console.log('필터 category:', category);
 
     try {
       // console.log('선택된 카테고리:', category);
-      const response = await GetDashboard(category, formattedStartDate, formattedEndDate);
+      const response = await GetDashboard(category, startDate, endDate);
       console.log('Dashboard data:', response.data.result);
       setDashboardData(response.data.result); // API에서 받은 데이터를 부모 컴포넌트로 전달
     } catch (error) {
@@ -63,8 +52,8 @@ const DashboardFilter = ({
             <Iconify icon="lets-icons:date-range" sx={{ width: '25px', height: '20px', color: colors.grey01 }} />
           </IconButton>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <C.CardLightFont>{formatDate(startDate)}</C.CardLightFont>
-            <C.CardLightFont>~{formatDate(endDate)}</C.CardLightFont>
+            <C.CardLightFont>{convertISOtoKST(startDate)}</C.CardLightFont>
+            <C.CardLightFont>~{convertISOtoKST(endDate)}</C.CardLightFont>
           </div>
         </S.Row>
 
