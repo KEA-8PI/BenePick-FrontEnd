@@ -62,7 +62,7 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
       <C.CardContent
         style={{ flex: '0 0 40%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
       >
-        <div style={{ padding: '8px', flex: '1 1 auto' }}>
+        <div style={{ padding: '5px', flex: '1 1 auto' }}>
           <S.Row>
             {/* 일단 category가 null로 설정되어있으면 전체로 써져있게끔 변경 */}
             <C.CardLightFont>#{info.category ? info.category : '전체'}</C.CardLightFont>
@@ -80,7 +80,7 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
           <Date info={info} />
         </div>
 
-        <Divider sx={{ backgroundColor: colors.cardGrey, marginTop: '10px' }} />
+        <Divider sx={{ backgroundColor: colors.cardGrey, marginTop: '5px' }} />
         <S.Row style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           {userRole === 'MEMBER' && info.goodsStatus !== 'COMPLETED' ? (
             <IconButton>
@@ -95,7 +95,7 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
             // Placeholder for the heart icon
             <div style={{ width: '20px' }} />
           )}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '5px' }}>
             <Iconify
               icon="bi:person"
               sx={{ width: '20px', height: '20px', color: colors.grey01, paddingRight: '4px' }}
