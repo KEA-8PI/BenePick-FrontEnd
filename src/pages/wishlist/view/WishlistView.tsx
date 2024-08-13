@@ -36,7 +36,7 @@ const WishlistView = () => {
   // HomeView 컴포넌트에서 filter 상태를 업데이트하는 함수
   const handleFilterChange = (filter: string) => {
     setFilter(filter);
-    console.log('HomeView filter:', filter);
+    console.log('WishlistView filter:', filter);
   };
 
   return (

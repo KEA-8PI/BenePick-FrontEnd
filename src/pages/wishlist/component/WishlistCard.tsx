@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as S from '../../../components/common/Components.styles';
@@ -12,6 +12,10 @@ import CardImage from '../../../components/CustomCard/CardImage';
 import { PostAddWishlist, DeleteWishlist } from 'api/wishlists.api';
 
 const WishlistCard: React.FC<CustomCardProps> = ({ info }) => {
+  useEffect(() => {
+    console.log('WishlistCard info:', info);
+  }, [info]);
+
   const [like, setLike] = useState(false);
 
   // 좋아요 버튼 클릭 시 위시리스트 삭제 api 호출
@@ -51,7 +55,7 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info }) => {
           </S.Row>
           {/* 상품 아이디, 상태, 상품 정보 -> 상품 상세 페이지로 전달 */}
           <Link
-            to={`/goods/${info.id}`}
+            to={`/goods/${info.goodId}`}
             style={{ textDecoration: 'none', color: 'black', alignContent: 'center', alignItems: 'center' }}
             state={{ info }}
           >

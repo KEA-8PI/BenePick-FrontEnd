@@ -13,6 +13,7 @@ export interface CustomCardData {
   goodsStatus: string;
   wishlist?: boolean;
   children?: React.ReactNode;
+  goodId?: number;
 }
 
 export interface CustomCardProps {
