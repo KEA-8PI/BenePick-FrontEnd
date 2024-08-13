@@ -74,6 +74,7 @@ const HomeView = () => {
           {/* 검색 결과를 업데이트하는 함수 전달 */}
           <SearchBar
             data={data}
+            category={category}
             onKeywordChange={handleKeywordChange}
             onSearchResult={handleSearchResult}
             filter={filter}
@@ -81,9 +82,6 @@ const HomeView = () => {
         </S.Row>
         <CustomTab
           tabs={tabData}
-          data={data}
-          keyword={keyword} // keyword 전달
-          category={category} // category 전달
           callGetAPI={[
             (sortBy) => GetSearchGoods('PROGRESS', 0, 20, sortBy, keyword, category),
             (sortBy) => GetSearchGoods('SCHEDULED', 0, 10, sortBy, keyword, category),

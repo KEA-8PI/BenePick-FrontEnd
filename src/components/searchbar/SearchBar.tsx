@@ -5,7 +5,7 @@ import { IconButton } from '@mui/material';
 import Iconify from 'components/common/Iconify/Iconify';
 import { GetSearchGoods } from 'api/goods.api';
 
-const SearchBar = ({ data, onKeywordChange, onSearchResult, filter }) => {
+const SearchBar = ({ data, category, onKeywordChange, onSearchResult, filter }) => {
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
   const [filteredData, setFilteredData] = useState([]);
@@ -27,44 +27,23 @@ const SearchBar = ({ data, onKeywordChange, onSearchResult, filter }) => {
   }, [query, onKeywordChange]);
 
   const handleSearchClick = async (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.type === 'click') {
       if (search.trim() === '') {
         setQuery(''); // search가 빈 값일 때 query 초기화
         onSearchResult([]); // 빈 검색 결과를 전달
         fetchInitialData(); // 초기 데이터를 가져와 화면에 표시
       } else {
+        console.log('카테고리: ', category);
         setQuery(search);
-
-        // 데이터 상태가 업데이트된 후 API 호출
-        const fetchSearchResults = async () => {
-          try {
-            const response = await GetSearchGoods(allGoodsStatus[0], 0, 20, allGoodsSortBy, search);
-            console.log('검색 결과:', response.data.result);
-            setFilteredData(response.data.result.goodsSearchDTOList);
-            onSearchResult(response.data.result.goodsSearchDTOList || []);
-          } catch (error) {
-            console.error('Error during search:', error);
-          }
-        };
-
         // 모든 상태가 업데이트된 후 검색 결과를 가져옵니다.
         fetchSearchResults();
-
-        // try {
-        //   const response = await GetSearchGoods(allGoodsStatus[0], 0, 20, allGoodsSortBy, search);
-        //   console.log('검색 결과:', response.data.result);
-        //   setFilteredData(response.data.result.goodsSearchDTOList);
-        //   onSearchResult(response.data.result.goodsSearchDTOList || []);
-        // } catch (error) {
-        //   console.error('Error during search:', error);
-        // }
       }
     }
   };
 
   const fetchInitialData = async () => {
     try {
-      const response = await GetSearchGoods(allGoodsStatus[0], 0, 20, allGoodsSortBy, '');
+      const response = await GetSearchGoods(allGoodsStatus[0], 0, 20, allGoodsSortBy, '', category);
       const goodsData = response.data.result.goodsSearchDTOList;
       setFilteredData(goodsData);
       onSearchResult(goodsData || []); // 데이터를 HomeView로 전달
@@ -73,12 +52,17 @@ const SearchBar = ({ data, onKeywordChange, onSearchResult, filter }) => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log('allGoodsStatus:', allGoodsStatus);
-  //   console.log('allGoodsSortBy:', allGoodsSortBy);
-  //   console.log('search: ', search);
-  //   console.log('filteredData:', filteredData);
-  // }, [allGoodsStatus, allGoodsSortBy, search, filteredData]);
+  // 데이터 상태가 업데이트된 후 API 호출
+  const fetchSearchResults = async () => {
+    try {
+      const response = await GetSearchGoods(allGoodsStatus[0], 0, 20, allGoodsSortBy, search, category);
+      console.log('검색 결과:', response.data.result);
+      setFilteredData(response.data.result.goodsSearchDTOList);
+      onSearchResult(response.data.result.goodsSearchDTOList || []);
+    } catch (error) {
+      console.error('Error during search:', error);
+    }
+  };
 
   return (
     <OutlinedInput
@@ -95,7 +79,7 @@ const SearchBar = ({ data, onKeywordChange, onSearchResult, filter }) => {
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton aria-label="toggle password visibility" onClick={() => setQuery(search)}>
+            <IconButton aria-label="toggle password visibility" onClick={handleSearchClick}>
               <Iconify icon="eva:search-fill" sx={{ width: 25, height: 25, color: 'black' }} />
             </IconButton>
           </InputAdornment>
