@@ -9,6 +9,11 @@ import DateCalendar from 'components/dateCalendar/DateCalendar';
 import { formatDate } from 'components/date/Date';
 import { GetDashboard } from 'api/dashboard.api';
 
+// 유효한 날짜인지 확인하는 함수
+const isValidDate = (date: Date) => {
+  return date instanceof Date && !isNaN(date.getTime());
+};
+
 const DashboardFilter = ({
   raffleStartAt,
   raffleEndAt,
@@ -63,8 +68,8 @@ const DashboardFilter = ({
             <Iconify icon="lets-icons:date-range" sx={{ width: '25px', height: '20px', color: colors.grey01 }} />
           </IconButton>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <C.CardLightFont>{formatDate(startDate)}</C.CardLightFont>
-            <C.CardLightFont>~{formatDate(endDate)}</C.CardLightFont>
+            <C.CardLightFont>{isValidDate(startDate) ? formatDate(startDate) : '시작일'}</C.CardLightFont>
+            <C.CardLightFont>~{isValidDate(endDate) ? formatDate(endDate) : '종료일'}</C.CardLightFont>
           </div>
         </S.Row>
 
