@@ -14,9 +14,6 @@ const a11yProps = (index: number) => {
 
 const CustomTab: React.FC<TabsProps> = ({
   tabs,
-  data,
-  keyword,
-  category,
   showTabTitle,
   showFilter,
   callGetAPI,
@@ -67,12 +64,7 @@ const CustomTab: React.FC<TabsProps> = ({
       });
   };
 
-  console.log('CustomTab filter:', selectedFilters[value]);
   onFilterChange(selectedFilters[value]);
-  console.log('CustomTab key:  ', keyword);
-  console.log('CustomTab tabs: ', tabs);
-  console.log('CustomTab data: ', data);
-
   return (
     <Box sx={{ width: '100%' }}>
       <Box>
