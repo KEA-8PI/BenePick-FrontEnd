@@ -7,3 +7,7 @@ export const GetMemberInfo = () => {
 export const PatchPassword = (password: string) => {
   return httpApi.patch('/member/password', { password });
 };
+
+export const GetMemberPoint = async () => {
+  return httpApi.get('/member/point');
+};

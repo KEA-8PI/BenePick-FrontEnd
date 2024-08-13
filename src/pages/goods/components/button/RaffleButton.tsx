@@ -9,12 +9,11 @@ import colors from 'theme/variableColors';
 import { useAccountStore } from 'store/useAccountStore';
 import { PostRaffleApply } from 'api/raffles.api';
 
-const MIN = 0;
-const MAX = 3200;
-const MID = (MIN + MAX) / 2;
-
-const RaffleButton = ({ info }) => {
+const RaffleButton = ({ info, point }) => {
   const userID = useAccountStore((state) => state.accountInfo.id);
+  const MIN = 1;
+  const MAX = point;
+  const MID = (MIN + MAX) / 2;
   const [value, setValue] = useState(MID);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +36,8 @@ const RaffleButton = ({ info }) => {
     console.log('value', value);
     console.log('info', info);
     console.log('userID', userID);
-  }, [value]);
+    console.log('RaffleButton point', point);
+  }, [value, info, userID, point]);
 
   const isFirstModalToggle = useToggle();
   const isSecondModalToggle = useToggle();
