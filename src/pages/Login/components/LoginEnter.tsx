@@ -146,11 +146,12 @@ const LoginEnter = () => {
         <Button
           style={{
             width: '210px',
-            height: '35px',
+            height: '40px',
             fontSize: '15px',
             backgroundColor: colors.primary,
             color: 'white',
             display: 'flex',
+            borderRadius: '30px',
           }}
           onClick={handleLoginClick}
           // onClick={() => loginConfirmToggle.toggle()}
