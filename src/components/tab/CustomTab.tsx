@@ -23,6 +23,7 @@ const CustomTab: React.FC<TabsProps> = ({
   setState,
   dtoName,
   onFilterChange,
+  setDrawIdList,
 }) => {
   const [value, setValue] = React.useState(0);
   // 각 탭의 sortBy 상태를 탭마다 독립적으로 관리
