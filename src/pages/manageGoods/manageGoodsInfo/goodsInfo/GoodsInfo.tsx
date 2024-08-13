@@ -4,7 +4,7 @@ import { GoodsInfoData } from './GoodsInfo.types';
 const GoodsInfo = () => {
   const [goodsInfo, setGoodsInfo] = useState<GoodsInfoData>({
     id: null,
-    image: '',
+    image: null,
     name: '',
     category: '전자기기',
     amounts: 0,

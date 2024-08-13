@@ -79,9 +79,9 @@ const RaffleResultButton = ({ info }) => {
     ),
     buttons: {
       action: () => {
-        // GetDrawVerification(info.id, hashValue)
         // 데이터 값이 없어서 임시로 goodsId=3으로 설정
-        GetDrawVerification(3, hashValue)
+        // GetDrawVerification(3, hashValue)
+        GetDrawVerification(info.id, hashValue)
           .then((res) => {
             const response = res.data.result.drawsList;
             const winners = response
@@ -89,7 +89,7 @@ const RaffleResultButton = ({ info }) => {
               .map((item) => ({
                 id: item.memberId,
                 name: item.memberName,
-                // point: item.points,
+                point: item.point,
               }));
             setResult(winners);
             console.log('추첨 검증 결과:', winners);

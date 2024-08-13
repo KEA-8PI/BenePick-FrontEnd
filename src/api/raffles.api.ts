@@ -14,3 +14,7 @@ export const PostRaffleApply = (goodsId: number, point: number) => {
 export const GetMyRafflesList = () => {
   return httpApi.get('/raffles/progress/member');
 };
+
+export const GetRaffleCurrentState = (goodsId: number) => {
+  return httpApi.get(`/raffles/current/state/${goodsId}`);
+};

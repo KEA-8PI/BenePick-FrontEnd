@@ -15,6 +15,7 @@ export interface TableRowProps {
   index: number;
   sequence?: number;
   propsId?: string | number;
+  setColumns?: React.Dispatch<React.SetStateAction<{ [key: string]: string | number }[]>>;
 }
 
 export interface IColumnList {

@@ -16,6 +16,7 @@ export interface TabsProps {
   setState?: React.Dispatch<React.SetStateAction<any>>[];
   dtoName?: string[];
   onFilterChange?: (filter: string) => void;
+  setDrawIdList?: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 export interface TabPanelProps {

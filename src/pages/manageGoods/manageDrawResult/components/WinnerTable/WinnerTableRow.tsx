@@ -13,7 +13,7 @@ import { Wrapper } from 'components/common/Components.styles';
 import { formatDateTime } from 'pages/manageGoods/utils/formatData';
 import { PatchDrawsWinner } from 'api/draws.api';
 
-const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
+const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index, propsId, setColumns }) => {
   const [status, setStatus] = React.useState<string>(columns[columns.length - 1].label.toString());
   const changeToggle = useToggle();
   const confirmToggle = useToggle();
@@ -53,9 +53,10 @@ const WinnerTableRow: React.FC<TableRowProps> = ({ columns, index }) => {
 
   const changeStatus = () => {
     // 당첨자 상태 관리 api 호출
-    PatchDrawsWinner(Number(columns[1].label), status)
+    PatchDrawsWinner(propsId as number, status)
       .then((res) => {
         console.log('Patch 당첨자 상태 변경 response:', res);
+        window.location.reload();
       })
       .catch((err) => {
         console.error('Patch 당첨자 상태 변경 error:', err);

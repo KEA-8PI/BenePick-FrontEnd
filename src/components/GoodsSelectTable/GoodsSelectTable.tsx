@@ -12,6 +12,7 @@ const GoodsSelectTable = ({
   setSelected,
   apiPage,
   setApiPage,
+  totalNum,
 }: {
   headList: { [key: string]: string }[];
   rowData: { [key: string]: string | number }[];
@@ -20,6 +21,7 @@ const GoodsSelectTable = ({
   setSelected: React.Dispatch<React.SetStateAction<any[]>>;
   apiPage: number;
   setApiPage: React.Dispatch<React.SetStateAction<number>>;
+  totalNum: number;
 }) => {
   const [page, setPage] = useState(0);
 
@@ -100,7 +102,7 @@ const GoodsSelectTable = ({
       <TablePagination
         page={page}
         component="div"
-        count={rowData.length}
+        count={totalNum}
         rowsPerPage={rowsPerPage}
         onPageChange={handleChangePage}
         rowsPerPageOptions={[5, 10, 25]}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useToggle } from 'hooks/useToggle';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, IconButton, InputAdornment, Button } from '@mui/material';
@@ -9,6 +9,7 @@ import Login from './Login';
 import { IModalConfig } from './Login.types';
 import { useAccountStore } from 'store/useAccountStore';
 import { PostLogin } from 'api/auth.api';
+import { SHA256 } from 'crypto-js';
 
 const LoginEnter = () => {
   const navigate = useNavigate();
@@ -30,7 +31,8 @@ const LoginEnter = () => {
 
   const handleLoginClick = async () => {
     try {
-      const response = await PostLogin(id, password);
+      const response = await PostLogin(id, SHA256(password).toString());
+      // const response = await PostLogin(id, password);
       console.log('로그인 성공', response.data);
 
       const { userID, role } = response.data.result;

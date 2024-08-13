@@ -38,6 +38,8 @@ const CustomTab: React.FC<TabsProps> = ({
           console.log('handleChange API 호출 결과:', response);
           setTabData(response);
           setState[newIndex](response);
+          dtoName[newIndex] === 'drawsResponseByWinnerGoodsIdDTOS' &&
+            setDrawIdList(response.map((item: any) => item.drawId));
         })
         .catch((error) => {
           console.log(error);
