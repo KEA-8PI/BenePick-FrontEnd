@@ -44,45 +44,6 @@ const MemberInfoPage = () => {
 
   const [loading, setLoading] = useState(true);
 
-  // const [rowData, setRowData] = useState([
-  //   {
-  //     date: '2021-10-15',
-  //     change: '-50',
-  //     content: 'MacBook Pro 14',
-  //     totalPoint: 950,
-  //     category: '전자기기',
-  //     point: 1000,
-  //     result: '당첨',
-  //   },
-  //   {
-  //     date: '2021-10-19',
-  //     change: '+50',
-  //     content: 'MacBook Pro 14',
-  //     totalPoint: 1000,
-  //     category: '여행/티켓',
-  //     point: 512,
-  //     result: '미당첨',
-  //   },
-  //   {
-  //     date: '2021-10-10',
-  //     change: '+500',
-  //     content: 'MacBook Pro 14',
-  //     totalPoint: 1000,
-  //     category: '문화생활',
-  //     point: 120,
-  //     result: '노쇼',
-  //   },
-  //   {
-  //     date: '2021-10-10',
-  //     change: '+500',
-  //     content: 'MacBook Pro 14',
-  //     totalPoint: 1000,
-  //     category: '문화생활',
-  //     point: 120,
-  //     result: '취소',
-  //   },
-  // ]);
-
   useEffect(() => {
     GetMemberInfo()
       .then((res) => {
@@ -133,10 +94,7 @@ const MemberInfoPage = () => {
     <div style={{ padding: '0 10%' }}>
       <S.Row width={100}>
         <S.ShadowBox width={25} padding={'3%'}>
-          <Avatar
-            src={'https://img.khan.co.kr/news/2017/01/02/l_2017010301000210000020622.jpg'}
-            sx={{ width: 100, height: 100 }}
-          />
+          <Avatar src={'images/benepick-logo-s.png'} sx={{ width: 100, height: 100 }} />
           <div>
             <S.Row style={{ justifyContent: 'flex-start', margin: '20px 0 10px 0' }}>
               <Iconify icon="ph:user" width={20} sx={{ marginRight: '7%' }} />

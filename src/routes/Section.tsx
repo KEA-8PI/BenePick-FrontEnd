@@ -12,6 +12,7 @@ export const GoodsPage = lazy(() => import('../pages/goods/GoodsPage'));
 export const ManageGoodsPage = lazy(() => import('../pages/manageGoods/ManageGoodsPage'));
 export const ManageGoodsInfoPage = lazy(() => import('../pages/manageGoods/manageGoodsInfo/ManageGoodsInfoPage'));
 export const ManageDrawResultPage = lazy(() => import('../pages/manageGoods/manageDrawResult/ManageDrawResultPage'));
+export const NotFoundPage = lazy(() => import('../pages/common/NotFoundPage'));
 
 export const Router = () => {
   // Router에서 useLocation 훅을 사용하여 현재 경로를 가져오고,
@@ -72,6 +73,14 @@ export const Router = () => {
       element: (
         <Suspense>
           <LoginPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: '404',
+      element: (
+        <Suspense>
+          <NotFoundPage />
         </Suspense>
       ),
     },
