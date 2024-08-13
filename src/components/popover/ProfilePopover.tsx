@@ -35,9 +35,12 @@ const ProfilePopover = () => {
     // user logout api 호출
     try {
       const response = await PostLogout();
+
       console.log('로그아웃 성공', response.data);
       console.log('userID:', userID);
       console.log('userRole:', userRole);
+
+      alert('로그아웃 되었습니다.');
     } catch (error) {
       console.error('로그아웃 실패:', error.message);
     }
@@ -72,11 +75,6 @@ const ProfilePopover = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {/* <MenuItem key="loginPrompt">로그인 후 사용해주세요!</MenuItem>
-        <Divider key="divider2" />
-        <MenuItem key="login" onClick={handleLoginClick} style={{ fontWeight: 'bold' }}>
-          로그인
-        </MenuItem> */}
         {userID
           ? [
               <MenuItem key="userId">이메일: {userID}</MenuItem>,
