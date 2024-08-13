@@ -14,16 +14,21 @@ const a11yProps = (index: number) => {
 
 const CustomTab: React.FC<TabsProps> = ({
   tabs,
+  data,
+  keyword,
+  category,
   showTabTitle,
   showFilter,
   callGetAPI,
   setState,
   dtoName,
+  onFilterChange,
   setDrawIdList,
 }) => {
   const [value, setValue] = React.useState(0);
   // 각 탭의 sortBy 상태를 탭마다 독립적으로 관리
   const [selectedFilters, setSelectedFilters] = useState<string[]>(['END', 'END', 'END']);
+  const [tabData, setTabData] = useState([]);
 
   const handleChange = (event: React.SyntheticEvent, newIndex: number) => {
     setValue(newIndex);
@@ -31,7 +36,8 @@ const CustomTab: React.FC<TabsProps> = ({
       callGetAPI[newIndex](selectedFilters[newIndex])
         .then((res) => {
           const response = dtoName ? res.data.result[dtoName[newIndex]] : '';
-          console.log('API 호출 결과:', response);
+          console.log('handleChange API 호출 결과:', response);
+          setTabData(response);
           setState[newIndex](response);
           dtoName[newIndex] === 'drawsResponseByWinnerGoodsIdDTOS' &&
             setDrawIdList(response.map((item: any) => item.drawId));
@@ -54,12 +60,18 @@ const CustomTab: React.FC<TabsProps> = ({
       .then((res) => {
         const response = dtoName ? res.data.result[dtoName[value]] : '';
         setState[value](response);
-        console.log('API 호출 결과:', response);
+        console.log('handleFilterChange API 호출 결과:', response);
       })
       .catch((error) => {
         console.error(error);
       });
   };
+
+  console.log('CustomTab filter:', selectedFilters[value]);
+  onFilterChange(selectedFilters[value]);
+  console.log('CustomTab key:  ', keyword);
+  console.log('CustomTab tabs: ', tabs);
+  console.log('CustomTab data: ', data);
 
   return (
     <Box sx={{ width: '100%' }}>

@@ -10,6 +10,7 @@ const ProfilePopover = () => {
   const navigate = useNavigate();
 
   const userID = useAccountStore((state) => state.accountInfo.id);
+  const userRole = useAccountStore((state) => state.accountInfo.role);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -26,16 +27,22 @@ const ProfilePopover = () => {
     navigate('/login');
   };
 
+  const { resetAccountInfo } = useAccountStore();
+
   const handleLogoutClick = async () => {
     handleClose();
 
     // user logout api 호출
     try {
-      const response = await PostLogout(userID);
+      const response = await PostLogout();
       console.log('로그아웃 성공', response.data);
+      console.log('userID:', userID);
+      console.log('userRole:', userRole);
     } catch (error) {
       console.error('로그아웃 실패:', error.message);
     }
+
+    resetAccountInfo();
   };
 
   return (

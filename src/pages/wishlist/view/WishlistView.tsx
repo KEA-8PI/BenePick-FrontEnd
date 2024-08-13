@@ -9,6 +9,7 @@ const WishlistView = () => {
   const showTabTitle = true; // 조건에 따라 동적으로 결정
   const showFilter = true; // 조건에 따라 동적으로 결정
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState('');
 
   const tabData = [
     { label: '진행중', content: <WishlistCardList data={data} goodsStatus="진행" />, tabTitle: `총 ${data.length}개` },
@@ -32,6 +33,12 @@ const WishlistView = () => {
       });
   }, []);
 
+  // HomeView 컴포넌트에서 filter 상태를 업데이트하는 함수
+  const handleFilterChange = (filter: string) => {
+    setFilter(filter);
+    console.log('HomeView filter:', filter);
+  };
+
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -47,6 +54,7 @@ const WishlistView = () => {
             dtoName={['wishlistDTOS', 'wishlistDTOS']}
             showTabTitle={showTabTitle}
             showFilter={showFilter}
+            onFilterChange={handleFilterChange}
           />
         </S.Wrapper>
       </div>

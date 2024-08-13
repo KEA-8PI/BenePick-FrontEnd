@@ -4,6 +4,6 @@ export const PostLogin = async (id: string, password: string) => {
   return httpApi.post('/auth/login', { id, password });
 };
 
-export const PostLogout = async (id: string) => {
-  return httpApi.post('/auth/logout', { id });
+export const PostLogout = async () => {
+  return httpApi.post('/auth/logout', {});
 };
