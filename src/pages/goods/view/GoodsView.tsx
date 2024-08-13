@@ -5,11 +5,9 @@ import GoodsDetail from '../components/GoodsDetail';
 
 const GoodsView = () => {
   return (
-    <>
-      <S.Wrapper>
-        <GoodsDetail />
-      </S.Wrapper>
-    </>
+    <S.Wrapper>
+      <GoodsDetail />
+    </S.Wrapper>
   );
 };
 
