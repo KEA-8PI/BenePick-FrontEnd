@@ -41,7 +41,7 @@ const HomeView = () => {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, [category, keyword]);
+  }, []);
 
   // 카테고리를 업데이트하는 함수
   const handleCategoryChange = (selectedCategory: string) => {
@@ -74,6 +74,7 @@ const HomeView = () => {
           {/* 검색 결과를 업데이트하는 함수 전달 */}
           <SearchBar
             data={data}
+            category={category}
             onKeywordChange={handleKeywordChange}
             onSearchResult={handleSearchResult}
             filter={filter}
@@ -81,13 +82,10 @@ const HomeView = () => {
         </S.Row>
         <CustomTab
           tabs={tabData}
-          data={data}
-          keyword={keyword} // keyword 전달
-          category={category} // category 전달
           callGetAPI={[
             (sortBy) => GetSearchGoods('PROGRESS', 0, 20, sortBy, keyword, category),
             (sortBy) => GetSearchGoods('SCHEDULED', 0, 10, sortBy, keyword, category),
-            (sortBy) => GetSearchGoods('COMPLETED', 2, 10, sortBy, keyword, category),
+            (sortBy) => GetSearchGoods('COMPLETED', 0, 10, sortBy, keyword, category),
           ]}
           setState={[setData, setData, setData]}
           dtoName={['goodsSearchDTOList', 'goodsSearchDTOList', 'goodsSearchDTOList']}
