@@ -4,8 +4,8 @@ export interface GoodsInfoData {
   name?: string;
   category: string;
   amounts: number;
-  raffleStartAt: Date;
-  raffleEndAt: Date;
+  raffleStartAt: string;
+  raffleEndAt: string;
   count: number;
   price: number;
   discountPrice: number;
