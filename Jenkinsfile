@@ -46,7 +46,7 @@ pipeline {
                                 docker pull ${DOCKER_IMAGE}
                                 docker stop ${IMAGE_NAME} || true
                                 docker rm ${IMAGE_NAME} || true
-                                docker run -d --restart unless-stopped --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_IMAGE}
+                                docker run -d --restart unless-stopped --name ${IMAGE_NAME} --network benepick-app-network -p 3000:3000 ${DOCKER_IMAGE}
 EOF
                             """
                         }
@@ -54,7 +54,7 @@ EOF
                 }
             }
         }
-        
+
         stage('Cleanup Docker Images') {
             steps {
                 script {
