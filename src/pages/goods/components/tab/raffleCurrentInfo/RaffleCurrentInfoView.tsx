@@ -5,6 +5,7 @@ import colors from 'theme/variableColors';
 import RaffleCurrentInfo from './RaffleCurrentInfoIng';
 import RaffleBeforeInfo from './RaffleCurrentInfo';
 import { GetRaffleCurrentState } from 'api/raffles.api';
+import * as S from 'components/common/Components.styles';
 
 const gradeColors = [
   colors.primary,
@@ -75,6 +76,14 @@ const RaffleCurrentInfoView = forwardRef<HTMLElement, RaffleCurrentInfoViewProps
       <div>
         {goodsStatus === 'SCHEDULED' ? (
           <RaffleBeforeInfo />
+        ) : legendData.length === 0 || seriesData.length === 0 ? (
+          <S.Wrapper style={{ paddingTop: '20px', width: '100%', justifyContent: 'center' }}>
+            <S.ShadowBox
+              style={{ width: 600, height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <S.Wrapper style={{ width: '100%', textAlign: 'center' }}>관련된 데이터가 없습니다.</S.Wrapper>
+            </S.ShadowBox>
+          </S.Wrapper>
         ) : (
           <RaffleCurrentInfo
             legendData={legendData}

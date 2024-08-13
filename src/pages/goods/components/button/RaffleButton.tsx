@@ -11,13 +11,16 @@ import { PostRaffleApply } from 'api/raffles.api';
 
 const RaffleButton = ({ info, point }) => {
   const userID = useAccountStore((state) => state.accountInfo.id);
-  const MIN = 1;
+  const MIN = 0;
   const MAX = point;
   const MID = (MIN + MAX) / 2;
-  const [value, setValue] = useState(MID);
+
+  // value의 초기 값을 MID로 설정합니다.
+  const [value, setValue] = useState(0);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value === '' ? 0 : Number(event.target.value));
+    const newValue = event.target.value === '' ? 0 : Number(event.target.value);
+    setValue(Math.min(MAX, Math.max(MIN, newValue))); // value를 MIN과 MAX 사이로 제한
   };
 
   const handleBlur = () => {
@@ -33,6 +36,7 @@ const RaffleButton = ({ info, point }) => {
   };
 
   useEffect(() => {
+    setValue(MID);
     console.log('value', value);
     console.log('info', info);
     console.log('userID', userID);
@@ -54,37 +58,43 @@ const RaffleButton = ({ info, point }) => {
         height="100%"
         textAlign="center"
       >
-        <Typography style={{ fontSize: '18px' }}>{value} 포인트 응모 하시겠습니까?</Typography>
-        <Typography
-          style={{ color: colors.primary, textDecoration: 'underline', fontSize: '13px', paddingTop: '15px' }}
-        >
-          ※ 응모 완료 시 취소할 수 없습니다.
-        </Typography>
+        {value === MIN ? (
+          <Typography style={{ color: colors.primary }}>1 이상의 포인트를 사용하셔야 합니다.</Typography>
+        ) : (
+          <>
+            <Typography style={{ fontSize: '18px' }}>{value} 포인트 응모 하시겠습니까?</Typography>
+            <Typography
+              style={{ color: colors.primary, textDecoration: 'underline', fontSize: '13px', paddingTop: '15px' }}
+            >
+              ※ 응모 완료 시 취소할 수 없습니다.
+            </Typography>
+          </>
+        )}
       </Box>
     ),
-    buttons: {
-      label: '확인',
-      action: () => {
-        PostRaffleApply(info.id, value)
-          .then((res) => {
-            const response = res.data.result;
-            console.log('응모 결과:', response);
-            isSecondModalToggle.toggle(); // 두 번째 모달 열기
-          })
-          .catch((error) => {
-            if (error.response) {
-              // 서버가 응답을 반환한 경우
-              console.error('응모 에러:', error.response.data);
-            } else if (error.request) {
-              // 요청이 전송되었으나 응답이 없는 경우
-              console.error('응모 에러: 서버로부터 응답이 없습니다.', error.request);
-            } else {
-              // 요청 설정 중에 오류가 발생한 경우
-              console.error('응모 에러:', error.message);
-            }
-          });
-      },
-    },
+    buttons:
+      value !== MIN
+        ? {
+            label: '확인',
+            action: () => {
+              PostRaffleApply(info.id, value)
+                .then((res) => {
+                  const response = res.data.result;
+                  console.log('응모 결과:', response);
+                  isSecondModalToggle.toggle();
+                })
+                .catch((error) => {
+                  if (error.response) {
+                    console.error('응모 에러:', error.response.data);
+                  } else if (error.request) {
+                    console.error('응모 에러: 서버로부터 응답이 없습니다.', error.request);
+                  } else {
+                    console.error('응모 에러:', error.message);
+                  }
+                });
+            },
+          }
+        : null, // value가 MIN일 경우 버튼을 숨깁니다.
   };
 
   const secondModalConfig = {
@@ -119,7 +129,7 @@ const RaffleButton = ({ info, point }) => {
         step={10}
         min={MIN}
         max={MAX}
-        value={typeof value === 'number' ? value : 0}
+        value={typeof value === 'number' ? value : MID} // value가 숫자인 경우만 설정, 아니면 MID를 기본값으로 사용
         onChange={handleSliderChange}
         style={{
           marginTop: '5px',

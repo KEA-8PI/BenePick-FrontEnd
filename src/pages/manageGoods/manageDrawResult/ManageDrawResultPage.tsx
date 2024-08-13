@@ -109,6 +109,11 @@ const ManageDrawResultPage = () => {
     },
   ];
 
+  const [filter, setFilter] = useState('');
+  const handleFilterChange = (filter: string) => {
+    setFilter(filter);
+  };
+
   return (
     <div>
       <Helmet>
@@ -136,6 +141,7 @@ const ManageDrawResultPage = () => {
             'drawsResponseByWaitlistGoodsIdDTOS',
           ]}
           setDrawIdList={setDrawIdList}
+          onFilterChange={handleFilterChange}
         />
 
         <CustomButton

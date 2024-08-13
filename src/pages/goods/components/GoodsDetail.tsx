@@ -11,9 +11,10 @@ import DrawOutcomeView from './tab/drawOutcome/DrawOutcomeView';
 import { CustomCardData } from 'components/CustomCard/CustomCard.types';
 import { GetGoodsInfo } from 'api/goods.api';
 import { GetMemberPoint } from 'api/members.api';
+import { PostAddWishlist, DeleteWishlist } from 'api/wishlists.api';
 import { useAccountStore } from 'store/useAccountStore';
 
-const GoodsDetail = () => {
+const GoodsDetail = ({ info }) => {
   const params = useParams();
   const goodsId = Number(params.id);
 
@@ -56,10 +57,40 @@ const GoodsDetail = () => {
     }
   }, [goodsId, userID, navigate]);
 
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState(info.wishlist);
+
+  // 좋아요 정보 상품마다 업데이트
+  useEffect(() => {
+    setLike(info.wishlist);
+  }, [info.wishlist]);
 
   const handleLike = () => {
+    if (!userID) {
+      navigate('/login');
+      return;
+    }
+
     setLike(!like);
+    console.log('like:', like);
+
+    if (!like) {
+      PostAddWishlist(info.id)
+        .then((res) => {
+          console.log('위시리스트 추가 성공:', res.data.result.id);
+          console.log('위시리스트 추가한 상품:', res.data.result.goods);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      DeleteWishlist(info.id)
+        .then((res) => {
+          console.log('위시리스트 삭제 성공:', res.data.result.id);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   };
 
   const scrollRefs = useRef([]);
@@ -80,11 +111,11 @@ const GoodsDetail = () => {
     <S.Wrapper>
       {/* 상품 이미지, 상품 정보 */}
       <S.Row style={{ justifyContent: 'flex-start' }}>
-        <LeftDetailContents info={goodsInfo} />
+        <LeftDetailContents info={goodsInfo} like={like} handleLike={handleLike} />
 
         {/* 설명란 */}
         <div style={{ paddingLeft: '150px' }}>
-          <RightDetailContents info={goodsInfo} like={like} handleLike={handleLike} />
+          <RightDetailContents info={goodsInfo} />
 
           {/* 버튼 */}
           <S.Row style={{ paddingTop: '30px', justifyContent: 'flex-end' }}>
