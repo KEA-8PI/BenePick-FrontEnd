@@ -3,17 +3,18 @@ import * as S from 'components/common/Components.styles';
 import { Typography, IconButton } from '@mui/material';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
-
 import CardImage from 'components/CustomCard/CardImage';
 import Date from 'components/date/Date';
+import { CustomCardData } from 'components/CustomCard/CustomCard.types';
 import { useAccountStore } from 'store/useAccountStore';
 
-const LeftDetailContents = ({ info }) => {
-  const [like, setLike] = useState(false);
+interface LeftDetailContentsProps {
+  info: CustomCardData;
+  like?: boolean;
+  handleLike?: () => void;
+}
 
-  const handleLike = () => {
-    setLike(!like);
-  };
+const LeftDetailContents: React.FC<LeftDetailContentsProps> = ({ info, like, handleLike }) => {
   const { accountInfo } = useAccountStore();
   const { role } = accountInfo;
 
@@ -22,7 +23,7 @@ const LeftDetailContents = ({ info }) => {
       <CardImage info={info} style={{ width: '300px', height: '216px', marginBottom: '10px' }} />
       <S.Row>
         <Date info={info} />
-        {role === 'MEMBER' && (
+        {role === 'MEMBER' && info.goodsStatus !== 'COMPLETED' && (
           <IconButton>
             <Iconify
               icon={like ? 'gridicons:heart' : 'gridicons:heart-outline'}
