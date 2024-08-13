@@ -4,7 +4,7 @@ import colors from 'theme/variableColors';
 
 export const ColumnBox = styled.div`
   width: 127px;
-  height: ${({ height }: { height?: number }) => (height ? `${height}px` : '49px')};
+  height: ${({ height }: { height?: number }) => (height ? `${height}px` : '56px')};
   border-radius: 2px;
   display: flex;
   justify-content: center;
@@ -18,7 +18,7 @@ export const ColumnBox = styled.div`
 
 export const GoodsInfoTextField = styled(TextField)({
   width: '550px',
-  height: '49px',
+  // height: '49px',
   marginBottom: '10px',
 
   '& .MuiOutlinedInput-root': {
