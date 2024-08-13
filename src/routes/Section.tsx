@@ -1,13 +1,28 @@
-import { Outlet, useRoutes } from 'react-router-dom';
+import { Outlet, useRoutes, useLocation } from 'react-router-dom';
 import Layout from 'components/Layout/Layout';
 import { Suspense, lazy } from 'react';
 
+export const HomePage = lazy(() => import('../pages/home/HomePage'));
+export const DashboardPage = lazy(() => import('../pages/dashboard/DashboardPage'));
+export const MyPage = lazy(() => import('../pages/mypage/MyPage'));
+export const WishListPage = lazy(() => import('../pages/wishlist/WishlistPage'));
 export const LoginPage = lazy(() => import('../pages/Login/LoginPage'));
+export const ManageMemberPage = lazy(() => import('../pages/manageMember/ManageMemberPage'));
+export const GoodsPage = lazy(() => import('../pages/goods/GoodsPage'));
+export const ManageGoodsPage = lazy(() => import('../pages/manageGoods/ManageGoodsPage'));
+export const ManageGoodsInfoPage = lazy(() => import('../pages/manageGoods/manageGoodsInfo/ManageGoodsInfoPage'));
+export const ManageDrawResultPage = lazy(() => import('../pages/manageGoods/manageDrawResult/ManageDrawResultPage'));
+export const NotFoundPage = lazy(() => import('../pages/common/NotFoundPage'));
+
 export const Router = () => {
+  // Router에서 useLocation 훅을 사용하여 현재 경로를 가져오고,
+  const location = useLocation();
   const routes = useRoutes([
     {
+      path: '/',
       element: (
-        <Layout>
+        // useRoutes 훅을 사용하여 라우트를 설정합니다.
+        <Layout path={location.pathname}>
           <Suspense>
             <Outlet />
           </Suspense>
@@ -15,37 +30,60 @@ export const Router = () => {
       ),
       children: [
         {
-          //홈페이지
-          element: <div>홈페이지</div>,
+          // 홈페이지
+          element: <HomePage />,
           index: true,
         },
         {
           path: 'dashboard',
-          element: <div>대시보드</div>,
+          element: <DashboardPage />,
         },
         {
           path: 'myPage',
-          element: <div>마이페이지</div>,
+          element: <MyPage />,
         },
         {
           path: 'wishList',
-          element: <div>위시리스트</div>,
+          element: <WishListPage />,
         },
         {
           path: 'manageGoods',
-          element: <div>상품 관리</div>,
+          element: <ManageGoodsPage />,
         },
         {
-          path: 'manageMembers',
-          element: <div>사원 관리</div>,
+          path: 'manageMember',
+          element: <ManageMemberPage />,
         },
         {
           path: 'goods/:id',
-          element: <div>상품 상세 페이지</div>,
+          element: <GoodsPage />,
+        },
+        {
+          path: 'manageGoodsInfo/:id?',
+          element: <ManageGoodsInfoPage />,
+        },
+        {
+          path: 'manageDrawResult/:id',
+          element: <ManageDrawResultPage />,
         },
       ],
     },
-    { path: 'login', element: <LoginPage /> },
+    {
+      path: 'login',
+      element: (
+        <Suspense>
+          <LoginPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: '404',
+      element: (
+        <Suspense>
+          <NotFoundPage />
+        </Suspense>
+      ),
+    },
   ]);
   return routes;
 };

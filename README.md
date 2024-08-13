@@ -1,46 +1,36 @@
-# Getting Started with Create React App
+# BenePick
+> 복지포인트를 활용한 공정한 사내 추첨 통합 시스템
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img width="281" alt="image" src="https://github.com/user-attachments/assets/f8845bf2-b694-4828-8255-0fa77f128be4">
 
-## Available Scripts
+사내 복지포인트 제도를 활용하여 여러 가지 상품에 대한 응모 및 추첨을 진행할 수 있습니다.
 
-In the project directory, you can run:
 
-### `npm start`
+## 구성원
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+|사진|이름|파트|
+|------|---|---|
+|<img width="100" alt="image" src="https://github.com/user-attachments/assets/fde95413-2135-4985-9ba3-bbd847a16204">|김미소|FrontEnd(PL)|
+|<img width="100" alt="image" src="https://github.com/user-attachments/assets/e35cc3e5-3204-437e-bcfa-4ce17e1b7374">|윤혜원|FrontEnd|
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## UI
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<img width="1250" alt="image" src="https://github.com/user-attachments/assets/fc355d79-4eba-486b-b0de-d53686459446">
+<img width="1250" alt="image" src="https://github.com/user-attachments/assets/f5c749d5-c729-4ef6-bead-c8bfc7fed770">
+<br/>
 
-### `npm run build`
+## 실행 방법
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [Download from Github](https://github.com/KEA-8PI/BenePick-FrontEnd/archive/refs/heads/develop.zip) or clone the repo : `https://github.com/KEA-8PI/BenePick-FrontEnd.git`
+- Recommended `Node.js v18.x`.
+- **Install:** `npm install`
+- **Start:** `npm start`
+- **Build:** `npm run build`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 기술스택
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
