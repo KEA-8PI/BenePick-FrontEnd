@@ -4,7 +4,7 @@ import GoodsDetail from '../components/GoodsDetail';
 const GoodsView = () => {
   return (
     <S.Wrapper>
-      <GoodsDetail info={info} />
+      <GoodsDetail />
     </S.Wrapper>
   );
 };
