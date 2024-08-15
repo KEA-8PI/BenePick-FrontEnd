@@ -10,7 +10,7 @@ export const baseUrl = () => {
 const httpApi = axios.create({
   // baseURL: 'http://benepick.kro.kr:10001/',
   // baseURL: 'http://localhost:8080/',
-  baseURL: 'https://benepick.o-r.kr/',
+  baseURL: 'https://backend.benepick.kro.kr/',
   headers: {
     common: {
       'Content-Type': 'application/json',
