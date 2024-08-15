@@ -15,7 +15,7 @@ const categoryList = [
 ];
 const SelectCategory: React.FC<SelectCategoryProps> = ({ onCategoryChange }) => {
   // HomeView로 전달할 카테고리 상태
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('전체');
 
   const handleSelect = (event: SelectChangeEvent) => {
     setCategory(event.target.value);
@@ -25,7 +25,7 @@ const SelectCategory: React.FC<SelectCategoryProps> = ({ onCategoryChange }) => 
   return (
     <FormControl sx={{ width: '140px', height: '62px' }} size="small">
       <InputLabel id="demo-select-small-label" style={{ color: 'black' }}>
-        카테고리
+        {category === '' && '카테고리'}
       </InputLabel>
 
       <Select
