@@ -9,6 +9,8 @@ pipeline {
         REGISTRY_CREDENTIALS_ID = "docker-registry-credentials"
         GITHUB_CREDENTIALS_ID = "github-token"
         SSH_CREDENTIALS_ID = "deploy-server-ssh" // SSH 인증 정보
+        REMOTE_SERVER = "ubuntu@10.0.0.120"
+
     }
 
     stages {
@@ -37,16 +39,26 @@ pipeline {
             steps {
                 script {
                     sshagent(["${SSH_CREDENTIALS_ID}"]) {
-                        sh """
-                        ssh -o StrictHostKeyChecking=no -t ${REMOTE_SERVER} << EOF
-                            docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
-                            docker pull ${DOCKER_IMAGE}
-                            docker stop ${IMAGE_NAME} || true
-                            docker rm ${IMAGE_NAME} || true
-                            docker run -d --restart unless-stopped --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_IMAGE}
+                        withCredentials([usernamePassword(credentialsId: REGISTRY_CREDENTIALS_ID, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                            sh """
+                            ssh -o StrictHostKeyChecking=no -t ${REMOTE_SERVER} << EOF
+                                echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin ${DOCKER_REGISTRY}
+                                docker pull ${DOCKER_IMAGE}
+                                docker stop ${IMAGE_NAME} || true
+                                docker rm ${IMAGE_NAME} || true
+                                docker run -d --restart unless-stopped --name ${IMAGE_NAME} --network benepick-app-network -p 3000:3000 ${DOCKER_IMAGE}
 EOF
-                        """
+                            """
+                        }
                     }
+                }
+            }
+        }
+
+        stage('Cleanup Docker Images') {
+            steps {
+                script {
+                    sh "docker rmi ${DOCKER_IMAGE} || true"
                 }
             }
         }
