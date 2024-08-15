@@ -40,6 +40,7 @@ const ManageGoodsPage = () => {
         })
         .catch((error) => {
           console.error(error);
+          window.location.href = '/*';
         });
   }, [goodsId, setGoodsInfo]);
 

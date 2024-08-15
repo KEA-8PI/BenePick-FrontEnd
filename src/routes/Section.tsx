@@ -1,6 +1,8 @@
 import { Outlet, useRoutes, useLocation } from 'react-router-dom';
 import Layout from 'components/Layout/Layout';
 import { Suspense, lazy } from 'react';
+import { MemberProtectRoute } from 'pages/common/MemberProtectRoute';
+import { AdminProtectRoute } from 'pages/common/AdminProtectRoute';
 
 export const HomePage = lazy(() => import('../pages/home/HomePage'));
 export const DashboardPage = lazy(() => import('../pages/dashboard/DashboardPage'));
@@ -40,19 +42,35 @@ export const Router = () => {
         },
         {
           path: 'myPage',
-          element: <MyPage />,
+          element: (
+            <MemberProtectRoute>
+              <MyPage />
+            </MemberProtectRoute>
+          ),
         },
         {
           path: 'wishList',
-          element: <WishListPage />,
+          element: (
+            <MemberProtectRoute>
+              <WishListPage />
+            </MemberProtectRoute>
+          ),
         },
         {
           path: 'manageGoods',
-          element: <ManageGoodsPage />,
+          element: (
+            <AdminProtectRoute>
+              <ManageGoodsPage />
+            </AdminProtectRoute>
+          ),
         },
         {
           path: 'manageMember',
-          element: <ManageMemberPage />,
+          element: (
+            <AdminProtectRoute>
+              <ManageMemberPage />
+            </AdminProtectRoute>
+          ),
         },
         {
           path: 'goods/:id',
@@ -60,11 +78,19 @@ export const Router = () => {
         },
         {
           path: 'manageGoodsInfo/:id?',
-          element: <ManageGoodsInfoPage />,
+          element: (
+            <AdminProtectRoute>
+              <ManageGoodsInfoPage />
+            </AdminProtectRoute>
+          ),
         },
         {
           path: 'manageDrawResult/:id',
-          element: <ManageDrawResultPage />,
+          element: (
+            <AdminProtectRoute>
+              <ManageDrawResultPage />
+            </AdminProtectRoute>
+          ),
         },
       ],
     },
@@ -77,7 +103,7 @@ export const Router = () => {
       ),
     },
     {
-      path: '404',
+      path: '*',
       element: (
         <Suspense>
           <NotFoundPage />

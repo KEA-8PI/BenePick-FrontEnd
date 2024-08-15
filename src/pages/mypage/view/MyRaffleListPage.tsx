@@ -18,69 +18,28 @@ const MyRaffleListPage = () => {
   const [sequenceList, setSequenceList] = useState<number[]>([]);
   const [propsIdList, setPropsIdList] = useState<number[]>([]);
 
-  // const [rowData, setRowData] = useState([
-  //   {
-  //     date: '2021-10-15',
-  //     change: '-50',
-  //     content: 'MacBook Pro 14',
-  //     totalPoint: 950,
-  //     category: '전자기기',
-  //     point: 1000,
-  //     result: 'WINNER',
-  //   },
-  //   {
-  //     date: '2021-10-19',
-  //     change: '+50',
-  //     content: 'MacBook Pro 14',
-  //     totalPoint: 1000,
-  //     category: '여행/티켓',
-  //     point: 512,
-  //     result: 'WAITLIST',
-  //   },
-  //   {
-  //     date: '2021-10-10',
-  //     change: '+500',
-  //     content: 'MacBook Pro 14',
-  //     totalPoint: 1000,
-  //     category: '문화생활',
-  //     point: 120,
-  //     result: 'CANCEL',
-  //   },
-  //   {
-  //     date: '2021-10-10',
-  //     change: '+500',
-  //     content: 'MacBook Pro 14',
-  //     totalPoint: 1000,
-  //     category: '문화생활',
-  //     point: 120,
-  //     result: 'NO_SHOW',
-  //   },
-  //   {
-  //     date: '2021-10-10',
-  //     change: '+500',
-  //     content: 'MacBook Pro 14',
-  //     totalPoint: 1000,
-  //     category: '문화생활',
-  //     point: 120,
-  //     result: 'NON_WINNER',
-  //   },
-  // ]);
-
   const TabData = [
     {
       label: '진행',
       content: (
-        <CustomTable
-          headList={[
-            { 날짜: 'rafflesAt' },
-            { 카테고리: 'categoryName' },
-            { 내역: 'goodsName' },
-            { '사용 복지 포인트': 'point' },
-          ]}
-          isPaging={false}
-          rowData={progressList}
-          propsIdList={propsIdList}
-        />
+        <>
+          <CustomTable
+            headList={[
+              { 날짜: 'rafflesAt' },
+              { 카테고리: 'categoryName' },
+              { 내역: 'goodsName' },
+              { '사용 복지 포인트': 'point' },
+            ]}
+            isPaging={false}
+            rowData={progressList}
+            propsIdList={propsIdList}
+          />
+          {progressList.length === 0 && (
+            <div style={{ display: 'flex', width: '100%', marginTop: '20px', justifyContent: 'center' }}>
+              내역이 존재하지 않습니다.
+            </div>
+          )}
+        </>
       ),
     },
     {
@@ -88,19 +47,26 @@ const MyRaffleListPage = () => {
       content: loading2 ? (
         <div>Loading...</div>
       ) : (
-        <CustomTable
-          headList={[
-            { 날짜: 'rafflesAt' },
-            { 카테고리: 'categoryName' },
-            { 내역: 'goodsName' },
-            { '사용 복지 포인트': 'point' },
-            { 결과: 'drawStatus' },
-          ]}
-          isPaging={false}
-          rowData={completedList}
-          propsIdList={propsIdList}
-          etcNum={sequenceList}
-        />
+        <>
+          <CustomTable
+            headList={[
+              { 날짜: 'rafflesAt' },
+              { 카테고리: 'categoryName' },
+              { 내역: 'goodsName' },
+              { '사용 복지 포인트': 'point' },
+              { 결과: 'drawStatus' },
+            ]}
+            isPaging={false}
+            rowData={completedList}
+            propsIdList={propsIdList}
+            etcNum={sequenceList}
+          />
+          {completedList.length === 0 && (
+            <div style={{ display: 'flex', width: '100%', marginTop: '20px', justifyContent: 'center' }}>
+              내역이 존재하지 않습니다.
+            </div>
+          )}
+        </>
       ),
     },
   ];

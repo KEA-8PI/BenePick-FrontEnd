@@ -58,7 +58,12 @@ const GoodsSelectTableRow: React.FC<GoodsSelectTableRowProps> = ({
         </TableCell>
       ))}
       <TableCell align={'right'}>
-        <IconButton aria-label="modify" size="small" onClick={() => navigate(`/manageGoodsInfo/${columns[0].label}`)}>
+        <IconButton
+          aria-label="modify"
+          size="small"
+          onClick={() => navigate(`/manageGoodsInfo/${columns[0].label}`)}
+          disabled={columns[columns.length - 1].label === 'COMPLETED'}
+        >
           <Iconify icon="ph:pencil" width={20} />
         </IconButton>
       </TableCell>
