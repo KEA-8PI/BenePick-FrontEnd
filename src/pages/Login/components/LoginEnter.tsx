@@ -29,6 +29,11 @@ const LoginEnter = () => {
   const [password, setPassword] = useState('');
 
   const handleLoginClick = async () => {
+    if (!id || !password) {
+      alert('아이디나 비밀번호를 입력해주세요');
+      return; // 입력값이 없으면 로그인 요청을 보내지 않음
+    }
+
     try {
       const response = await PostLogin(id, SHA256(password).toString());
       // const response = await PostLogin(id, password);
@@ -38,31 +43,21 @@ const LoginEnter = () => {
 
       setAccountInfo(userID, role);
 
-      loginConfirmToggle.toggle();
+      console.log('로그인 성공');
+
+      // 역할과 함께 네비게이션 필요
+      navigate('/');
     } catch (error) {
       console.error('로그인 실패:', error.message);
 
       if (error.message === 'Request failed with status code 400') {
         alert('아이디 또는 비밀번호가 잘못 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요.');
+      } else if (error.response && error.response.status === 404) {
+        alert('존재하지 않는 사원입니다.');
+      } else {
+        alert('로그인 중 문제가 발생했습니다. 다시 시도해 주세요.');
       }
     }
-  };
-
-  // 로그인 확인 모달
-  const loginConfirmToggle = useToggle();
-
-  const loginConfirmToggleConfig: IModalConfig = {
-    open: loginConfirmToggle.isOpen,
-    onClose: loginConfirmToggle.toggle,
-    contents: <Typography>로그인에 성공하셨습니다!</Typography>,
-    buttons: { action: () => handleLogin() },
-  };
-
-  const handleLogin = () => {
-    console.log('로그인 성공');
-
-    // 역할과 함께 네비게이션 필요
-    navigate('/');
   };
 
   return (
@@ -94,7 +89,7 @@ const LoginEnter = () => {
           flexDirection: 'row',
           alignItems: 'center',
           alignContent: 'center',
-          padding: '22px 0 0 44px',
+          padding: '20px 0 0 44px',
         }}
       >
         <Typography style={{ fontWeight: 'bold', fontSize: '15px', paddingRight: '100px' }}>ID</Typography>
@@ -109,7 +104,7 @@ const LoginEnter = () => {
           padding: '20px 0 0 44px',
         }}
       >
-        <Typography style={{ fontWeight: 'bold', fontSize: '15px', paddingRight: '45px' }}>Password</Typography>
+        <Typography style={{ fontWeight: 'bold', fontSize: '15px', paddingRight: '43.5px' }}>Password</Typography>
         <S.HashInput
           style={{ backgroundColor: colors.tableGrey }}
           type={showPassword ? 'text' : 'password'}
@@ -154,13 +149,10 @@ const LoginEnter = () => {
             borderRadius: '30px',
           }}
           onClick={handleLoginClick}
-          // onClick={() => loginConfirmToggle.toggle()}
         >
           로그인
         </Button>
       </Box>
-
-      <Login modalConfig={loginConfirmToggleConfig} />
     </div>
   );
 };
