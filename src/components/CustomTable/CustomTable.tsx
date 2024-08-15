@@ -51,27 +51,23 @@ const CustomTable = ({
               return { id: head[key], label: key };
             })}
           />
-          {rowData.length === 0 ? (
-            <div style={{ flex: 1 }}>No data</div>
-          ) : (
-            <TableBody>
-              {paginatedRowData.map((row, index) => (
-                <CustomTableRow
-                  key={index} // Changed key to use index instead of row.content
-                  index={index}
-                  columns={headList.map((head) => {
-                    const key = Object.keys(head)[0];
-                    return { id: head[key], label: row[head[key] as keyof typeof row] };
-                  })}
-                  propsId={propsIdList ? propsIdList[index] : undefined}
-                  sequence={etcNum ? etcNum[index] : undefined}
-                />
-              ))}
-            </TableBody>
-          )}
+          <TableBody>
+            {paginatedRowData.map((row, index) => (
+              <CustomTableRow
+                key={index} // Changed key to use index instead of row.content
+                index={index}
+                columns={headList.map((head) => {
+                  const key = Object.keys(head)[0];
+                  return { id: head[key], label: row[head[key] as keyof typeof row] };
+                })}
+                propsId={propsIdList ? propsIdList[index] : undefined}
+                sequence={etcNum ? etcNum[index] : undefined}
+              />
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
-      {isPaging && total && (
+      {isPaging && total !== 0 && (
         <TablePagination
           page={page}
           component="div"
