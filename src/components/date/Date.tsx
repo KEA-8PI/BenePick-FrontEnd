@@ -4,7 +4,7 @@ import * as C from 'components/CustomCard/CustomCard.styles';
 import { CustomCardProps } from 'components/CustomCard/CustomCard.types';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
-import { formatDateSecond } from 'pages/manageGoods/utils/formatData';
+import { convertISOtoKST } from 'pages/manageGoods/utils/formatData';
 
 export const formatDate = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -28,10 +28,10 @@ const Date: React.FC<CustomCardProps> = ({ info }) => {
         sx={{ width: '20px', height: '20px', marginRight: '8px', color: colors.grey01 }}
       />
       <S.Wrapper>
-        <C.CardLightFont>{formatDateSecond(info.raffleStartAt)}</C.CardLightFont>
+        <C.CardLightFont>{convertISOtoKST(info.raffleStartAt, true)}</C.CardLightFont>
         <S.Row>
           <C.CardLightFont>~</C.CardLightFont>
-          <C.CardLightFont>{formatDateSecond(info.raffleEndAt)}</C.CardLightFont>
+          <C.CardLightFont>{convertISOtoKST(info.raffleEndAt, true)}</C.CardLightFont>
         </S.Row>
       </S.Wrapper>
     </Box>

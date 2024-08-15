@@ -17,11 +17,9 @@ const GoodsView = () => {
   }, [info]);
 
   return (
-    <>
-      <S.Wrapper>
-        <GoodsDetail info={info} />
-      </S.Wrapper>
-    </>
+    <S.Wrapper>
+      <GoodsDetail info={info} />
+    </S.Wrapper>
   );
 };
 

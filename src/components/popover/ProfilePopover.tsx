@@ -44,7 +44,7 @@ const ProfilePopover = () => {
     } catch (error) {
       console.error('로그아웃 실패:', error.message);
     }
-
+    window.location.href = '/';
     resetAccountInfo();
   };
 

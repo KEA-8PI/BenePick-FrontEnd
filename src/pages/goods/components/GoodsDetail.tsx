@@ -40,6 +40,7 @@ const GoodsDetail = ({ info }) => {
         .catch((error) => {
           console.error('Error fetching data:', error);
           setLoading(false); // 데이터 로딩 실패 시 상태 변경
+          window.location.href = '/*';
         });
 
       GetMemberPoint()
@@ -101,10 +102,6 @@ const GoodsDetail = ({ info }) => {
 
   if (loading) {
     return <div>Loading...</div>; // 로딩 화면 표시 필요
-  }
-
-  if (!goodsInfo) {
-    return <div>No data available</div>; // 404 화면 표시
   }
 
   return (
