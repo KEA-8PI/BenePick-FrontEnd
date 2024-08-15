@@ -7,15 +7,15 @@ import { formatDate } from 'components/date/Date';
 import { useEffect, useState } from 'react';
 import DateCalendar from 'components/dateCalendar/DateCalendar';
 import { GoodsInfoData } from '../../goodsInfo/GoodsInfo.types';
-import { formatDateSecond } from 'pages/manageGoods/utils/formatData';
+import { convertISOtoKST, formatDateSecond } from 'pages/manageGoods/utils/formatData';
 
 const ModifyGoodsDate = ({
   raffleStartAt,
   raffleEndAt,
   setState,
 }: {
-  raffleStartAt: Date;
-  raffleEndAt: Date;
+  raffleStartAt: string;
+  raffleEndAt: string;
   setState: React.Dispatch<React.SetStateAction<GoodsInfoData>>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,8 +26,8 @@ const ModifyGoodsDate = ({
         <Iconify icon="lets-icons:date-range" sx={{ width: '20px', height: '20px', color: colors.grey01 }} />
       </IconButton>
       <S.Wrapper>
-        <C.CardLightFont>{formatDateSecond(raffleStartAt)}</C.CardLightFont>
-        <C.CardLightFont>~{formatDateSecond(raffleEndAt)}</C.CardLightFont>
+        <C.CardLightFont>{convertISOtoKST(raffleStartAt, true)}</C.CardLightFont>
+        <C.CardLightFont>~{convertISOtoKST(raffleEndAt, true)}</C.CardLightFont>
       </S.Wrapper>
       <DateCalendar
         isOpen={isOpen}

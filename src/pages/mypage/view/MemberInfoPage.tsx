@@ -161,6 +161,9 @@ const MemberInfoPage = () => {
         apiPage={pointHistPage}
         setApiPage={setPointHistPage}
       />
+      {pointHistTotal === 0 && (
+        <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center' }}>포인트 내역이 없습니다.</div>
+      )}
       <Typography variant="h5" style={{ margin: '80px 0 15px 0' }}>
         패널티 내역
       </Typography>
@@ -177,6 +180,9 @@ const MemberInfoPage = () => {
         apiPage={penaltyHistPage}
         setApiPage={setPenaltyHistPage}
       />
+      {penaltyHistTotal === 0 && (
+        <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center' }}>패널티 내역이 없습니다.</div>
+      )}
       <ChangePwdModal modalConfig={modalConfig} />
       <CustomModal modalConfig={confirmModalConfig} />
     </div>

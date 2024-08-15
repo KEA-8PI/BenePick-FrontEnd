@@ -15,18 +15,22 @@ const DateCalendar = ({
 }: {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  startDate: Date;
-  setStartDate?: React.Dispatch<React.SetStateAction<Date>>;
-  endDate: Date;
-  setEndDate?: React.Dispatch<React.SetStateAction<Date>>;
+  startDate: string;
+  setStartDate?: React.Dispatch<React.SetStateAction<string>>;
+  endDate: string;
+  setEndDate?: React.Dispatch<React.SetStateAction<string>>;
   setState?: React.Dispatch<React.SetStateAction<GoodsInfoData>>;
 }) => {
   const changeDate = (e) => {
     if (setState) {
-      setState((prev) => ({ ...prev, raffleStartAt: e[0], raffleEndAt: e[1] }));
+      setState((prev) => ({
+        ...prev,
+        raffleStartAt: e[0].toISOString().slice(0, 19),
+        raffleEndAt: e[1].toISOString().slice(0, 19),
+      }));
     } else {
-      setStartDate(e[0]);
-      setEndDate(e[1]);
+      setStartDate(e[0].toISOString().slice(0, 19));
+      setEndDate(e[1].toISOString().slice(0, 19));
     }
   };
 

@@ -1,12 +1,7 @@
 export const formatData = (data) => {
   const formattedData = data.map((item) => {
-    const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      return date.toISOString().split('T')[0]; // 'YYYY-MM-DD' 형식으로 변환
-    };
-
-    const formattedStartDate = formatDate(item.raffleStartAt);
-    const formattedEndDate = item.raffleEndAt ? formatDate(item.raffleEndAt) : '';
+    const formattedStartDate = convertISOtoKST(item.raffleStartAt);
+    const formattedEndDate = item.raffleEndAt ? convertISOtoKST(item.raffleEndAt) : '';
 
     return {
       id: item.id.toString(),
@@ -37,4 +32,24 @@ export const formatDateSecond = (dateString) => {
   const hh = String(date.getHours()).padStart(2, '0');
   const mi = String(date.getMinutes()).padStart(2, '0');
   return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+};
+
+export const convertISOtoKST = (isoDateString: string, time?: boolean, seconds?: boolean) => {
+  const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+  const dateObj = new Date(isoDateString);
+  const kstDateObj = new Date(dateObj.getTime() + 9 * 60 * 60 * 1000);
+  const year = kstDateObj.getFullYear();
+  const month = String(kstDateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(kstDateObj.getDate()).padStart(2, '0');
+  const dayOfWeek = daysOfWeek[kstDateObj.getDay()];
+  const hours = String(kstDateObj.getHours()).padStart(2, '0');
+  const minutes = String(kstDateObj.getMinutes()).padStart(2, '0');
+  if (time) {
+    return `${year}-${month}-${day} (${dayOfWeek}) ${hours}:${minutes}`;
+  }
+  if (seconds) {
+    const seconds = String(kstDateObj.getSeconds()).padStart(2, '0');
+    return `${year}-${month}-${day} (${dayOfWeek}) ${hours}:${minutes}:${seconds}`;
+  }
+  return `${year}-${month}-${day}`;
 };
