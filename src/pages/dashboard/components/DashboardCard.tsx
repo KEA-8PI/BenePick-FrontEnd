@@ -26,7 +26,6 @@ const DashboardCard = ({ data }) => {
           </Tooltip>
         </Box>
         <S.ShadowBox style={{ height: '300px' }}>
-          {/* <AvgWinnerPointsPerRafflesChart data={data} /> */}
           {data.avgWinnerPointsPerRaffles && data.avgWinnerPointsPerRaffles.length > 0 ? (
             <AvgWinnerPointsPerRafflesChart data={data} />
           ) : (
