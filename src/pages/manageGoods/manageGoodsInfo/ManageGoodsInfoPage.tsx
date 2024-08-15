@@ -105,7 +105,7 @@ const ManageGoodsPage = () => {
         <S.Row width={65}>
           <div>
             {labelList.map((label, index) => (
-              <ColumnBox key={label} style={{ height: index === 6 && '171px' }}>
+              <ColumnBox key={label} style={{ height: index === 6 && '180px' }}>
                 {label}
               </ColumnBox>
             ))}
@@ -113,6 +113,7 @@ const ManageGoodsPage = () => {
           <div style={{ marginLeft: '10px' }}>
             <G.GoodsInfoTextField
               value={goodsInfo.name}
+              inputProps={{ maxLength: 50 }}
               onChange={(e) => setGoodsInfo((prev) => ({ ...prev, ['name']: e.target.value }))}
             />
             <G.GoodsInfoTextField value={goodsInfo.id || '입력하지 않아도 되는 값입니다.'} disabled={true} />
@@ -148,7 +149,7 @@ const ManageGoodsPage = () => {
               multiline
               inputProps={{ maxLength: 255 }}
               rows={6}
-              sx={{ '& .MuiOutlinedInput-root': { height: '171px' } }}
+              sx={{ '& .MuiOutlinedInput-root': { height: '180px' } }}
               onChange={(e) => setGoodsInfo((prev) => ({ ...prev, ['description']: e.target.value }))}
             />
           </div>
