@@ -16,7 +16,11 @@ const RaffleButton = ({ info, point }) => {
   const MID = (MIN + MAX) / 2;
 
   // value의 초기 값을 MID로 설정합니다.
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(MID);
+
+  useEffect(() => {
+    setValue(MID);
+  }, [point]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value === '' ? 0 : Number(event.target.value);
@@ -34,14 +38,6 @@ const RaffleButton = ({ info, point }) => {
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number);
   };
-
-  useEffect(() => {
-    setValue(MID);
-    console.log('value', value);
-    console.log('info', info);
-    console.log('userID', userID);
-    console.log('RaffleButton point', point);
-  }, [value, info, userID, point]);
 
   const isFirstModalToggle = useToggle();
   const isSecondModalToggle = useToggle();

@@ -114,6 +114,16 @@ const ManageDrawResultPage = () => {
     setFilter(filter);
   };
 
+  const downloadFile = () => {
+    const downloadUrl = `https://backend.benepick.kro.kr/draws/download/${goodsId}`; // 백엔드 파일 다운로드 API 경로
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.setAttribute('download', ''); // 이 속성을 설정하면 다운로드가 자동으로 시작됩니다.
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div>
       <Helmet>
@@ -144,10 +154,13 @@ const ManageDrawResultPage = () => {
           onFilterChange={handleFilterChange}
         />
 
-        <CustomButton
+        {/* <CustomButton
           style={{ marginTop: '20px' }}
-          onClick={() => window.open(`http://benepick.kro.kr:10001/draws/download/${goodsId}`)}
+          onClick={() => window.open(`https://backend.benepick.kro.kr/draws/download/${goodsId}`)}
         >
+          내보내기
+        </CustomButton> */}
+        <CustomButton style={{ marginTop: '20px' }} onClick={downloadFile}>
           내보내기
         </CustomButton>
       </div>

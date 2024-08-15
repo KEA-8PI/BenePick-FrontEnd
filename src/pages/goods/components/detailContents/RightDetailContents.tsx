@@ -24,7 +24,7 @@ const RightDetailContents = ({ info }: { info: CustomCardData; like?: boolean; h
   return (
     <div>
       <C.CardLightFont style={{ fontSize: '15px' }}>#{info.category}</C.CardLightFont>
-      <C.CardBoldFont style={{ fontSize: '25px', width: '400px' }}>{info.name}</C.CardBoldFont>
+      <C.GoodsTitle style={{ fontSize: '25px', width: '400px' }}>{info.name}</C.GoodsTitle>
       <C.CardBoldFont
         style={{ fontSize: '20px', textDecoration: 'line-through', color: colors.grey01, marginBottom: '3px' }}
       >

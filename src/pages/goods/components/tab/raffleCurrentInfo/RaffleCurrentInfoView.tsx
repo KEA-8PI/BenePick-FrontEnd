@@ -31,30 +31,28 @@ const RaffleCurrentInfoView = forwardRef<HTMLElement, RaffleCurrentInfoViewProps
         const total = result.total;
 
         // legendData와 seriesData를 동적으로 생성
-        const newLegendData = currentState.map((item, index) => ({
+        // 5등까지 표시하고, 나머지는 "그 외"로 처리
+        const newLegendData = currentState.slice(0, 5).map((item, index) => ({
           name: `${item.grade}등`,
           icon: 'circle',
         }));
 
-        const newSeriesData = currentState.map((item, index) => ({
+        const newSeriesData = currentState.slice(0, 5).map((item, index) => ({
           value: item.point,
           name: `${item.grade}등`,
           itemStyle: { color: gradeColors[index] },
         }));
 
-        // '그 외' 등급 처리 (등급이 6개 미만일 때)
-        if (currentState.length < 6) {
-          const otherValue = total - currentState.reduce((acc, item) => acc + item.point, 0);
+        // 6등 이후의 등급을 합산하여 "그 외"로 처리
+        const otherPoints = currentState.slice(5).reduce((acc, item) => acc + item.point, 0);
 
-          // 그 외 등급이 0 이상인 경우에만 추가
-          if (otherValue > 0) {
-            newLegendData.push({ name: '그 외', icon: 'circle' });
-            newSeriesData.push({
-              value: otherValue,
-              name: '그 외',
-              itemStyle: { color: gradeColors[5] },
-            });
-          }
+        if (otherPoints > 0) {
+          newLegendData.push({ name: '그 외', icon: 'circle' });
+          newSeriesData.push({
+            value: otherPoints,
+            name: '그 외',
+            itemStyle: { color: gradeColors[5] },
+          });
         }
 
         setLegendData(newLegendData);

@@ -14,11 +14,12 @@ import { GetMemberPoint } from 'api/members.api';
 import { PostAddWishlist, DeleteWishlist } from 'api/wishlists.api';
 import { useAccountStore } from 'store/useAccountStore';
 
-const GoodsDetail = ({ info }) => {
+const GoodsDetail = () => {
   const params = useParams();
   const goodsId = Number(params.id);
 
   const [goodsInfo, setGoodsInfo] = useState<CustomCardData | null>(null);
+  const [like, setLike] = useState(false);
   const [pointData, setPointData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -33,6 +34,7 @@ const GoodsDetail = ({ info }) => {
         .then((res) => {
           const goodsInfo = res.data.result;
           setGoodsInfo(res.data.result);
+          setLike(res.data.result.wishlist);
           setLoading(false); // 데이터 로딩이 완료되면 상태 변경
 
           console.log('goodsInfo:', goodsInfo);
@@ -58,13 +60,6 @@ const GoodsDetail = ({ info }) => {
     }
   }, [goodsId, userID, navigate]);
 
-  const [like, setLike] = useState(info.wishlist);
-
-  // 좋아요 정보 상품마다 업데이트
-  useEffect(() => {
-    setLike(info.wishlist);
-  }, [info.wishlist]);
-
   const handleLike = () => {
     if (!userID) {
       navigate('/login');
@@ -75,7 +70,7 @@ const GoodsDetail = ({ info }) => {
     console.log('like:', like);
 
     if (!like) {
-      PostAddWishlist(info.id)
+      PostAddWishlist(goodsInfo.id)
         .then((res) => {
           console.log('위시리스트 추가 성공:', res.data.result.id);
           console.log('위시리스트 추가한 상품:', res.data.result.goods);
@@ -84,7 +79,7 @@ const GoodsDetail = ({ info }) => {
           console.error(err);
         });
     } else {
-      DeleteWishlist(info.id)
+      DeleteWishlist(goodsInfo.id)
         .then((res) => {
           console.log('위시리스트 삭제 성공:', res.data.result.id);
         })
@@ -102,6 +97,11 @@ const GoodsDetail = ({ info }) => {
 
   if (loading) {
     return <div>Loading...</div>; // 로딩 화면 표시 필요
+  }
+
+  // 이거 없으면 에러 발생해요!! 삭제하면 안돼요!!
+  if (!goodsInfo) {
+    return <div>No data available</div>; // 404 화면 표시
   }
 
   return (
