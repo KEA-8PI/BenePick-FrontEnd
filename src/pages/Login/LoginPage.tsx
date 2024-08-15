@@ -7,10 +7,6 @@ const LoginPage = () => {
   const { accountInfo } = useAccountStore();
   const { role } = accountInfo;
 
-  useEffect(() => {
-    if (role !== '') window.location.href = '*';
-  }, [role]);
-
   return (
     <>
       <Helmet>
