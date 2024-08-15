@@ -33,12 +33,26 @@ export const CardBoldFont = styled.div`
   text-overflow: ellipsis; /* ...으로 표시 */
   white-space: normal; /* 여러 줄 허용 */
   max-width: 100%; /* 최대 너비 */
-  height: 40px;
   overflow: hidden;
+  display: flex;
+  align-items: start; /* 수직 중앙 정렬 */
+  height: 35px; /* 두 줄의 높이로 설정 */
+  line-height: 1.2; /* 줄 간격 설정 */
+`;
+
+export const GoodsTitle = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: -webkit-box; /* 플렉스 박스로 설정 */
+  -webkit-box-orient: vertical; /* 수직으로 쌓기 */
+  white-space: normal; /* 여러 줄 허용 */
+  max-width: 100%; /* 최대 너비 */
+  overflow: hidden;
+  display: flex;
 `;
 
 export const CardLightFont = styled.div`
   font-size: 13px;
   color: ${colors.grey01};
-  height: 20px; // 고정된 높이 설정
 `;

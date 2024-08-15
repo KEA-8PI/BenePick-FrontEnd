@@ -14,7 +14,6 @@ import { SHA256 } from 'crypto-js';
 const LoginEnter = () => {
   const navigate = useNavigate();
   const { setAccountInfo } = useAccountStore();
-  const { updateAccountInfo } = useAccountStore();
 
   // 비밀번호 보이기/숨기기
   const [showPassword, setShowPassword] = useState(false);
@@ -39,12 +38,13 @@ const LoginEnter = () => {
 
       setAccountInfo(userID, role);
 
-      // console.log('userID:', userID); // 디버깅용
-      // console.log('role:', role); // 디버깅용
-
       loginConfirmToggle.toggle();
     } catch (error) {
       console.error('로그인 실패:', error.message);
+
+      if (error.message === 'Request failed with status code 400') {
+        alert('아이디 또는 비밀번호가 잘못 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요.');
+      }
     }
   };
 
