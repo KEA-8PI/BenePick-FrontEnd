@@ -99,6 +99,11 @@ const GoodsDetail = () => {
     return <div>Loading...</div>; // 로딩 화면 표시 필요
   }
 
+  // 이거 없으면 에러 발생해요!! 삭제하면 안돼요!!
+  if (!goodsInfo) {
+    return <div>No data available</div>; // 404 화면 표시
+  }
+
   return (
     <S.Wrapper>
       {/* 상품 이미지, 상품 정보 */}
