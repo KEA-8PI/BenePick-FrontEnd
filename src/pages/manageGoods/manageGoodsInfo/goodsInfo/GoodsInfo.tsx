@@ -2,14 +2,23 @@ import { useState } from 'react';
 import { GoodsInfoData } from './GoodsInfo.types';
 
 const GoodsInfo = () => {
+  const raffleStartAt = new Date();
+  raffleStartAt.setDate(raffleStartAt.getDate() + 1);
+  raffleStartAt.setHours(0 - 9, 0, 0, 0); // UTC 기준으로 시간 설정
+
+  // 일주일 뒤 한국 시간 23:59 설정
+  const raffleEndAt = new Date();
+  raffleEndAt.setDate(raffleEndAt.getDate() + 7);
+  raffleEndAt.setHours(23 - 9, 59, 59, 999);
+
   const [goodsInfo, setGoodsInfo] = useState<GoodsInfoData>({
     id: null,
     image: null,
     name: '',
     category: '전자기기',
     amounts: 0,
-    raffleStartAt: '',
-    raffleEndAt: '',
+    raffleStartAt: raffleStartAt.toISOString(),
+    raffleEndAt: raffleEndAt.toISOString(),
     count: 0,
     price: 0,
     discountPrice: 0,
