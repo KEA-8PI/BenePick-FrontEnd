@@ -90,7 +90,12 @@ const ManageGoodsPage = () => {
         <S.CustomButton
           style={{ backgroundColor: colors.secondary, marginBottom: '10px' }}
           onClick={handleSave}
-          disabled={goodsInfo.name === '' || goodsInfo.amounts === 0 || goodsInfo.image === ''}
+          disabled={
+            goodsInfo.name === '' ||
+            goodsInfo.amounts === 0 ||
+            goodsInfo.image === '' ||
+            goodsInfo.discountPrice > goodsInfo.price
+          }
         >
           완료
         </S.CustomButton>
