@@ -20,7 +20,6 @@ const CustomTableRow: React.FC<TableRowProps> = ({ columns, index, sequence, pro
     <TableRow hover tabIndex={-1} sx={{ '& .MuiTableCell-root': { paddingTop: '10px', paddingBottom: '10px' } }}>
       <TableCell>{index + 1}</TableCell>
       {columns.map((column) => (
-        // label이 상품일 시 상품명을 클릭하면 상품 상세 페이지로 이동하게 추가
         <TableCell key={column.label} align={'center'}>
           {column.id === 'penaltyCount' ||
           column.id === 'pointChange' ||
@@ -31,19 +30,19 @@ const CustomTableRow: React.FC<TableRowProps> = ({ columns, index, sequence, pro
           column.id === 'rafflesAt' ? (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               {(column.id === 'penaltyCount' || column.id === 'pointChange') && (
-                <ColorBox color={column.label.toString().startsWith('-') ? colors.buttonPink : colors.mint}>
-                  {column.label.toString().startsWith('-') ? column.label : `+${column.label}`}
+                <ColorBox color={column.label?.toString().startsWith('-') ? colors.buttonPink : colors.mint}>
+                  {column.label?.toString().startsWith('-') ? column.label : `+${column.label}`}
                 </ColorBox>
               )}
               {column.id === 'drawStatus' && (
                 <ColorBox color={ResultColor[column.label]}>
-                  {convertResponse(column.label.toString())}
+                  {convertResponse(column.label?.toString() || '')}
                   {column.label === 'WAITLIST' && ` ${sequence}순위`}
                 </ColorBox>
               )}
               {column.id === 'status' && <ColorBox color={colors.lemon}>{column.label}순위</ColorBox>}
               {(column.id === 'rafflesAt' || column.id === 'createdAt') &&
-                convertISOtoKST(column.label.toString(), false, true)}
+                convertISOtoKST(column.label?.toString() || '', false, true)}
               {column.id === 'goodsName' && (
                 <div
                   style={{
