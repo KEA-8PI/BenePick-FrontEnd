@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useToggle } from 'hooks/useToggle';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, IconButton, InputAdornment, Button } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import colors from 'theme/variableColors';
 import * as S from './Login.styles';
-import Login from './Login';
-import { IModalConfig } from './Login.types';
 import { useAccountStore } from 'store/useAccountStore';
 import { PostLogin } from 'api/auth.api';
 import { SHA256 } from 'crypto-js';
@@ -14,9 +11,7 @@ import { SHA256 } from 'crypto-js';
 const LoginEnter = () => {
   const navigate = useNavigate();
   const { setAccountInfo } = useAccountStore();
-
-  // 비밀번호 보이기/숨기기
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // 비밀번호 보이기/숨기기
 
   const handleClickShowPassword = (change: React.Dispatch<React.SetStateAction<boolean>>) => {
     return () => {
@@ -37,19 +32,10 @@ const LoginEnter = () => {
     try {
       const response = await PostLogin(id, SHA256(password).toString());
       // const response = await PostLogin(id, password);
-      console.log('로그인 성공', response.data);
-
       const { userID, role } = response.data.result;
-
       setAccountInfo(userID, role);
-
-      console.log('로그인 성공');
-
-      // 역할과 함께 네비게이션 필요
-      navigate('/');
+      navigate('/'); // 역할과 함께 네비게이션 필요
     } catch (error) {
-      console.error('로그인 실패:', error.message);
-
       if (error.message === 'Request failed with status code 400') {
         alert('아이디 또는 비밀번호가 잘못 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요.');
       } else if (error.response && error.response.status === 404) {
