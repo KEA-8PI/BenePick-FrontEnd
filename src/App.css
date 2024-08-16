@@ -30,3 +30,16 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper {
+  padding-top: 130px;
+  padding-bottom: 130px;
+  padding-left: max(10px, calc(12vw)); /* Padding starts at 12% of the viewport width, but will not drop below 20px */
+  padding-right: max(10px, calc(12vw)); /* Same logic for right padding */
+  box-sizing: border-box; /* Ensures padding is included in the width calculation */
+  overflow-x: auto; /* Enables horizontal scrolling when content overflows */
+}
+
+.container {
+  min-width: 800px; /* Minimum width to ensure scrolling when padding reaches 20px on both sides */
+}
