@@ -135,6 +135,7 @@ const SelectTableRow: React.FC<SelectTableRowProps> = ({
               size="small"
               sx={{ fontSize: '0.875rem' }}
               onChange={(e) => handleInputChange(column.id as keyof InputValues, e.target.value)}
+              disabled={column.id === 'id' && id !== ''}
             />
           ) : (
             column.label
