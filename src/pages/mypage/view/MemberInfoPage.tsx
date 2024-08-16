@@ -96,7 +96,7 @@ const MemberInfoPage = () => {
         <S.ShadowBox width={25} padding={'3%'}>
           <Avatar src={'images/benepick-logo-s.png'} sx={{ width: 100, height: 100 }} />
           <div>
-            <S.Row style={{ justifyContent: 'flex-start', margin: '20px 0 10px 0' }}>
+            <S.Row style={{ justifyContent: 'flex-start', marginTop: 20 }}>
               <Iconify icon="ph:user" width={20} sx={{ marginRight: '7%' }} />
               <div style={{ fontWeight: 'bold' }}>{memberInfo.name}</div>
             </S.Row>

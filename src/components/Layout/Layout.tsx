@@ -25,17 +25,21 @@ const Layout = (props: { children: React.ReactNode; path: string }) => {
   console.log('계정 정보 확인:', useAccountStore.getState().accountInfo);
 
   return (
-    <div style={{ padding: '130px 12%' }}>
-      {/* <Header /> */}
-      {/* 로그아웃 상태 일 때 */}
-      {userRole === '' && <MemberNavBar navItems={navItems} memberNavItems={memberNavItems} path={props.path} />}
-      {/* 로그인 상태 일 때 */}
-      {userRole === 'MEMBER' && <MemberNavBar navItems={navItems} memberNavItems={memberNavItems} path={props.path} />}
-      {userRole === 'ADMIN' && (
-        <ManagerNavBar navItems={navItems} managerNavItems={managerNavItems} path={props.path} />
-      )}
-      <main>{props.children}</main>
-      {/* <Footer /> */}
+    // <div style={{ padding: '130px 12%' }}>
+    <div className="wrapper">
+      <div className="container">
+        {/* 로그아웃 상태 일 때 */}
+        {userRole === '' && <MemberNavBar navItems={navItems} memberNavItems={memberNavItems} path={props.path} />}
+        {/* 로그인 상태 일 때 */}
+        {userRole === 'MEMBER' && (
+          <MemberNavBar navItems={navItems} memberNavItems={memberNavItems} path={props.path} />
+        )}
+        {userRole === 'ADMIN' && (
+          <ManagerNavBar navItems={navItems} managerNavItems={managerNavItems} path={props.path} />
+        )}
+        <main>{props.children}</main>
+        {/* <Footer /> */}
+      </div>
     </div>
   );
 };

@@ -12,11 +12,8 @@ const DrawOutcomeAfter = forwardRef<HTMLElement, DrawOutcomeProps>(({ info }) =>
 
   useEffect(() => {
     const getDrawList = async () => {
-      // 이것도 info.id로 해야하는데, 들어있는 데이터가 없어서 임시로 3으로 설정
-      // GetDrawList(3)
       GetDrawList(info.id).then((res) => {
         const response = res.data.result.drawsResponseByGoodsDTOList;
-        console.log('DrawOutcomeAfter response: ', response);
         const result = response
 
           .filter((item) => item.drawStatus === 'WINNER')
@@ -26,7 +23,6 @@ const DrawOutcomeAfter = forwardRef<HTMLElement, DrawOutcomeProps>(({ info }) =>
             points: item.point,
           }));
         setResult(result);
-        console.log('DrawOutcomeAfter response: ', result);
       });
     };
     getDrawList();

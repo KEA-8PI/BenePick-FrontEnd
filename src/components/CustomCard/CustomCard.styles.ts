@@ -36,7 +36,7 @@ export const CardBoldFont = styled.div`
   overflow: hidden;
   display: flex;
   align-items: start; /* 수직 중앙 정렬 */
-  height: 35px; /* 두 줄의 높이로 설정 */
+  height: 34.5px; /* 두 줄의 높이로 설정 */
   line-height: 1.2; /* 줄 간격 설정 */
 `;
 

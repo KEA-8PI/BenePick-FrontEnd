@@ -52,18 +52,31 @@ const CustomTable = ({
             })}
           />
           <TableBody>
-            {paginatedRowData.map((row, index) => (
-              <CustomTableRow
-                key={index} // Changed key to use index instead of row.content
-                index={index}
-                columns={headList.map((head) => {
-                  const key = Object.keys(head)[0];
-                  return { id: head[key], label: row[head[key] as keyof typeof row] };
-                })}
-                propsId={propsIdList ? propsIdList[index] : undefined}
-                sequence={etcNum ? etcNum[index] : undefined}
-              />
-            ))}
+            {isPaging
+              ? paginatedRowData.map((row, index) => (
+                  <CustomTableRow
+                    key={index} // Changed key to use index instead of row.content
+                    index={index}
+                    columns={headList.map((head) => {
+                      const key = Object.keys(head)[0];
+                      return { id: head[key], label: row[head[key] as keyof typeof row] };
+                    })}
+                    propsId={propsIdList ? propsIdList[index] : undefined}
+                    sequence={etcNum ? etcNum[index] : undefined}
+                  />
+                ))
+              : rowData.map((row, index) => (
+                  <CustomTableRow
+                    key={index} // Changed key to use index instead of row.content
+                    index={index}
+                    columns={headList.map((head) => {
+                      const key = Object.keys(head)[0];
+                      return { id: head[key], label: row[head[key] as keyof typeof row] };
+                    })}
+                    propsId={propsIdList ? propsIdList[index] : undefined}
+                    sequence={etcNum ? etcNum[index] : undefined}
+                  />
+                ))}
           </TableBody>
         </Table>
       </TableContainer>
