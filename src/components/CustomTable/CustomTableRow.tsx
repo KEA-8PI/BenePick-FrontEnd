@@ -19,8 +19,8 @@ const CustomTableRow: React.FC<TableRowProps> = ({ columns, index, sequence, pro
   return (
     <TableRow hover tabIndex={-1} sx={{ '& .MuiTableCell-root': { paddingTop: '10px', paddingBottom: '10px' } }}>
       <TableCell>{index + 1}</TableCell>
-      {columns.map((column) => (
-        <TableCell key={column.label} align={'center'}>
+      {columns.map((column, idx) => (
+        <TableCell key={idx} align={'center'}>
           {column.id === 'penaltyCount' ||
           column.id === 'pointChange' ||
           column.id === 'drawStatus' ||
