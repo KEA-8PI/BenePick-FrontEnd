@@ -5,13 +5,8 @@ import * as S from 'components/common/Components.styles';
 import PieChart from 'components/pieChart/PieChart';
 import colors from 'theme/variableColors';
 
-// const avgRafflePoint = 26;
-// const totalRafflePoint = 765;
-
 const RaffleCurrentInfo = forwardRef<HTMLElement, RaffleCurrentInfoProps>(
   ({ legendData, seriesData, averagePoint, totalPoint }) => {
-    // console.log('상태: ', goodsStatus);
-
     return (
       <S.Wrapper style={{ paddingTop: '20px', width: '100%' }}>
         <S.Row>
