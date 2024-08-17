@@ -4,6 +4,7 @@ import colors from 'theme/variableColors';
 import * as S from 'components/common/Components.styles';
 
 const AvgWinnerPointsChart = ({ data }) => {
+  const formattedPoints = data.avgWinnerPoints.avgWinnerPoints.toFixed(2).toLocaleString();
   return (
     <S.Wrapper>
       <Iconify
@@ -16,7 +17,7 @@ const AvgWinnerPointsChart = ({ data }) => {
       />
       <S.Row style={{ paddingTop: '20px' }}>
         <Typography style={{ color: colors.yellow, fontSize: '35px', fontWeight: 'bold', paddingRight: '10px' }}>
-          {data.avgWinnerPoints.toLocaleString()}
+          {formattedPoints}
         </Typography>
         <Typography style={{ fontSize: '35px' }}>포인트</Typography>
       </S.Row>
