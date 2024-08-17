@@ -26,7 +26,7 @@ const CustomTable = ({
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    if (newPage > page && (newPage + 1) * rowsPerPage >= rowData.length) {
+    if (newPage > page && (newPage + 1) * rowsPerPage >= rowData.length && total >= (newPage + 1) * rowsPerPage) {
       setApiPage(apiPage + 1);
     }
     setPage(newPage);
