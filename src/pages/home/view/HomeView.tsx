@@ -5,43 +5,115 @@ import SearchBar from 'components/searchbar/SearchBar';
 import CustomTab from 'components/tab/CustomTab';
 import HomeCardList from 'pages/home/components/HomeCardList';
 import { GetSearchGoods } from 'api/goods.api';
+import { useInView } from 'react-intersection-observer';
 
 const HomeView = () => {
   // CustomTabTitle 표시 여부를 조정할 수 있는 로직을 추가
   const showTabTitle = true; // 조건에 따라 동적으로 결정
   const showFilter = true; // 조건에 따라 동적으로 결정
 
-  const [data, setData] = useState([]);
+  // 탭별 데이터 및 상태
+  const [progressData, setProgressData] = useState([]);
+  const [scheduledData, setScheduledData] = useState([]);
+  const [completedData, setCompletedData] = useState([]);
+
+  // 탭별 페이지 상태
+  const [progressPage, setProgressPage] = useState(0);
+  const [scheduledPage, setScheduledPage] = useState(0);
+  const [completedPage, setCompletedPage] = useState(0);
+
+  // 카테고리, 키워드, 필터 상태
   const [category, setCategory] = useState('');
   const [keyword, setKeyword] = useState('');
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState('END');
+
+  // inView 상태
+  const [progressRef, progressInView] = useInView();
+  const [scheduledRef, scheduledInView] = useInView();
+  const [completedRef, completedInView] = useInView();
 
   const tabData = [
-    { label: '진행중', content: <HomeCardList data={data} goodsStatus="진행" />, tabTitle: `총 ${data.length}개` },
+    {
+      label: '진행중',
+      content: (
+        <>
+          <HomeCardList data={progressData} goodsStatus="진행" />
+          <div ref={progressRef} />
+        </>
+      ),
+      tabTitle: `총 ${progressData.length}개`,
+    },
     {
       label: '응모 예정',
-      content: <HomeCardList data={data} goodsStatus="예정" />,
-      tabTitle: `총 ${data.length}개`,
+      content: (
+        <>
+          <HomeCardList data={scheduledData} goodsStatus="예정" />
+          <div ref={scheduledRef} />
+        </>
+      ),
+      tabTitle: `총 ${scheduledData.length}개`,
     },
     {
       label: '응모 종료',
-      content: <HomeCardList data={data} goodsStatus="종료" />,
-      tabTitle: `총 ${data.length}개`,
+      content: (
+        <>
+          <HomeCardList data={completedData} goodsStatus="종료" />
+          <div ref={completedRef} />
+        </>
+      ),
+      tabTitle: `총 ${completedData.length}개`,
     },
   ];
 
   // 컴포넌트가 처음으로 렌더링될 때 API를 호출하도록 설정
   // 카테고리와 키워드에 따라 API 호출
-  useEffect(() => {
-    GetSearchGoods('PROGRESS', 0, 20, 'END', keyword, category)
+  const fetchGoods = (goodsStatus, page, setData) => {
+    GetSearchGoods(goodsStatus, page, 16, filter, keyword, category)
       .then((res) => {
         const response = res.data.result.goodsSearchDTOList || [];
-        setData(response);
+        setData((prevData) => [...prevData, ...response]);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error(`Error fetching ${goodsStatus} data:`, error);
       });
-  }, []);
+  };
+
+  // 무한 스크롤을 통해 데이터를 추가로 불러오는 로직
+  useEffect(() => {
+    if (progressInView) {
+      fetchGoods('PROGRESS', progressPage, setProgressData);
+      setProgressPage((prevPage) => prevPage + 1);
+    }
+  }, [progressInView]);
+
+  useEffect(() => {
+    if (scheduledInView) {
+      fetchGoods('SCHEDULED', scheduledPage, setScheduledData);
+      setScheduledPage((prevPage) => prevPage + 1);
+    }
+  }, [scheduledInView]);
+
+  useEffect(() => {
+    if (completedInView) {
+      fetchGoods('COMPLETED', completedPage, setCompletedData);
+      setCompletedPage((prevPage) => prevPage + 1);
+    }
+  }, [completedInView]);
+
+  // 카테고리, 키워드, 필터가 변경될 때마다 데이터 초기화 및 새로 불러오기
+  useEffect(() => {
+    setProgressPage(0);
+    setScheduledPage(0);
+    setCompletedPage(0);
+
+    setProgressData([]);
+    setScheduledData([]);
+    setCompletedData([]);
+
+    fetchGoods('PROGRESS', 0, setProgressData);
+    fetchGoods('SCHEDULED', 0, setScheduledData);
+    fetchGoods('COMPLETED', 0, setCompletedData);
+  }, [category, keyword, filter]);
 
   // 카테고리를 업데이트하는 함수
   const handleCategoryChange = (selectedCategory: string) => {
@@ -57,13 +129,13 @@ const HomeView = () => {
 
   // 검색 결과를 업데이트하는 함수
   const handleSearchResult = (searchResult) => {
-    setData(searchResult);
+    setProgressData(searchResult);
     console.log('검색 결과:', searchResult);
   };
 
   // HomeView 컴포넌트에서 filter 상태를 업데이트하는 함수
-  const handleFilterChange = (filter: string) => {
-    setFilter(filter);
+  const handleFilterChange = (selectedFilter: string) => {
+    setFilter(selectedFilter);
   };
 
   return (
@@ -73,7 +145,7 @@ const HomeView = () => {
           <SelectCategory onCategoryChange={handleCategoryChange} />
           {/* 검색 결과를 업데이트하는 함수 전달 */}
           <SearchBar
-            data={data}
+            data={progressData}
             category={category}
             onKeywordChange={handleKeywordChange}
             onSearchResult={handleSearchResult}
@@ -82,13 +154,6 @@ const HomeView = () => {
         </S.Row>
         <CustomTab
           tabs={tabData}
-          callGetAPI={[
-            (sortBy) => GetSearchGoods('PROGRESS', 0, 20, sortBy, keyword, category),
-            (sortBy) => GetSearchGoods('SCHEDULED', 0, 10, sortBy, keyword, category),
-            (sortBy) => GetSearchGoods('COMPLETED', 0, 10, sortBy, keyword, category),
-          ]}
-          setState={[setData, setData, setData]}
-          dtoName={['goodsSearchDTOList', 'goodsSearchDTOList', 'goodsSearchDTOList']}
           showTabTitle={showTabTitle}
           showFilter={showFilter}
           onFilterChange={handleFilterChange}
