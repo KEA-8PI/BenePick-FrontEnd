@@ -15,11 +15,15 @@ const categoryList = [
 ];
 const SelectCategory: React.FC<SelectCategoryProps> = ({ onCategoryChange }) => {
   // HomeView로 전달할 카테고리 상태
-  const [category, setCategory] = useState('전체');
+  const [category, setCategory] = useState<string>('전체');
 
   const handleSelect = (event: SelectChangeEvent) => {
-    setCategory(event.target.value);
-    onCategoryChange(event.target.value);
+    const selectedValue = event.target.value;
+    setCategory(selectedValue);
+
+    // 전체 선택 시 ''으로 변환해서 API에 전달
+    const apiValue = selectedValue === '전체' ? '' : selectedValue;
+    onCategoryChange(apiValue);
   };
 
   return (
