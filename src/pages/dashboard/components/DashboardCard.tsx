@@ -8,9 +8,11 @@ import RefillRatesPerRaffleChart from './charts/RefillRatesPerRaffleChart';
 import MostWinnedRanksChart from './charts/MostWinnedRanksChart';
 import AvgWinnerPointsChart from './charts/AvgWinnerPointsChart';
 import EmptyChart from './charts/EmptyChart';
+import DashboardEmpty from '../components/DashboardEmpty';
 
 const DashboardCard = ({ data }) => {
   console.log('DashboardCard data', data);
+
   return (
     <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
       <Box style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -26,7 +28,7 @@ const DashboardCard = ({ data }) => {
           </Tooltip>
         </Box>
         <S.ShadowBox style={{ height: '300px' }}>
-          {data.avgWinnerPointsPerRaffles && data.avgWinnerPointsPerRaffles.length > 0 ? (
+          {data.avgWinnerPointsPerRaffles.avgWinnerPointsPerRaffles.length > 0 ? (
             <AvgWinnerPointsPerRafflesChart data={data} />
           ) : (
             <EmptyChart />
@@ -45,7 +47,7 @@ const DashboardCard = ({ data }) => {
           </Tooltip>
         </Box>
         <S.ShadowBox style={{ height: '300px' }}>
-          {data.totalPointsPerRaffles && data.totalPointsPerRaffles.length > 0 ? (
+          {data.totalPointsPerRaffles.totalPointsPerRaffles.length > 0 ? (
             <TotalPointsPerRafflesChart data={data} />
           ) : (
             <EmptyChart />
@@ -64,7 +66,7 @@ const DashboardCard = ({ data }) => {
           </Tooltip>
         </Box>
         <S.ShadowBox style={{ height: '300px' }}>
-          {data.refillRatesPerRaffles && data.refillRatesPerRaffles.length > 0 ? (
+          {data.refillRatesPerRaffles.refillRatesPerRaffles.length > 0 ? (
             <RefillRatesPerRaffleChart data={data} />
           ) : (
             <EmptyChart />
@@ -85,11 +87,7 @@ const DashboardCard = ({ data }) => {
               </Tooltip>
             </Box>
             <S.ShadowBox style={{ height: '300px' }}>
-              {data.mostWinnedRanks && data.mostWinnedRanks.length > 0 ? (
-                <MostWinnedRanksChart data={data} />
-              ) : (
-                <EmptyChart />
-              )}
+              {data.mostWinnedRanks.mostWonRanks.length > 0 ? <MostWinnedRanksChart data={data} /> : <EmptyChart />}
             </S.ShadowBox>
           </div>
 

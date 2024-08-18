@@ -9,7 +9,7 @@ import colors from 'theme/variableColors';
 import Iconify from 'components/common/Iconify/Iconify';
 import Date from 'components/date/Date';
 import CardImage from '../../../components/CustomCard/CardImage';
-import { PostAddWishlist, DeleteWishlist } from 'api/wishlists.api';
+import { DeleteWishlist } from 'api/wishlists.api';
 
 const WishlistCard: React.FC<CustomCardProps> = ({ info }) => {
   useEffect(() => {
@@ -22,7 +22,8 @@ const WishlistCard: React.FC<CustomCardProps> = ({ info }) => {
   const handleLike = () => {
     setLike(!like);
     console.log('like:', like);
-    DeleteWishlist(info.id)
+
+    DeleteWishlist(info.goodId)
       .then((res) => {
         console.log(res);
         console.log('위시리스트 삭제 성공:', res.data.result.id);

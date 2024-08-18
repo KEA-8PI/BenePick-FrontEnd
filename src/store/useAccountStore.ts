@@ -44,24 +44,20 @@ export const useAccountStore = create<AccountStore>()(
       accountInfo: {
         id: '',
         role: '',
-        point: 0,
-        profileImg: '',
       },
       updateAccountInfo: (field, value) =>
         set((state) => ({
           accountInfo: { ...state.accountInfo, [field]: value },
         })),
-      setAccountInfo: (id, role, point = 0, profileImg = '') =>
+      setAccountInfo: (id, role) =>
         set(() => ({
-          accountInfo: { id, role, point, profileImg },
+          accountInfo: { id, role },
         })),
       resetAccountInfo: () =>
         set(() => ({
           accountInfo: {
             id: '',
             role: '',
-            point: 0,
-            profileImg: '',
           },
         })),
     }),

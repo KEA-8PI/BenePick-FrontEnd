@@ -16,15 +16,10 @@ const RaffleButton = ({ info, point }) => {
   const MID = (MIN + MAX) / 2;
 
   // value의 초기 값을 MID로 설정합니다.
-  const [value, setValue] = useState(MID);
-
-  useEffect(() => {
-    setValue(MID);
-  }, [point]);
+  const [value, setValue] = useState(Math.round(MID));
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let newValue = event.target.value === '' ? 0 : Number(event.target.value);
-    newValue = Math.round(newValue);
+    const newValue = event.target.value === '' ? 0 : Number(event.target.value);
     setValue(Math.min(MAX, Math.max(MIN, newValue))); // value를 MIN과 MAX 사이로 제한
   };
 
@@ -37,9 +32,13 @@ const RaffleButton = ({ info, point }) => {
   };
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    const roundedValue = Math.round(newValue as number); // 반올림 처리
-    setValue(roundedValue);
+    const newValue2 = Math.round(newValue as number); // 반올림 처리
+    setValue(newValue2);
   };
+
+  useEffect(() => {
+    console.log('value:', value);
+  }, [value]);
 
   const isFirstModalToggle = useToggle();
   const isSecondModalToggle = useToggle();

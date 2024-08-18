@@ -6,7 +6,7 @@ const MostWinnedRanks = ({ data }) => {
   const colorMap = [colors.primary, colors.secondary, colors.tertiary, colors.buttonPink, colors.tablePink];
 
   // mostWinnedRanks 데이터를 기반으로 legendData와 seriesData 생성
-  const mostWinnedRanks = data.mostWinnedRanks;
+  const mostWinnedRanks = data.mostWinnedRanks.mostWonRanks;
 
   const legendData = mostWinnedRanks.map((item) => {
     const rank = Object.keys(item)[0];
