@@ -7,7 +7,13 @@ import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import DateCalendar from 'components/dateCalendar/DateCalendar';
 import { formatDate } from 'components/date/Date';
-import { GetDashboard } from 'api/dashboard.api';
+import {
+  GetDashbordAvgPointsPerRaffle,
+  GetDashboardTotalPoints,
+  GetDashboardRefillRates,
+  GetDashboardMostRanks,
+  GetashboardAvgWinnerPoints,
+} from 'api/dashboard.api';
 import { convertISOtoKST } from 'pages/manageGoods/utils/formatData';
 
 const DashboardFilter = ({
@@ -22,17 +28,37 @@ const DashboardFilter = ({
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState('');
 
+  const formatDate = (date: Date) => {
+    // Ensure date is formatted as 'YYYY-MM-DD' if that's the expected format
+    return date.toISOString().split('T')[0];
+  };
+
   const handleSearchClick = async (startDate: string, endDate: string) => {
     setLoading(true);
-    setIsOpen(false); // 달력 닫기
-
-    console.log('필터 category:', category);
+    setIsOpen(false);
 
     try {
-      // console.log('선택된 카테고리:', category);
-      const response = await GetDashboard(category, startDate, endDate);
-      console.log('Dashboard data:', response.data.result);
-      setDashboardData(response.data.result); // API에서 받은 데이터를 부모 컴포넌트로 전달
+      const formattedStartDate = formatDate(new Date(startDate));
+      const formattedEndDate = formatDate(new Date(endDate));
+
+      const [avgPointsResponse, totalPointsResponse, refillRatesResponse, mostRanksResponse, avgWinnerPointsResponse] =
+        await Promise.all([
+          GetDashbordAvgPointsPerRaffle(category, formattedStartDate, formattedEndDate),
+          GetDashboardTotalPoints(category, formattedStartDate, formattedEndDate),
+          GetDashboardRefillRates(category, formattedStartDate, formattedEndDate),
+          GetDashboardMostRanks(category, formattedStartDate, formattedEndDate),
+          GetashboardAvgWinnerPoints(category, formattedStartDate, formattedEndDate),
+        ]);
+
+      const aggregatedData = {
+        avgWinnerPointsPerRaffles: avgPointsResponse.data.result,
+        totalPointsPerRaffles: totalPointsResponse.data.result,
+        refillRatesPerRaffles: refillRatesResponse.data.result,
+        mostWinnedRanks: mostRanksResponse.data.result,
+        avgWinnerPoints: avgWinnerPointsResponse.data.result,
+      };
+
+      setDashboardData(aggregatedData);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
     } finally {

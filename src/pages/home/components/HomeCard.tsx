@@ -16,7 +16,6 @@ const CustomCard: React.FC<CustomCardProps> = ({ info }) => {
   const userRole = useAccountStore((state) => state.accountInfo.role);
   // like 상태를 info.wishlist로 초기화
   const [like, setLike] = useState(info.wishlist || false);
-  const navigate = useNavigate();
 
   // 좋아요 정보 상품마다 업데이트
   useEffect(() => {

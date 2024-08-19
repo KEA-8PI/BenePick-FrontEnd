@@ -23,48 +23,54 @@ const CustomTab: React.FC<TabsProps> = ({
   setDrawIdList,
 }) => {
   const [value, setValue] = React.useState(0);
-  // 각 탭의 sortBy 상태를 탭마다 독립적으로 관리
   const [selectedFilters, setSelectedFilters] = useState<string[]>(['END', 'END', 'END']);
   const [tabData, setTabData] = useState([]);
 
   const handleChange = (event: React.SyntheticEvent, newIndex: number) => {
     setValue(newIndex);
-    callGetAPI &&
+
+    // 조건문 간소화 및 API 호출
+    if (callGetAPI?.[newIndex] && setState?.[newIndex] && dtoName?.[newIndex]) {
       callGetAPI[newIndex](selectedFilters[newIndex])
         .then((res) => {
-          const response = dtoName ? res.data.result[dtoName[newIndex]] : '';
+          const response = res.data.result[dtoName[newIndex]];
           console.log('handleChange API 호출 결과:', response);
           setTabData(response);
           setState[newIndex](response);
-          dtoName[newIndex] === 'drawsResponseByWinnerGoodsIdDTOS' &&
+
+          if (dtoName[newIndex] === 'drawsResponseByWinnerGoodsIdDTOS') {
             setDrawIdList(response.map((item: any) => item.drawId));
+          }
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
+    }
   };
 
   const handleFilterChange = (filter: string) => {
-    // 현재 활성화된 탭의 sortBy 상태 업데이트
     setSelectedFilters((prevFilters) => {
       const newFilters = [...prevFilters];
       newFilters[value] = filter;
       return newFilters;
     });
 
-    // 현재 선택된 탭에 대해 필터 적용된 데이터를 불러오기
-    callGetAPI[value](filter)
-      .then((res) => {
-        const response = dtoName ? res.data.result[dtoName[value]] : '';
-        setState[value](response);
-        console.log('handleFilterChange API 호출 결과:', response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // 조건문 간소화 및 API 호출
+    if (callGetAPI?.[value] && setState?.[value] && dtoName?.[value]) {
+      callGetAPI[value](filter)
+        .then((res) => {
+          const response = res.data.result[dtoName[value]];
+          console.log('handleFilterChange API 호출 결과:', response);
+          setState[value](response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   onFilterChange(selectedFilters[value]);
+
   return (
     <Box sx={{ width: '100%' }}>
       <Box>
