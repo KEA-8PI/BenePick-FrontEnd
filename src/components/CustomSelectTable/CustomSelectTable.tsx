@@ -1,6 +1,6 @@
 import { Card, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
 import SelectTableHeader from './SelectTableHeader';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SelectTableToolbar from './SelectTableToolbar';
 import SelectTableRow from './SelectTableRow';
 
@@ -15,6 +15,8 @@ const CustomSelectTable = ({
   totalNum,
   apiPage,
   setApiPage,
+  page,
+  setPage,
 }: {
   headList: { [key: string]: string }[];
   rowData: { [key: string]: string | number }[];
@@ -26,8 +28,10 @@ const CustomSelectTable = ({
   totalNum: number;
   apiPage: number;
   setApiPage: React.Dispatch<React.SetStateAction<number>>;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
