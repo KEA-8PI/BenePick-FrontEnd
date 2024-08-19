@@ -34,6 +34,15 @@ const DashboardFilter = ({
   };
 
   const handleSearchClick = async (startDate: string, endDate: string) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Check if startDate and endDate are the same
+    if (start.getTime() === end.getTime()) {
+      alert('시작일과 종료일은 동일할 수 없습니다. 최소 하루 이상의 날짜 범위를 선택해주세요.');
+      return;
+    }
+
     setLoading(true);
     setIsOpen(false);
 
