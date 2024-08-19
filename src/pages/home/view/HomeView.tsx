@@ -22,6 +22,9 @@ const HomeView = () => {
   const [scheduledPage, setScheduledPage] = useState(0);
   const [completedPage, setCompletedPage] = useState(0);
 
+  // 현재 탭 상태
+  const [currentTab, setCurrentTab] = useState(0);
+
   // 카테고리, 키워드, 필터 상태
   const [category, setCategory] = useState('');
   const [keyword, setKeyword] = useState('');
@@ -71,7 +74,13 @@ const HomeView = () => {
     GetSearchGoods(goodsStatus, page, 16, filter, keyword, category)
       .then((res) => {
         const response = res.data.result.goodsSearchDTOList || [];
-        setData((prevData) => [...prevData, ...response]);
+        setData((prevData) => {
+          // 상태 업데이트 전에 기존 데이터가 있는 경우 필터 적용
+          if (filter === 'END' && goodsStatus === 'PROGRESS') {
+            return response; // '종료 임박순' 필터 적용
+          }
+          return [...prevData, ...response];
+        });
       })
       .catch((error) => {
         console.error(`Error fetching ${goodsStatus} data:`, error);
@@ -80,25 +89,25 @@ const HomeView = () => {
 
   // 무한 스크롤을 통해 데이터를 추가로 불러오는 로직
   useEffect(() => {
-    if (progressInView) {
+    if (progressInView && currentTab === 0) {
       fetchGoods('PROGRESS', progressPage, setProgressData);
       setProgressPage((prevPage) => prevPage + 1);
     }
-  }, [progressInView]);
+  }, [progressInView, currentTab]);
 
   useEffect(() => {
-    if (scheduledInView) {
+    if (scheduledInView && currentTab === 1) {
       fetchGoods('SCHEDULED', scheduledPage, setScheduledData);
       setScheduledPage((prevPage) => prevPage + 1);
     }
-  }, [scheduledInView]);
+  }, [scheduledInView, currentTab]);
 
   useEffect(() => {
-    if (completedInView) {
+    if (completedInView && currentTab === 2) {
       fetchGoods('COMPLETED', completedPage, setCompletedData);
       setCompletedPage((prevPage) => prevPage + 1);
     }
-  }, [completedInView]);
+  }, [completedInView, currentTab]);
 
   // 카테고리, 키워드, 필터가 변경될 때마다 데이터 초기화 및 새로 불러오기
   useEffect(() => {
@@ -115,6 +124,29 @@ const HomeView = () => {
     fetchGoods('COMPLETED', 0, setCompletedData);
   }, [category, keyword, filter]);
 
+  // 탭 변경 시 데이터 초기화 및 페이지 번호 초기화
+  useEffect(() => {
+    switch (currentTab) {
+      case 0:
+        setProgressPage(0);
+        setProgressData([]);
+        fetchGoods('PROGRESS', 0, setProgressData);
+        break;
+      case 1:
+        setScheduledPage(0);
+        setScheduledData([]);
+        fetchGoods('SCHEDULED', 0, setScheduledData);
+        break;
+      case 2:
+        setCompletedPage(0);
+        setCompletedData([]);
+        fetchGoods('COMPLETED', 0, setCompletedData);
+        break;
+      default:
+        break;
+    }
+  }, [currentTab]);
+
   // 카테고리를 업데이트하는 함수
   const handleCategoryChange = (selectedCategory: string) => {
     setCategory(selectedCategory);
@@ -130,6 +162,10 @@ const HomeView = () => {
   // 검색 결과를 업데이트하는 함수
   const handleSearchResult = (searchResult) => {
     setProgressData(searchResult);
+    // 검색 결과가 1개일 때 검색어 업데이트 방지
+    if (searchResult.length !== 1) {
+      setKeyword('');
+    }
     console.log('검색 결과:', searchResult);
   };
 

@@ -3,11 +3,10 @@ import * as S from 'components/common/Components.styles';
 import * as C from 'components/CustomCard/CustomCard.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
-import { formatDate } from 'components/date/Date';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DateCalendar from 'components/dateCalendar/DateCalendar';
 import { GoodsInfoData } from '../../goodsInfo/GoodsInfo.types';
-import { convertISOtoKST, formatDateSecond } from 'pages/manageGoods/utils/formatData';
+import { deleteDateT } from 'pages/manageGoods/utils/formatData';
 
 const ModifyGoodsDate = ({
   raffleStartAt,
@@ -26,8 +25,8 @@ const ModifyGoodsDate = ({
         <Iconify icon="lets-icons:date-range" sx={{ width: '20px', height: '20px', color: colors.grey01 }} />
       </IconButton>
       <S.Wrapper>
-        <C.CardLightFont>{convertISOtoKST(raffleStartAt, true)}</C.CardLightFont>
-        <C.CardLightFont>~{convertISOtoKST(raffleEndAt, true)}</C.CardLightFont>
+        <C.CardLightFont>{deleteDateT(raffleStartAt, true)}</C.CardLightFont>
+        <C.CardLightFont>~{deleteDateT(raffleEndAt, true)}</C.CardLightFont>
       </S.Wrapper>
       <DateCalendar
         isOpen={isOpen}

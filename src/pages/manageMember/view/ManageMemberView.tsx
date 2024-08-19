@@ -21,6 +21,7 @@ const ManageMemberView = () => {
 
   const [rowData, setRowData] = useState([]);
   const [apiPage, setApiPage] = useState(0);
+  const [page, setPage] = useState(0);
 
   const modalConfig = {
     open: deleteToggle.isOpen,
@@ -37,7 +38,7 @@ const ManageMemberView = () => {
 
   const handlePointSubmit = (formData: FormData) => {
     PostMemberPointUpload(formData)
-      .then((res) => {
+      .then(() => {
         // console.log('Post 멤버 복지포인트 response:', res);
         window.location.reload();
       })
@@ -49,7 +50,7 @@ const ManageMemberView = () => {
 
   const handleMemberSubmit = (formData: FormData) => {
     PostMemberUpload(formData)
-      .then((res) => {
+      .then(() => {
         // console.log('Post 멤버 추가 response:', res);
         window.location.reload();
       })
@@ -99,6 +100,7 @@ const ManageMemberView = () => {
   }, [apiPage]);
 
   const handleSearch = () => {
+    setPage(0); // Reset to first page
     setApiPage(0); // Reset to first apiPage on new search
     fetchMemberList(0, search);
   };
@@ -159,6 +161,8 @@ const ManageMemberView = () => {
           totalNum={rowDataNum}
           apiPage={apiPage}
           setApiPage={setApiPage}
+          page={page}
+          setPage={setPage}
         />
         <S.Row style={{ width: '100%', justifyContent: 'flex-end', marginTop: '20px' }}>
           <S.CustomButton sx={{ mr: '1%' }} onClick={() => deleteToggle.toggle()} disabled={selected.length === 0}>

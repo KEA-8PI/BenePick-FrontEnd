@@ -1,10 +1,10 @@
 import { IModalConfig } from './ChangePwdModal.types';
-import { Box, IconButton, Stack, Modal, Typography, InputAdornment } from '@mui/material';
+import { IconButton, Stack, Modal, Typography, InputAdornment, Divider } from '@mui/material';
 import * as S from '../CustomModal/CustomModal.styles';
 import { Row } from 'components/common/Components.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Container, PasswordInput } from './ChangePwdModal.styles';
 import { PatchPassword } from 'api/members.api';
@@ -13,9 +13,11 @@ import { SHA256 } from 'crypto-js';
 export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) => {
   const { open, onClose, buttonAction } = modalConfig;
 
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
 
+  const [currentPwd, setCurrentPwd] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [isValidatePassword, setIsValidatePassword] = useState(false);
@@ -52,11 +54,19 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
 
   const clickConfirmButton = () => {
     // 비밀번호 재설정 api 호출
-    PatchPassword(SHA256(password).toString()).then((res) => {
-      console.log('비밀번호 변경 성공', res);
-    });
-    buttonAction();
-    onClose();
+    PatchPassword(SHA256(currentPwd).toString(), SHA256(password).toString())
+      .then((res) => {
+        console.log('비밀번호 변경 성공', res);
+        buttonAction();
+        onClose();
+      })
+      .catch((err) => {
+        console.log('비밀번호 변경 실패', err.response.data);
+        const errorCode = err.response.data.code;
+        if (errorCode === 'MEMBERS_004') alert('기존 비밀번호와 동일합니다.');
+        else if (errorCode === 'MEMBERS_003') alert('현재 비밀번호가 일치하지 않습니다.');
+        else alert('비밀번호 변경에 실패했습니다.');
+      });
   };
 
   if (!open) {
@@ -71,7 +81,7 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
       aria-describedby="modal-modal-description"
       sx={{ display: 'flex' }}
     >
-      <S.Wrapper>
+      <S.Wrapper style={{ width: `${270 * 1.7}px`, height: 350 }}>
         <div style={{ display: 'flex', justifyContent: 'end', zIndex: 2 }}>
           <IconButton onClick={onClose} sx={{ mt: '5px', mr: '5px' }}>
             <Iconify icon="eva:close-fill" sx={{ width: '25px', height: '25px' }} />
@@ -79,6 +89,34 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
         </div>
         <Typography style={{ marginLeft: '6%', marginBottom: '1%', fontSize: '18px' }}>비밀번호 재설정</Typography>
         <Container>
+          <Row width={90} style={{ alignItems: 'center', marginBottom: 15 }}>
+            <Typography style={{ fontSize: '13px', fontWeight: '600' }}>현재 비밀번호</Typography>
+            <div style={{ width: 'auto', alignItems: 'center', display: 'flex' }}>
+              <PasswordInput
+                type={showCurrentPassword ? 'text' : 'password'}
+                size="small"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCurrentPwd(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword(setShowCurrentPassword)}
+                        edge="end"
+                      >
+                        {showCurrentPassword ? (
+                          <VisibilityOff sx={{ width: '18px', height: '18px' }} />
+                        ) : (
+                          <Visibility sx={{ width: '18px', height: '18px' }} />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </div>
+          </Row>
+          <Divider style={{ width: '90%', marginBottom: 15, color: '' }} />
           <Row width={90} style={{ alignItems: 'center' }}>
             <Typography style={{ fontSize: '13px', fontWeight: '600' }}>새 비밀번호</Typography>
             <div style={{ width: 'auto', alignItems: 'center', display: 'flex' }}>
@@ -90,9 +128,6 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
                 />
               )}
               <PasswordInput
-                // sx={{
-                //   width: '70%',
-                // }}
                 type={showPassword ? 'text' : 'password'}
                 size="small"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -134,9 +169,6 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
                 />
               )}
               <PasswordInput
-                // sx={{
-                //   width: '70%',
-                // }}
                 type={showPasswordCheck ? 'text' : 'password'}
                 size="small"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -165,7 +197,10 @@ export const ChangePwdModal = ({ modalConfig }: { modalConfig: IModalConfig }) =
         </Container>
         <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-around', padding: '0 7%' }}>
           <S.LeftButton onClick={onClose}>취소</S.LeftButton>
-          <S.RightButton onClick={clickConfirmButton} disabled={!isValidatePassword || !isValidatePasswordCheck}>
+          <S.RightButton
+            onClick={clickConfirmButton}
+            disabled={!isValidatePassword || !isValidatePasswordCheck || currentPwd === ''}
+          >
             확인
           </S.RightButton>
         </Stack>

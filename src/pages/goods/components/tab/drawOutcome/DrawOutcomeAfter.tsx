@@ -14,14 +14,11 @@ const DrawOutcomeAfter = forwardRef<HTMLElement, DrawOutcomeProps>(({ info }) =>
     const getDrawList = async () => {
       GetDrawList(info.id).then((res) => {
         const response = res.data.result.drawsResponseByGoodsDTOList;
-        const result = response
-
-          .filter((item) => item.drawStatus === 'WINNER')
-          .map((item) => ({
-            id: item.memberId,
-            name: item.memberName,
-            points: item.point,
-          }));
+        const result = response.map((item) => ({
+          id: item.memberId,
+          name: item.memberName,
+          points: item.point,
+        }));
         setResult(result);
       });
     };
@@ -29,7 +26,9 @@ const DrawOutcomeAfter = forwardRef<HTMLElement, DrawOutcomeProps>(({ info }) =>
   }, [info]);
 
   return (
-    <S.Wrapper style={{ paddingTop: '20px', width: '100%', justifyContent: 'center' }}>
+    <S.Wrapper
+      style={{ paddingTop: '20px', width: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center' }}
+    >
       {result.length === 0 ? (
         <S.Wrapper style={{ paddingTop: '20px', width: '100%', justifyContent: 'center' }}>
           <S.ShadowBox
@@ -39,8 +38,8 @@ const DrawOutcomeAfter = forwardRef<HTMLElement, DrawOutcomeProps>(({ info }) =>
           </S.ShadowBox>
         </S.Wrapper>
       ) : (
-        <Card sx={{ borderRadius: '10px' }}>
-          <TableContainer sx={{ overflow: 'unset' }}>
+        <Card sx={{ borderRadius: '10px', display: 'flex', justifyContent: 'center' }}>
+          <TableContainer sx={{ overflow: 'unset', display: 'flex', justifyContent: 'center' }}>
             <Table sx={{ minWidth: 800 }}>
               <TableHeader
                 headLabel={headList.map((head) => {

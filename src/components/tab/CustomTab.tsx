@@ -23,7 +23,7 @@ const CustomTab: React.FC<TabsProps> = ({
   setDrawIdList,
 }) => {
   const [value, setValue] = React.useState(0);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>(['END', 'END', 'END']);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(['END', 'END', 'POPULAR']);
   const [tabData, setTabData] = useState([]);
 
   const handleChange = (event: React.SyntheticEvent, newIndex: number) => {
@@ -69,7 +69,7 @@ const CustomTab: React.FC<TabsProps> = ({
     }
   };
 
-  onFilterChange(selectedFilters[value]);
+  onFilterChange && onFilterChange(selectedFilters[value]);
 
   return (
     <Box sx={{ width: '100%' }}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Radio, RadioGroup, FormControl, FormControlLabel } from '@mui/material';
 import { TabPanelProps } from './CustomTab.types';
 import CustomTabTitle from './CustomTabTitle';
@@ -37,6 +37,14 @@ const CustomTabPanel: React.FC<TabPanelProps> = ({
     console.log('선택된 필터:', apiFilter);
   };
 
+  // 탭 인덱스에 따른 필터 옵션 설정
+  const filterOptions =
+    index === 1
+      ? ['종료 임박순', '최신순'] // 응모 예정 탭 필터 옵션
+      : index === 2
+        ? ['인기순', '최신순'] // 응모 종료 탭 필터 옵션
+        : Object.keys(filterMapping); // 기본 필터 옵션 (진행중 탭 포함)
+
   return (
     <div
       role="tabpanel"
@@ -67,48 +75,23 @@ const CustomTabPanel: React.FC<TabPanelProps> = ({
                 value={Object.keys(filterMapping).find((key) => filterMapping[key] === selectedFilter)} // 부모 컴포넌트로부터 받은 현재 필터 상태값을 한국어로 변환하여 사용
                 onChange={handleFilterChange} // 변경 핸들러
               >
-                <FormControlLabel
-                  value="종료 임박순"
-                  control={
-                    <Radio
-                      sx={{
-                        color: colors.whiteGrey,
-                        '&.Mui-checked': {
-                          color: colors.primary,
-                        },
-                      }}
-                    />
-                  }
-                  label="종료 임박순"
-                />
-                <FormControlLabel
-                  value="인기순"
-                  control={
-                    <Radio
-                      sx={{
-                        color: colors.whiteGrey,
-                        '&.Mui-checked': {
-                          color: colors.primary,
-                        },
-                      }}
-                    />
-                  }
-                  label="인기순"
-                />
-                <FormControlLabel
-                  value="최신순"
-                  control={
-                    <Radio
-                      sx={{
-                        color: colors.whiteGrey,
-                        '&.Mui-checked': {
-                          color: colors.primary,
-                        },
-                      }}
-                    />
-                  }
-                  label="최신순"
-                />
+                {filterOptions.map((option) => (
+                  <FormControlLabel
+                    key={option}
+                    value={option}
+                    control={
+                      <Radio
+                        sx={{
+                          color: colors.whiteGrey,
+                          '&.Mui-checked': {
+                            color: colors.primary,
+                          },
+                        }}
+                      />
+                    }
+                    label={option}
+                  />
+                ))}
               </RadioGroup>
             </FormControl>
           </Box>
