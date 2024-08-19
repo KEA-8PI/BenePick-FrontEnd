@@ -1,8 +1,9 @@
-import { Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import * as S from 'components/common/Components.styles';
 import * as M from './UploadBox.styles';
 import { CustomButton } from 'components/common/Components.styles';
 import { useState } from 'react';
+import Iconify from 'components/common/Iconify/Iconify';
 
 type UploadedInfo = {
   [key: string]: string;
@@ -18,6 +19,21 @@ const FileInfo = ({ uploadedInfo }: { uploadedInfo: UploadedInfo }) => (
     ))}
   </M.PreviewInfo>
 );
+
+const fileUrl = {
+  '상품 등록':
+    'https://objectstorage.kr-central-2.kakaocloud.com/v1/627e0b3fc53c4793b30520a51de16438/benepick-bucket/excel-example/상품등록_예시.xlsx',
+  '복지 포인트 등록':
+    'https://objectstorage.kr-central-2.kakaocloud.com/v1/627e0b3fc53c4793b30520a51de16438/benepick-bucket/excel-example/복지포인트등록_예시.xlsx',
+  '사원 관리':
+    'https://objectstorage.kr-central-2.kakaocloud.com/v1/627e0b3fc53c4793b30520a51de16438/benepick-bucket/excel-example/사원등록_예시.xlsx',
+};
+
+const fileName = {
+  '상품 등록': '상품등록_예시.xlsx',
+  '복지 포인트 등록': '복지포인트등록_예시.xlsx',
+  '사원 관리': '사원등록_예시.xlsx',
+};
 
 const ManageMemberView = ({
   title,
@@ -66,6 +82,15 @@ const ManageMemberView = ({
     }
   };
 
+  const handleDownload = (title: string) => {
+    const link = document.createElement('a');
+    link.href = fileUrl[title];
+    link.download = fileName[title];
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleSubmit = () => {
     const formData = new FormData();
     formData.append('file', file);
@@ -82,9 +107,14 @@ const ManageMemberView = ({
     >
       <S.Row style={{ width: '100%' }}>
         <Typography style={{ marginBottom: '15px', fontSize: '20px', fontWeight: 'bold' }}>{title}</Typography>
-        <CustomButton onClick={uploadedInfo && handleSubmit} disabled={!uploadedInfo}>
-          등록하기
-        </CustomButton>
+        <div>
+          <IconButton onClick={() => handleDownload(title)}>
+            <Iconify icon="lucide:download" />
+          </IconButton>
+          <CustomButton onClick={uploadedInfo && handleSubmit} disabled={!uploadedInfo}>
+            등록하기
+          </CustomButton>
+        </div>
       </S.Row>
       <M.FileLabel
         isActive={isActive}
