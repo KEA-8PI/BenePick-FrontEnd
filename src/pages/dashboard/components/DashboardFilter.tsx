@@ -14,7 +14,6 @@ import {
   GetDashboardMostRanks,
   GetashboardAvgWinnerPoints,
 } from 'api/dashboard.api';
-import { convertISOtoKST } from 'pages/manageGoods/utils/formatData';
 
 const DashboardFilter = ({
   setDashboardData,
@@ -32,26 +31,18 @@ const DashboardFilter = ({
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState('');
 
-  const formatDate = (date: Date) => {
-    // Ensure date is formatted as 'YYYY-MM-DD' if that's the expected format
-    return date.toISOString().split('T')[0];
-  };
-
   const handleSearchClick = async (startDate: string, endDate: string) => {
     setLoading(true);
     setIsOpen(false);
 
     try {
-      const formattedStartDate = formatDate(new Date(startDate));
-      const formattedEndDate = formatDate(new Date(endDate));
-
       const [avgPointsResponse, totalPointsResponse, refillRatesResponse, mostRanksResponse, avgWinnerPointsResponse] =
         await Promise.all([
-          GetDashbordAvgPointsPerRaffle(category, formattedStartDate, formattedEndDate),
-          GetDashboardTotalPoints(category, formattedStartDate, formattedEndDate),
-          GetDashboardRefillRates(category, formattedStartDate, formattedEndDate),
-          GetDashboardMostRanks(category, formattedStartDate, formattedEndDate),
-          GetashboardAvgWinnerPoints(category, formattedStartDate, formattedEndDate),
+          GetDashbordAvgPointsPerRaffle(category, startDate, endDate),
+          GetDashboardTotalPoints(category, startDate, endDate),
+          GetDashboardRefillRates(category, startDate, endDate),
+          GetDashboardMostRanks(category, startDate, endDate),
+          GetashboardAvgWinnerPoints(category, startDate, endDate),
         ]);
 
       const aggregatedData = {
