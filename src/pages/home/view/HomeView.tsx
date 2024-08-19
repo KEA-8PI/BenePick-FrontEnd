@@ -22,6 +22,11 @@ const HomeView = () => {
   const [scheduledPage, setScheduledPage] = useState(0);
   const [completedPage, setCompletedPage] = useState(0);
 
+  // 탭별 totalCnt 상태
+  const [progressTotalCnt, setProgressTotalCnt] = useState(0);
+  const [scheduledTotalCnt, setScheduledTotalCnt] = useState(0);
+  const [completedTotalCnt, setCompletedTotalCnt] = useState(0);
+
   // 현재 탭 상태
   const [currentTab, setCurrentTab] = useState(0);
 
@@ -44,7 +49,7 @@ const HomeView = () => {
           <div ref={progressRef} />
         </>
       ),
-      tabTitle: `총 ${progressData.length}개`,
+      tabTitle: `총 ${progressTotalCnt}개`,
     },
     {
       label: '응모 예정',
@@ -54,7 +59,7 @@ const HomeView = () => {
           <div ref={scheduledRef} />
         </>
       ),
-      tabTitle: `총 ${scheduledData.length}개`,
+      tabTitle: `총 ${scheduledTotalCnt}개`,
     },
     {
       label: '응모 종료',
@@ -64,22 +69,25 @@ const HomeView = () => {
           <div ref={completedRef} />
         </>
       ),
-      tabTitle: `총 ${completedData.length}개`,
+      tabTitle: `총 ${completedTotalCnt}개`,
     },
   ];
 
   // 컴포넌트가 처음으로 렌더링될 때 API를 호출하도록 설정
   // 카테고리와 키워드에 따라 API 호출
-  const fetchGoods = (goodsStatus, page, setData) => {
+  const fetchGoods = (goodsStatus, page, setData, setTotalCnt) => {
     GetSearchGoods(goodsStatus, page, 16, filter, keyword, category)
       .then((res) => {
         const response = res.data.result.goodsSearchDTOList || [];
+        const totalCnt = res.data.result.totalCnt || 0;
+
+        setTotalCnt(totalCnt);
         setData((prevData) => {
-          // 상태 업데이트 전에 기존 데이터가 있는 경우 필터 적용
-          if (filter === 'END' && goodsStatus === 'PROGRESS') {
-            return response; // '종료 임박순' 필터 적용
-          }
-          return [...prevData, ...response];
+          // 새로운 데이터에서 중복된 항목을 제거
+          const newData = response.filter(
+            (newItem) => !prevData.some((existingItem) => existingItem.id === newItem.id),
+          );
+          return [...prevData, ...newData];
         });
       })
       .catch((error) => {
@@ -89,25 +97,21 @@ const HomeView = () => {
 
   // 무한 스크롤을 통해 데이터를 추가로 불러오는 로직
   useEffect(() => {
-    if (progressInView && currentTab === 0) {
-      fetchGoods('PROGRESS', progressPage, setProgressData);
+    if (progressInView) {
+      fetchGoods('PROGRESS', progressPage, setProgressData, setProgressTotalCnt);
       setProgressPage((prevPage) => prevPage + 1);
     }
-  }, [progressInView, currentTab]);
 
-  useEffect(() => {
-    if (scheduledInView && currentTab === 1) {
-      fetchGoods('SCHEDULED', scheduledPage, setScheduledData);
+    if (scheduledInView) {
+      fetchGoods('SCHEDULED', scheduledPage, setScheduledData, setScheduledTotalCnt);
       setScheduledPage((prevPage) => prevPage + 1);
     }
-  }, [scheduledInView, currentTab]);
 
-  useEffect(() => {
-    if (completedInView && currentTab === 2) {
-      fetchGoods('COMPLETED', completedPage, setCompletedData);
+    if (completedInView) {
+      fetchGoods('COMPLETED', completedPage, setCompletedData, setCompletedTotalCnt);
       setCompletedPage((prevPage) => prevPage + 1);
     }
-  }, [completedInView, currentTab]);
+  }, [progressInView, scheduledInView, completedInView]);
 
   // 카테고리, 키워드, 필터가 변경될 때마다 데이터 초기화 및 새로 불러오기
   useEffect(() => {
@@ -119,9 +123,9 @@ const HomeView = () => {
     setScheduledData([]);
     setCompletedData([]);
 
-    fetchGoods('PROGRESS', 0, setProgressData);
-    fetchGoods('SCHEDULED', 0, setScheduledData);
-    fetchGoods('COMPLETED', 0, setCompletedData);
+    fetchGoods('PROGRESS', 0, setProgressData, setProgressTotalCnt);
+    fetchGoods('SCHEDULED', 0, setScheduledData, setScheduledTotalCnt);
+    fetchGoods('COMPLETED', 0, setCompletedData, setCompletedTotalCnt);
   }, [category, keyword, filter]);
 
   // 탭 변경 시 데이터 초기화 및 페이지 번호 초기화
@@ -130,17 +134,17 @@ const HomeView = () => {
       case 0:
         setProgressPage(0);
         setProgressData([]);
-        fetchGoods('PROGRESS', 0, setProgressData);
+        fetchGoods('PROGRESS', 0, setProgressData, setProgressTotalCnt);
         break;
       case 1:
         setScheduledPage(0);
         setScheduledData([]);
-        fetchGoods('SCHEDULED', 0, setScheduledData);
+        fetchGoods('SCHEDULED', 0, setScheduledData, setScheduledTotalCnt);
         break;
       case 2:
         setCompletedPage(0);
         setCompletedData([]);
-        fetchGoods('COMPLETED', 0, setCompletedData);
+        fetchGoods('COMPLETED', 0, setCompletedData, setCompletedTotalCnt);
         break;
       default:
         break;
