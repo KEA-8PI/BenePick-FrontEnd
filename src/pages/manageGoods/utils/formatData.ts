@@ -24,16 +24,6 @@ export const formatDateTime = (dateString) => {
   return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
 };
 
-export const formatDateSecond = (dateString) => {
-  const date = new Date(dateString);
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const dd = String(date.getDate()).padStart(2, '0');
-  const hh = String(date.getHours()).padStart(2, '0');
-  const mi = String(date.getMinutes()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
-};
-
 export const convertISOtoKST = (isoDateString: string, time?: boolean, seconds?: boolean) => {
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
   const dateObj = new Date(isoDateString);
@@ -52,4 +42,31 @@ export const convertISOtoKST = (isoDateString: string, time?: boolean, seconds?:
     return `${year}-${month}-${day} (${dayOfWeek}) ${hours}:${minutes}:${seconds}`;
   }
   return `${year}-${month}-${day}`;
+};
+
+export const formatDateObject = (dateString) => {
+  // Parse the date string
+  const date = new Date(dateString);
+
+  // Get the components of the date
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  // Format the date in the desired format
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+};
+
+export const deleteDateT = (dateString: string, weekend?: boolean) => {
+  const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+  const date = new Date(dateString);
+  const dayOfWeek = daysOfWeek[date.getDay()];
+
+  if (weekend) {
+    return dateString.replace('T', ' ').slice(0, 10) + ` (${dayOfWeek})` + dateString.replace('T', ' ').slice(10, 16);
+  }
+  return dateString.replace('T', ' ').slice(0, 16);
 };

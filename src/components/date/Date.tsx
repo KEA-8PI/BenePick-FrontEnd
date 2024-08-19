@@ -4,21 +4,7 @@ import * as C from 'components/CustomCard/CustomCard.styles';
 import { CustomCardProps } from 'components/CustomCard/CustomCard.types';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
-import { convertISOtoKST } from 'pages/manageGoods/utils/formatData';
-
-export const formatDate = (date: Date) => {
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    weekday: 'short',
-    hour12: false,
-  };
-  const formattedDate = date.toLocaleString('ko-KR', options);
-  return formattedDate.replace(/(\d+)\.(\d+)\.(\d+)\.\s(\w+)\s(\d+:\d+)/, '$1.$2.$3($4) $5');
-};
+import { deleteDateT } from 'pages/manageGoods/utils/formatData';
 
 const Date: React.FC<CustomCardProps> = ({ info }) => {
   return (
@@ -28,10 +14,10 @@ const Date: React.FC<CustomCardProps> = ({ info }) => {
         sx={{ width: '20px', height: '20px', marginRight: '8px', color: colors.grey01 }}
       />
       <S.Wrapper>
-        <C.CardLightFont>{convertISOtoKST(info.raffleStartAt, true)}</C.CardLightFont>
+        <C.CardLightFont>{deleteDateT(info.raffleStartAt, true)}</C.CardLightFont>
         <S.Row>
           <C.CardLightFont>~</C.CardLightFont>
-          <C.CardLightFont>{convertISOtoKST(info.raffleEndAt, true)}</C.CardLightFont>
+          <C.CardLightFont>{deleteDateT(info.raffleEndAt, true)}</C.CardLightFont>
         </S.Row>
       </S.Wrapper>
     </Box>
