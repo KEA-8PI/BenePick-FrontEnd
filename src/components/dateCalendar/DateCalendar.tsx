@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as S from './DateCalendar.styles';
 import moment from 'moment';
 import 'components/dateCalendar/DateCalendar.css';
 import { GoodsInfoData } from 'pages/manageGoods/manageGoodsInfo/goodsInfo/GoodsInfo.types';
+import { formatDateObject } from 'pages/manageGoods/utils/formatData';
 
 const DateCalendar = ({
   isOpen,
@@ -25,12 +26,14 @@ const DateCalendar = ({
     if (setState) {
       setState((prev) => ({
         ...prev,
-        raffleStartAt: e[0].toISOString().slice(0, 19),
-        raffleEndAt: e[1].toISOString().slice(0, 19),
+        raffleStartAt: formatDateObject(e[0].toString()),
+        raffleEndAt: formatDateObject(e[1].toString()),
       }));
     } else {
-      setStartDate(e[0].toISOString().slice(0, 19));
-      setEndDate(e[1].toISOString().slice(0, 19));
+      setStartDate(formatDateObject(e[0].toString()));
+      setEndDate(formatDateObject(e[1].toString()));
+      // console.log('raffleStartAt', formatDateObject(e[0].toString()));
+      // console.log('raffleEndAt', formatDateObject(e[1].toString()));
     }
   };
 

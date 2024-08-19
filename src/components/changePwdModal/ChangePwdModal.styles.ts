@@ -6,11 +6,10 @@ export const Container = styled(Box)`
   justify-content: center;
   align-items: center;
   display: flex;
-  // background-color: grey;
+  /* background-color: grey; */
   flex-direction: column;
-  height: 50%;
+  height: 60%;
   margin-bottom: 3%;
-  padding: '0 5%';
 `;
 
 export const PasswordInput = styled(TextField)({

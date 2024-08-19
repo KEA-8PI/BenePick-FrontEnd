@@ -1,17 +1,13 @@
-import CardImage from 'components/CustomCard/CardImage';
 import * as S from 'components/common/Components.styles';
 import { Helmet } from 'react-helmet-async';
-import colors from 'theme/variableColors';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import LeftDetailContents from 'pages/goods/components/detailContents/LeftDetailContents';
 import RightDetailContents from 'pages/goods/components/detailContents/RightDetailContents';
 import CustomTab from 'components/tab/CustomTab';
-import CustomSelectTable from 'components/CustomTable/CustomTable';
 import CustomTable from 'components/CustomTable/CustomTable';
 import { CustomButton } from 'components/common/Components.styles';
 import WinnerTable from './components/WinnerTable/WinnerTable';
-import { convertResponse } from 'utils/ConvertResponse';
 import { GetGoodsInfo } from 'api/goods.api';
 import GoodsInfo from '../manageGoodsInfo/goodsInfo/GoodsInfo';
 import { GetDrawsWaitList, GetDrawsWinnerList } from 'api/draws.api';
@@ -62,57 +58,73 @@ const ManageDrawResultPage = () => {
       content: loading ? (
         <div>Loading...</div>
       ) : (
-        <CustomTable
-          rowData={rowData}
-          headList={[
-            { '응모 날짜': 'rafflesAt' },
-            { 아이디: 'id' },
-            { 이름: 'memberName' },
-            { '사용 복지 포인트': 'point' },
-          ]}
-          isPaging={false}
-        />
+        <>
+          <CustomTable
+            rowData={rowData}
+            headList={[
+              { '응모 날짜': 'rafflesAt' },
+              { 아이디: 'id' },
+              { 이름: 'memberName' },
+              { '사용 복지 포인트': 'point' },
+            ]}
+            isPaging={false}
+          />
+          {rowData.length === 0 && (
+            <div style={{ display: 'flex', width: '100%', marginTop: '20px', justifyContent: 'center' }}>
+              내역이 존재하지 않습니다.
+            </div>
+          )}
+        </>
       ),
     },
     {
       label: '당첨자',
       content: (
-        <WinnerTable
-          rowData={winnerData}
-          setRowData={setWinnerData}
-          headList={[
-            { '응모 날짜': 'rafflesAt' },
-            { 아이디: 'memberId' },
-            { 이름: 'memberName' },
-            { '사용 복지 포인트': 'point' },
-            { 상태: 'status' },
-          ]}
-          drawIdList={drawIdList}
-        />
+        <>
+          <WinnerTable
+            rowData={winnerData}
+            setRowData={setWinnerData}
+            headList={[
+              { '응모 날짜': 'rafflesAt' },
+              { 아이디: 'memberId' },
+              { 이름: 'memberName' },
+              { '사용 복지 포인트': 'point' },
+              { 상태: 'status' },
+            ]}
+            drawIdList={drawIdList}
+          />
+          {winnerData.length === 0 && (
+            <div style={{ display: 'flex', width: '100%', marginTop: '20px', justifyContent: 'center' }}>
+              내역이 존재하지 않습니다.
+            </div>
+          )}
+        </>
       ),
     },
     {
       label: '대기자',
       content: (
-        <CustomTable
-          rowData={waitList}
-          headList={[
-            { '응모 날짜': 'rafflesAt' },
-            { 아이디: 'memberId' },
-            { 이름: 'memberName' },
-            { '사용 복지 포인트': 'point' },
-            { 상태: 'status' },
-          ]}
-          isPaging={false}
-        />
+        <>
+          <CustomTable
+            rowData={waitList}
+            headList={[
+              { '응모 날짜': 'rafflesAt' },
+              { 아이디: 'memberId' },
+              { 이름: 'memberName' },
+              { '사용 복지 포인트': 'point' },
+              { 상태: 'status' },
+            ]}
+            isPaging={false}
+          />
+          {waitList.length === 0 && (
+            <div style={{ display: 'flex', width: '100%', marginTop: '20px', justifyContent: 'center' }}>
+              내역이 존재하지 않습니다.
+            </div>
+          )}
+        </>
       ),
     },
   ];
-
-  const [filter, setFilter] = useState('');
-  const handleFilterChange = (filter: string) => {
-    setFilter(filter);
-  };
 
   const downloadFile = () => {
     const downloadUrl = `https://backend.benepick.kro.kr/draws/download/${goodsId}`; // 백엔드 파일 다운로드 API 경로
@@ -151,15 +163,7 @@ const ManageDrawResultPage = () => {
             'drawsResponseByWaitlistGoodsIdDTOS',
           ]}
           setDrawIdList={setDrawIdList}
-          onFilterChange={handleFilterChange}
         />
-
-        {/* <CustomButton
-          style={{ marginTop: '20px' }}
-          onClick={() => window.open(`https://backend.benepick.kro.kr/draws/download/${goodsId}`)}
-        >
-          내보내기
-        </CustomButton> */}
         <CustomButton style={{ marginTop: '20px' }} onClick={downloadFile}>
           내보내기
         </CustomButton>

@@ -6,7 +6,7 @@ import * as C from 'components/CustomCard/CustomCard.styles';
 import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import DateCalendar from 'components/dateCalendar/DateCalendar';
-import { formatDate } from 'components/date/Date';
+import { deleteDateT, formatDateObject } from 'pages/manageGoods/utils/formatData';
 import {
   GetDashbordAvgPointsPerRaffle,
   GetDashboardTotalPoints,
@@ -14,7 +14,6 @@ import {
   GetDashboardMostRanks,
   GetashboardAvgWinnerPoints,
 } from 'api/dashboard.api';
-import { convertISOtoKST } from 'pages/manageGoods/utils/formatData';
 
 const DashboardFilter = ({
   setDashboardData,
@@ -23,15 +22,14 @@ const DashboardFilter = ({
   setDashboardData: (data: any) => void;
   setLoading: (loading: boolean) => void;
 }) => {
-  const [startDate, setStartDate] = useState(convertISOtoKST(new Date().toISOString().slice(0, 19)));
-  const [endDate, setEndDate] = useState(convertISOtoKST(new Date().toISOString().slice(0, 19)));
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+  const end = new Date();
+  end.setHours(23, 59, 59, 59);
+  const [startDate, setStartDate] = useState(formatDateObject(start.toString()));
+  const [endDate, setEndDate] = useState(formatDateObject(end.toString()));
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState('');
-
-  const formatDate = (date: Date) => {
-    // Ensure date is formatted as 'YYYY-MM-DD' if that's the expected format
-    return date.toISOString().split('T')[0];
-  };
 
   const handleSearchClick = async (startDate: string, endDate: string) => {
     const start = new Date(startDate);
@@ -47,16 +45,13 @@ const DashboardFilter = ({
     setIsOpen(false);
 
     try {
-      const formattedStartDate = formatDate(new Date(startDate));
-      const formattedEndDate = formatDate(new Date(endDate));
-
       const [avgPointsResponse, totalPointsResponse, refillRatesResponse, mostRanksResponse, avgWinnerPointsResponse] =
         await Promise.all([
-          GetDashbordAvgPointsPerRaffle(category, formattedStartDate, formattedEndDate),
-          GetDashboardTotalPoints(category, formattedStartDate, formattedEndDate),
-          GetDashboardRefillRates(category, formattedStartDate, formattedEndDate),
-          GetDashboardMostRanks(category, formattedStartDate, formattedEndDate),
-          GetashboardAvgWinnerPoints(category, formattedStartDate, formattedEndDate),
+          GetDashbordAvgPointsPerRaffle(category, startDate, endDate),
+          GetDashboardTotalPoints(category, startDate, endDate),
+          GetDashboardRefillRates(category, startDate, endDate),
+          GetDashboardMostRanks(category, startDate, endDate),
+          GetashboardAvgWinnerPoints(category, startDate, endDate),
         ]);
 
       const aggregatedData = {
@@ -87,8 +82,8 @@ const DashboardFilter = ({
             <Iconify icon="lets-icons:date-range" sx={{ width: '25px', height: '20px', color: colors.grey01 }} />
           </IconButton>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <C.CardLightFont>{convertISOtoKST(startDate)}</C.CardLightFont>
-            <C.CardLightFont>~{convertISOtoKST(endDate)}</C.CardLightFont>
+            <C.CardLightFont>{deleteDateT(startDate).slice(0, 10)}</C.CardLightFont>
+            <C.CardLightFont>~{deleteDateT(endDate).slice(0, 10)}</C.CardLightFont>
           </div>
         </S.Row>
 
