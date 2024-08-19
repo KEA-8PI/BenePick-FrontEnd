@@ -5,7 +5,7 @@ import colors from 'theme/variableColors';
 import { TableRowProps } from './CustomTable.types';
 import { ColorBox } from 'components/common/Components.styles';
 import { convertResponse } from 'utils/ConvertResponse';
-import { convertISOtoKST } from 'pages/manageGoods/utils/formatData';
+import { deleteDateT } from 'pages/manageGoods/utils/formatData';
 
 const ResultColor = {
   WINNER: colors.mint,
@@ -42,7 +42,7 @@ const CustomTableRow: React.FC<TableRowProps> = ({ columns, index, sequence, pro
               )}
               {column.id === 'status' && <ColorBox color={colors.lemon}>{column.label}순위</ColorBox>}
               {(column.id === 'rafflesAt' || column.id === 'createdAt') &&
-                convertISOtoKST(column.label?.toString() || '', false, true)}
+                deleteDateT(column.label?.toString() || '', false)}
               {column.id === 'goodsName' && (
                 <div
                   style={{
