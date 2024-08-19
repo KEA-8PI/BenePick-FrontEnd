@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import * as S from 'components/common/Components.styles';
 import * as C from 'components/CustomCard/CustomCard.styles';
 import { Box, Button, Slider, OutlinedInput, Typography } from '@mui/material';
@@ -11,12 +11,19 @@ import { PostRaffleApply } from 'api/raffles.api';
 
 const RaffleButton = ({ info, point }) => {
   const userID = useAccountStore((state) => state.accountInfo.id);
+
   const MIN = 0;
   const MAX = point;
-  const MID = (MIN + MAX) / 2;
+
+  // useMemo를 사용하여 point 값이 변경될 때만 MID를 재계산합니다.
+  const MID = useMemo(() => (MIN + MAX) / 2, [point]);
 
   // value의 초기 값을 MID로 설정합니다.
   const [value, setValue] = useState(Math.round(MID));
+
+  useEffect(() => {
+    setValue(Math.round(MID)); // MID가 변경될 때마다 value를 업데이트합니다.
+  }, [MID]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value === '' ? 0 : Number(event.target.value);
@@ -37,7 +44,7 @@ const RaffleButton = ({ info, point }) => {
   };
 
   useEffect(() => {
-    console.log('value:', value);
+    console.log('value:', value); // value 값 확인
   }, [value]);
 
   const isFirstModalToggle = useToggle();
@@ -73,25 +80,24 @@ const RaffleButton = ({ info, point }) => {
       value !== MIN
         ? {
             label: '확인',
-            action: () => {
-              PostRaffleApply(info.id, value)
-                .then((res) => {
-                  const response = res.data.result;
-                  console.log('응모 결과:', response);
-                  isSecondModalToggle.toggle();
-                })
-                .catch((error) => {
-                  if (error.response) {
-                    console.error('응모 에러:', error.response.data);
-                  } else if (error.request) {
-                    console.error('응모 에러: 서버로부터 응답이 없습니다.', error.request);
-                  } else {
-                    console.error('응모 에러:', error.message);
-                  }
-                });
+            action: async () => {
+              try {
+                const res = await PostRaffleApply(info.id, value);
+                const response = res.data.result;
+                console.log('응모 결과:', response);
+                isSecondModalToggle.toggle();
+              } catch (error) {
+                if (error.response) {
+                  console.error('응모 에러:', error.response.data);
+                } else if (error.request) {
+                  console.error('응모 에러: 서버로부터 응답이 없습니다.', error.request);
+                } else {
+                  console.error('응모 에러:', error.message);
+                }
+              }
             },
           }
-        : null, // value가 MIN일 경우 버튼을 숨깁니다.
+        : null,
   };
 
   const secondModalConfig = {
@@ -126,7 +132,7 @@ const RaffleButton = ({ info, point }) => {
         step={10}
         min={MIN}
         max={MAX}
-        value={typeof value === 'number' ? value : MID} // value가 숫자인 경우만 설정, 아니면 MID를 기본값으로 사용
+        value={value}
         onChange={handleSliderChange}
         style={{
           marginTop: '5px',
