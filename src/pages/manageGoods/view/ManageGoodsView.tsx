@@ -14,6 +14,7 @@ import { formatData } from '../utils/formatData';
 const ManageGoodsView = () => {
   const [rowData, setRowData] = useState([]);
   const [apiPage, setApiPage] = useState(0);
+  const [page, setPage] = useState(0);
 
   const navigate = useNavigate();
 
@@ -91,7 +92,8 @@ const ManageGoodsView = () => {
   }, [rowData]);
 
   const handleSearch = () => {
-    setApiPage(0); // Reset to first apiPage on new search
+    setPage(0);
+    setApiPage(0);
     fetchGoodsList(0, search);
   };
 
@@ -142,6 +144,8 @@ const ManageGoodsView = () => {
           apiPage={apiPage}
           setApiPage={setApiPage}
           totalNum={rowDataNum}
+          page={page}
+          setPage={setPage}
         />
         <S.Row style={{ width: '100%', justifyContent: 'flex-end', marginTop: '20px' }}>
           <S.CustomButton sx={{ mr: '1%' }} onClick={() => deleteToggle.toggle()} disabled={selected.length === 0}>
