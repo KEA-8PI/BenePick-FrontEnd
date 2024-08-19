@@ -15,7 +15,7 @@ const RaffleResultButton = ({ info }) => {
   const [seeds, setSeeds] = useState();
   const [hashValue, setHashValue] = useState('');
   const [result, setResult] = useState([]);
-  const headList = [{ 아이디: 'id' }, { 이름: 'name' }, { '응모한 포인트': 'points' }];
+  const headList = [{ 아이디: 'id' }, { 이름: 'name' }, { '응모한 포인트': 'point' }];
 
   // 해시값 입력 시 상태 업데이트
   const handleInputChange = (e) => {
@@ -79,8 +79,6 @@ const RaffleResultButton = ({ info }) => {
     ),
     buttons: {
       action: () => {
-        // 데이터 값이 없어서 임시로 goodsId=3으로 설정
-        // GetDrawVerification(3, hashValue)
         GetDrawVerification(info.id, hashValue)
           .then((res) => {
             const response = res.data.result.drawsList;

@@ -10,7 +10,7 @@ const TotalPointsPerRafflesChart = ({ data }) => {
     if (chartRef.current) {
       const myChart = echarts.init(chartRef.current);
       // xAxis의 데이터를 data.avgWinnerPointsPerRaffles 배열의 길이에 따라 동적으로 생성
-      const xAxisData = data.avgWinnerPointsPerRaffles.map((_, index) => `${index + 1}회차`);
+      const xAxisData = data.totalPointsPerRaffles.totalPointsPerRaffles.map((_, index) => `${index + 1}회차`);
 
       const option: echarts.EChartsOption = {
         tooltip: {
@@ -24,7 +24,7 @@ const TotalPointsPerRafflesChart = ({ data }) => {
         },
         series: [
           {
-            data: data.totalPointsPerRaffles,
+            data: data.totalPointsPerRaffles.totalPointsPerRaffles,
             type: 'line',
             lineStyle: {
               color: colors.secondary,

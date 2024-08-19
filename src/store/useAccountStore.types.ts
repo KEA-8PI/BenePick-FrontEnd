@@ -1,8 +1,6 @@
 export interface AccountInfo {
   id: string;
   role: string;
-  point: number;
-  profileImg: string;
 }
 
 export interface AccountStore {

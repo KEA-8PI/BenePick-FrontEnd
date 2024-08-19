@@ -9,7 +9,7 @@ const RefillRatesPerRaffleChart = ({ data }) => {
   useEffect(() => {
     if (chartRef.current) {
       const myChart = echarts.init(chartRef.current);
-      const xAxisData = data.avgWinnerPointsPerRaffles.map((_, index) => `${index + 1}회차`);
+      const xAxisData = data.refillRatesPerRaffles.refillRatesPerRaffles.map((_, index) => `${index + 1}회차`);
       const option: echarts.EChartsOption = {
         tooltip: {
           trigger: 'axis',
@@ -22,7 +22,7 @@ const RefillRatesPerRaffleChart = ({ data }) => {
         },
         series: [
           {
-            data: data.refillRatesPerRaffles,
+            data: data.refillRatesPerRaffles.refillRatesPerRaffles,
             type: 'line',
             lineStyle: {
               color: colors.secondary,

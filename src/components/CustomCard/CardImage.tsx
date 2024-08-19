@@ -18,11 +18,14 @@ const getBackgroundColor = (goodsStatus: string) => {
 };
 
 const CardImage: React.FC<CustomCardProps> = ({ info, style }) => {
+  const { goodId, id } = info;
+  const itemId = goodId || id;
+
   return (
     <Box sx={{ weight: '100%', height: '100%', position: 'relative', ...style }}>
       <CardMedia
         component="div"
-        onClick={() => (window.location.href = `/goods/${info.id}`)}
+        onClick={() => (window.location.href = `/goods/${itemId}`)}
         image={info.image || '/images/benepickLogo.png'}
         sx={{
           position: 'absolute',
