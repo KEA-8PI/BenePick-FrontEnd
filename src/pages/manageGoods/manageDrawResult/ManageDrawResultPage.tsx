@@ -164,9 +164,11 @@ const ManageDrawResultPage = () => {
           ]}
           setDrawIdList={setDrawIdList}
         />
-        <CustomButton style={{ marginTop: '20px' }} onClick={downloadFile}>
-          내보내기
-        </CustomButton>
+        {goodsInfo.goodsStatus === 'COMPLETED' && (
+          <CustomButton style={{ marginTop: '20px' }} onClick={downloadFile}>
+            내보내기
+          </CustomButton>
+        )}
       </div>
     </div>
   );
