@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Button, Box, Typography, Card, Table, TableBody, TableContainer } from '@mui/material';
+import { Button, Box, Typography, Card, Table, TableBody, TableContainer, IconButton } from '@mui/material';
+import Iconify from 'components/common/Iconify/Iconify';
 import colors from 'theme/variableColors';
 import * as S from 'components/common/Components.styles';
 import { HashInput } from 'components/bigCustomModal/bigCustomModal.styles';
 import BigCustomModal from 'components/bigCustomModal/bigCustomModal';
 import { IModalConfig } from 'components/bigCustomModal/bigCustomModal.types';
 import TableHeader from 'components/CustomTable/TableHeader';
-import CustomTableRow from 'components/CustomTable/CustomTableRow';
+import CustomTableDrawRow from 'components/CustomTable/CustomTableDrawRow';
 import { useToggle } from 'hooks/useToggle';
 import { GetGoodsSeed } from 'api/goods.api';
 import { GetDrawVerification } from 'api/draws.api';
@@ -15,7 +16,7 @@ const RaffleResultButton = ({ info }) => {
   const [seeds, setSeeds] = useState();
   const [hashValue, setHashValue] = useState('');
   const [result, setResult] = useState([]);
-  const headList = [{ 아이디: 'id' }, { 이름: 'name' }, { '응모한 포인트': 'point' }];
+  const headList = [{ 아이디: 'id' }, { 이름: 'name' }, { '응모한 포인트': 'point' }, { '당첨 여부': 'status' }];
 
   // 해시값 입력 시 상태 업데이트
   const handleInputChange = (e) => {
@@ -30,6 +31,15 @@ const RaffleResultButton = ({ info }) => {
     };
     getSeeds();
   }, [info]);
+
+  const handleCopyClipBoard = (text: string) => {
+    try {
+      navigator.clipboard.writeText(text);
+      alert('시드값이 복사되었습니다.');
+    } catch (error) {
+      alert('시드값 복사에 실패하였습니다.');
+    }
+  };
 
   // 모달창 불러오기
   const isFirstModalToggle = useToggle();
@@ -50,8 +60,30 @@ const RaffleResultButton = ({ info }) => {
           }}
         >
           <Typography style={{ paddingRight: '70px', whiteSpace: 'nowrap' }}>설정된 해시 </Typography>
-          <Box style={{ width: '350px', maxWidth: 'calc(100% - 50px)', wordBreak: 'break-word' }}>
+          <Box
+            style={{
+              width: '350px',
+              maxWidth: 'calc(100% - 50px)',
+              wordBreak: 'break-word',
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
             <Typography>{seeds}</Typography>
+            <Box style={{ display: 'flex', flexDirection: 'row' }}>
+              <IconButton style={{ color: colors.pinkGrey, padding: 5 }} onClick={() => handleCopyClipBoard(seeds)}>
+                <Iconify
+                  icon="oui:copy"
+                  style={{
+                    color: colors.pinkGrey,
+                    width: '15px',
+                    height: '15px',
+                    alignContent: 'center',
+                    alignItems: 'center',
+                  }}
+                />
+              </IconButton>
+            </Box>
           </Box>
         </Box>
         <Box
@@ -82,13 +114,13 @@ const RaffleResultButton = ({ info }) => {
         GetDrawVerification(info.id, hashValue)
           .then((res) => {
             const response = res.data.result.drawsList;
-            const winners = response
-              .filter((item) => item.status === 'WINNER')
-              .map((item) => ({
-                id: item.memberId,
-                name: item.memberName,
-                point: item.point,
-              }));
+            const winners = response.map((item) => ({
+              id: item.memberId,
+              name: item.memberName,
+              point: item.point,
+              status: item.drawStatus,
+              sequence: item.sequence,
+            }));
             setResult(winners);
             console.log('추첨 검증 결과:', winners);
             isSecondModalToggle.toggle();
@@ -96,8 +128,6 @@ const RaffleResultButton = ({ info }) => {
           .catch((error) => {
             if (error.response) {
               console.error('응모 에러:', error.response.data);
-            } else if (error.request) {
-              console.error('응모 에러: 서버로부터 응답이 없습니다.', error.request);
             } else {
               console.error('응모 에러:', error.message);
             }
@@ -117,32 +147,47 @@ const RaffleResultButton = ({ info }) => {
           당첨자 목록
         </Typography>
 
-        <S.Wrapper style={{ paddingTop: '20px', height: '70%', justifyContent: 'center', alignContent: 'center' }}>
-          <Card sx={{ borderRadius: '10px', overflow: 'auto' }}>
-            <TableContainer sx={{ overflow: 'auto', maxHeight: '100%', width: '100%' }}>
-              <Table sx={{ minWidth: '520px' }}>
-                <TableHeader
-                  headLabel={headList.map((head) => {
-                    const key = Object.keys(head)[0];
-                    return { id: head[key], label: key };
-                  })}
-                />
-                <TableBody>
-                  {result.map((row, index) => (
-                    <CustomTableRow
-                      key={index}
-                      index={index}
-                      columns={headList.map((head) => {
-                        const key = Object.keys(head)[0];
-                        return { id: head[key], label: row[head[key] as keyof typeof row] };
-                      })}
-                    />
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Card>
-        </S.Wrapper>
+        {result.length > 0 ? (
+          <S.Wrapper style={{ paddingTop: '20px', height: '70%', justifyContent: 'center', alignContent: 'center' }}>
+            <Card sx={{ borderRadius: '10px', overflow: 'auto' }}>
+              <TableContainer sx={{ overflow: 'auto', maxHeight: '100%', width: '100%' }}>
+                <Table sx={{ minWidth: '520px' }}>
+                  <TableHeader
+                    headLabel={headList.map((head) => {
+                      const key = Object.keys(head)[0];
+                      return { id: head[key], label: key };
+                    })}
+                  />
+                  <TableBody>
+                    {result.map((row, index) => (
+                      <CustomTableDrawRow
+                        key={index}
+                        index={index}
+                        columns={headList.map((head) => {
+                          const key = Object.keys(head)[0];
+                          return { id: head[key], label: row[head[key] as keyof typeof row] };
+                        })}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Card>
+          </S.Wrapper>
+        ) : (
+          <S.Wrapper
+            style={{
+              paddingTop: '20px',
+              height: '50%',
+              width: '100%',
+              textAlign: 'center',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+          >
+            관련된 데이터가 없습니다.
+          </S.Wrapper>
+        )}
       </Box>
     ),
     buttons: {
