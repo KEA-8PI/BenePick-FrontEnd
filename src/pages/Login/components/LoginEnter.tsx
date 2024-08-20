@@ -34,7 +34,7 @@ const LoginEnter = () => {
       // const response = await PostLogin(id, password);
       const { userID, role } = response.data.result;
       setAccountInfo(userID, role);
-      navigate('/'); // 역할과 함께 네비게이션 필요
+      navigate(-1); // 역할과 함께 네비게이션 필요
     } catch (error) {
       if (error.message === 'Request failed with status code 400') {
         alert('아이디 또는 비밀번호가 잘못 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요.');
