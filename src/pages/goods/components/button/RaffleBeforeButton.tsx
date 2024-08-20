@@ -12,7 +12,7 @@ const RaffleBeforeButton = () => {
         color: 'white',
       }}
     >
-      웅모 예정
+      응모 예정
     </Button>
   );
 };
